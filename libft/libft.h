@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:06:28 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/08 14:34:09 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/14 16:53:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include <unistd.h>
+# include <stdint.h>
 
 int		ft_atoi(const char *nptr);
 void	ft_bzero(void *s, size_t n);

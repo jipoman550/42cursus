@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 16:28:27 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/08 13:49:49 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/14 17:52:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	*ft_calloc(size_t nelem, size_t elsize)
 {
 	void	*ret;
 
-	if (nelem && elsize && (nelem > -1 / elsize))
+	if (nelem == 0 || elsize == 0)
+		return (malloc(0));
+	if (nelem > SIZE_MAX / elsize)
 		return (NULL);
 	ret = (void *)malloc(nelem * elsize);
 	if (!ret)

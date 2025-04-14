@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/03 15:14:36 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/08 19:04:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/14 18:29:32 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 // #include <string.h>
 // int main()
 // {
-// 	// char src[] = "Hello, World!";
-//     // char *dest1; // 충분한 크기의 배열을 할당
-//     // char *dest2;
+// 	char src[] = "Hello, World!";
+//     char *dest1; // 충분한 크기의 배열을 할당
+//     char *dest2;
 
-//     // size_t n = 5;
+//     size_t n = 5;
 
-//     // // 표준 memcpy 테스트
-//     // memcpy(dest1, src, n);
-//     // dest1[n] = '\0'; // 문자열 끝을 명확히 하기 위해 추가
-//     // printf("memcpy:    %s\n", dest1); // 예상: "Hello"
+//     // 표준 memcpy 테스트
+//     memcpy(dest1, src, n);
+//     dest1[n] = '\0'; // 문자열 끝을 명확히 하기 위해 추가
+//     printf("memcpy:    %s\n", dest1); // 예상: "Hello"
 
-//     // // 사용자 정의 ft_memcpy 테스트
-//     // ft_memcpy(dest2, src, n);
-//     // dest2[n] = '\0';
-//     // printf("ft_memcpy: %s\n", dest2); // 예상: "Hello"
+//     // 사용자 정의 ft_memcpy 테스트
+//     ft_memcpy(dest2, src, n);
+//     dest2[n] = '\0';
+//     printf("ft_memcpy: %s\n", dest2); // 예상: "Hello"
 
-//	char str1[] = "123456789";
+// 	char str1[] = "123456789";
 //     char str2[] = "123456789";
 
 //     printf("Before memcpy:  %s\n", str1);
