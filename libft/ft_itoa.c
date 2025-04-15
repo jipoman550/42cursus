@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:52:20 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/10 20:08:02 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/15 12:25:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*ft_itoa(int n)
 {
 	int		digit_cnt;
 	int		sign;
-	int		i;
 	char	*str;
 	long	num;
 

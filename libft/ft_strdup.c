@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 20:12:09 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/10 19:10:06 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:25:07 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ char	*ft_strdup(const char *s)
 	int		i;
 	char	*dup;
 
-	if (!s)
-		return (NULL);
 	dup = (char *)malloc(ft_strlen(s) + 1);
 	if (!dup)
 		return (NULL);

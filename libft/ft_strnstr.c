@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 12:40:55 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/07 13:58:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/15 15:23:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	size_t	i;
 	size_t	j;
 
-	if (big[0] && len == 0)
-		return (NULL);
-	if (little[0] == '\0')
+	if (*little == '\0')
 		return ((char *)big);
+	if (!big && len == 0)
+		return (NULL);
 	i = 0;
 	while (big[i] && i < len)
 	{
