@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 19:54:49 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/17 20:48:57 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/18 14:50:12 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,22 @@
 
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	t_list	*new;
-	t_list	*cur;
+	t_list	*new_list;
+	t_list	*new_node;
 
-	new = lst;
+	if (!f || !del)
+		return (NULL);
+	new_list = NULL;
 	while (lst)
 	{
-		cur = ft_lstnew(f(new->content));
-		if (!cur)
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
 		{
-			ft_lstclear(&lst, del);
-			return (void *) (NULL);
+			ft_lstclear(&new_list, del);
+			return (NULL);
 		}
-		ft_lstadd_back(&lst, new);
+		ft_lstadd_back(&new_list, new_node);
 		lst = lst->next;
 	}
-	return (new);
+	return (new_list);
 }
