@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 19:06:28 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/18 17:06:31 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/21 15:11:00 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-//# include <stdint.h>
 
 typedef struct s_list
 {
