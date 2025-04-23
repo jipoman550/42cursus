@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/05 16:05:06 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/07 12:13:15 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 12:09:00 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,3 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 		return (0);
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-
-// int main()
-// {
-//     char *s1 = "apple";
-//     char *s2 = "app";
-
-//     printf("%d\n", strcmp(s1, s2));
-//     return 0;
-
-// }

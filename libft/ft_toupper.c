@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 17:15:42 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/08 14:39:48 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 11:36:33 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,3 @@ int	ft_toupper(int c)
 	}
 	return (c);
 }
-
-// #include <stdio.h>
-
-// int main()
-// {
-// 	char a = 'Z';
-// 	printf("%c\n", ft_toupper(a));
-// 	return (0);
-// }

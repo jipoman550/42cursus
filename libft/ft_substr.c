@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:05:21 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/08 20:55:25 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:32:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,3 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	substr[i] = '\0';
 	return (substr);
 }
-
-// #include <stdio.h>
-
-// int main()
-// {
-// 	char *result = ft_substr("hello", 10, 3);
-// 	printf("%s\n", result);  // result가 NULL이면 Segmentation fault 발생 가능
-// }

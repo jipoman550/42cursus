@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 15:52:20 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/15 12:25:06 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:28:17 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,50 +65,3 @@ char	*ft_itoa(int n)
 	fill_str(str, num, digit_cnt, sign);
 	return (str);
 }
-
-// #include <stdio.h>
-// #include <limits.h>
-
-// int main(void)
-// {
-// 	char	*str;
-
-// 	printf("===== ft_itoa 테스트 =====\n");
-
-// 	// 일반 케이스
-// 	str = ft_itoa(12345);
-// 	printf("ft_itoa(12345) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// 음수
-// 	str = ft_itoa(-9876);
-// 	printf("ft_itoa(-9876) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// 0
-// 	str = ft_itoa(0);
-// 	printf("ft_itoa(0) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// INT_MAX
-// 	str = ft_itoa(INT_MAX);
-// 	printf("ft_itoa(INT_MAX) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// INT_MIN
-// 	str = ft_itoa(INT_MIN);
-// 	printf("ft_itoa(INT_MIN) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// 엣지 케이스: 한 자리수 양수
-// 	str = ft_itoa(7);
-// 	printf("ft_itoa(7) = \"%s\"\n", str);
-// 	free(str);
-
-// 	// 엣지 케이스: 한 자리수 음수
-// 	str = ft_itoa(-3);
-// 	printf("ft_itoa(-3) = \"%s\"\n", str);
-// 	free(str);
-
-// 	return 0;
-// }

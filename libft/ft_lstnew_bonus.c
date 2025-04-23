@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:27:57 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/15 20:54:31 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:23:42 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,3 @@ t_list	*ft_lstnew(void *content)
 	new->next = NULL;
 	return (new);
 }
-
-// #include <stdio.h>
-
-// int main(void)
-// {
-// 	t_list *node;
-
-// 	node = ft_lstnew("abcdef");
-
-// 	if (node == NULL)
-// 	{
-// 		printf("Node creation failed.\n");
-// 		return (1);
-// 	}
-
-// 	printf("Content: %s\n", (char *)node->content);
-// 	printf("Next: %p\n", (void *)node->next);
-
-// 	return (0);
-// }

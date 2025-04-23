@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:30:05 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/14 18:47:56 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:34:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,3 @@ void	ft_putnbr_fd(int n, int fd)
 	digit = (num % 10) + '0';
 	write(fd, &digit, 1);
 }
-
-// int main()
-// {
-// 	int n = 0;
-// 	ft_putnbr_fd(n, 1);
-// 	return 0;
-// }

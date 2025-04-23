@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:55:34 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/15 16:43:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:28:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,3 @@ void	ft_putstr_fd(char *s, int fd)
 		s++;
 	}
 }
-
-// int main()
-// {
-// 	char *s = "hello, world!";
-// 	ft_putstr_fd(s, 1);
-// 	write(1, "\n", 1);
-// 	return (0);
-// }

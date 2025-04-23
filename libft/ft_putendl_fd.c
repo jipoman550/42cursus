@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 18:13:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/14 18:29:20 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 16:31:53 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,3 @@ void	ft_putendl_fd(char *s, int fd)
 	write(fd, s, len);
 	write(fd, "\n", 1);
 }
-
-// int main()s
-// {
-// 	char *s = "hello";
-// 	ft_putendl_fd(s, 1);
-// 	return 0;
-// }

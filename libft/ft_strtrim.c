@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/09 16:42:33 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/09 20:12:38 by sisung           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:46:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	ret[i] = '\0';
 	return (ret);
 }
-
-// #include <stdio.h>
-
-// int main()
-// {
-// 	char *s1 = "ahelloc";
-// 	char *set = "abc";
-// 	char *ret;
-
-// 	ret = ft_strtrim(s1, set);
-// 	printf("%s\n", ret); // hello world
-// 	return 0;
-// }
