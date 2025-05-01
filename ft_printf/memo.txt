@@ -14,7 +14,7 @@ ft_printf
 		convert_pointer
 		convert_decimal
 		convert_integer
-		convert_unsigned_decimal
-		convert_hexadecimal_lowercase
-		convert_hexadecimal_uppercase
-		convert_percent_sign
+		convert_unsigned
+		convert_hex_lower
+		convert_hex_upper
+		convert_percent
