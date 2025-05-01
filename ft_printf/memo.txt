@@ -1,2 +1,20 @@
-ft_printf를 구현하기 위한 방법
+***ft_printf***
 
+1. printf원형에 대해 조사하기.
+2. 가변인자 함수에 대해 알아보기.
+
+구조잡기
+
+ft_printf.h
+
+ft_printf
+	handle_conversion
+		convert_char
+		convert_string
+		convert_pointer
+		convert_decimal
+		convert_integer
+		convert_unsigned_decimal
+		convert_hexadecimal_lowercase
+		convert_hexadecimal_uppercase
+		convert_percent_sign
