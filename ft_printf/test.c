@@ -1,28 +1,27 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-// args는 고정 매개변수
-void printNumbers(int args, ...)
+void va_fct(int a, ...);
+
+int main(void)
 {
-	va_list ap;
-
-	va_start(ap, args);
-	for (int i = 0; i < args; i++)
-	{
-		int num = va_arg(ap, int);
-		printf("%d ", num);
-	}
-	va_end(ap);
-
-	printf("\n");
-}
-
-int main()
-{
-    printNumbers(1, 10);
-    printNumbers(2, 10, 20);
-    printNumbers(3, 10, 20, 30);
-    printNumbers(4, 10, 20, 30, 40);
+	va_fct(1, 1);
+	va_fct(2, 1, 2);
+	va_fct(3, 1, 2, 3);
 
     return 0;
+}
+
+void va_fct(int a, ...)
+{
+	va_list list;
+
+	va_start(list, a);
+
+	for (int i = 0; i < a; i++) {
+		printf("%d ", va_arg(list, int));
+	}
+	printf("\n");
+
+	va_end(list);
 }

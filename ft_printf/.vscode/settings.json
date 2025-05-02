@@ -3,5 +3,6 @@
 		"stdarg.h": "c",
 		"ft_printf.h": "c",
 		"stdlib.h": "c"
-	}
+	},
+	"editor.formatOnType": false
 }

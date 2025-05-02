@@ -5,6 +5,8 @@
 
 구조잡기
 
+Makefile
+
 ft_printf.h
 
 ft_printf

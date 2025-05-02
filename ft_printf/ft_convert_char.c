@@ -6,9 +6,17 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 18:38:45 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/01 18:39:00 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/02 15:47:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
+int	convert_char(va_list args)
+{
+	char	c;
+
+	c = (char)va_arg(args, int);
+	write(1, &c, 1);
+	return (1);
+}

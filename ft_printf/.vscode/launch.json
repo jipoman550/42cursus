@@ -1,0 +1,30 @@
+{
+	// Use IntelliSense to learn about possible attributes.
+	// Hover to view descriptions of existing attributes.
+	// For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Debug ft_printf",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "/home/sisung/workspace/42cursus/ft_printf/ft_printf_test", // 실행 파일명
+			"args": [],
+			"stopAtEntry": true,
+			"cwd": "/home/sisung/workspace/42cursus/ft_printf",
+			"environment": [],
+			"externalConsole": false,
+			"MIMode": "gdb",	// Linux
+			"preLaunchTask": "build ft_printf",
+			"setupCommands": [
+				{
+					"description": "Enable pretty-printing",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+
+		}
+
+	]
+}
