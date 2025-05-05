@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/14 11:10:20 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 15:57:45 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	va_list	args;
-	int		printed_chars;
+	char			*str;
+	unsigned int	len;
+	unsigned int	i;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	len = ft_strlen(s);
+	if (!s || !f)
+		return (NULL);
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		str[i] = f(i, s[i]);
+		i++;
 	}
-	va_end(args);
-	return (printed_chars);
+	str[i] = '\0';
+	return (str);
 }

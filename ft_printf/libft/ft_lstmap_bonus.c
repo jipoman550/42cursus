@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/17 19:54:49 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/24 12:28:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	va_list	args;
-	int		printed_chars;
+	t_list	*new_list;
+	t_list	*new_node;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	if (!f || !del)
+		return (NULL);
+	new_list = NULL;
+	while (lst)
 	{
-		if (*format == '%')
+		new_node = ft_lstnew(f(lst->content));
+		if (!new_node)
 		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
+			ft_lstclear(&new_list, del);
+			return (NULL);
 		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		ft_lstadd_back(&new_list, new_node);
+		lst = lst->next;
 	}
-	va_end(args);
-	return (printed_chars);
+	return (new_list);
 }

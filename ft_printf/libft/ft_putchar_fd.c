@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/14 15:12:26 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 16:17:42 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+void	ft_putchar_fd(char c, int fd)
 {
-	va_list	args;
-	int		printed_chars;
-
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
-	}
-	va_end(args);
-	return (printed_chars);
+	if (fd < 0)
+		return ;
+	write(fd, &c, 1);
 }

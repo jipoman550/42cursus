@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/14 13:17:05 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 16:16:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	va_list	args;
-	int		printed_chars;
+	unsigned int	i;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	if (!s || !f)
+		return ;
+	i = 0;
+	while (s[i])
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		f(i, &s[i]);
+		i++;
 	}
-	va_end(args);
-	return (printed_chars);
 }

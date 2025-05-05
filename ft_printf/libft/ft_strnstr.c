@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/07 12:40:55 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/15 15:23:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	va_list	args;
-	int		printed_chars;
+	size_t	i;
+	size_t	j;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	if (*little == '\0')
+		return ((char *)big);
+	if (!big && len == 0)
+		return (NULL);
+	i = 0;
+	while (big[i] && i < len)
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		j = 0;
+		while (big[i + j] && little[j] && i + j < len
+			&& big[i + j] == little[j])
+			j++;
+		if (little[j] == '\0')
+			return ((char *)&big[i]);
+		i++;
 	}
-	va_end(args);
-	return (printed_chars);
+	return (NULL);
 }

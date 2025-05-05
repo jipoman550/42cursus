@@ -1,39 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/04 13:56:05 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 11:31:10 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+size_t	ft_strlcat(char *dst, const char *src, size_t dsize)
 {
-	va_list	args;
-	int		printed_chars;
+	size_t	dst_len;
+	size_t	src_len;
+	size_t	i;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	src_len = ft_strlen(src);
+	if (dsize == 0)
+		return (src_len);
+	dst_len = ft_strlen(dst);
+	if (dst_len >= dsize)
+		return (dsize + src_len);
+	i = 0;
+	while (src[i] && dst_len + i < (dsize - 1))
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		dst[dst_len + i] = src[i];
+		i++;
 	}
-	va_end(args);
-	return (printed_chars);
+	dst[dst_len + i] = '\0';
+	return (dst_len + src_len);
 }

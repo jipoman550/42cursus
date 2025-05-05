@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/07 16:28:27 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 13:39:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+void	*ft_calloc(size_t nelem, size_t elsize)
 {
-	va_list	args;
-	int		printed_chars;
+	void	*ret;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
-	}
-	va_end(args);
-	return (printed_chars);
+	if (nelem == 0 || elsize == 0)
+		return (malloc(0));
+	if (nelem > -1 / elsize)
+		return (NULL);
+	ret = (void *)malloc(nelem * elsize);
+	if (!ret)
+		return (NULL);
+	ft_bzero(ret, nelem * elsize);
+	return (ret);
 }

@@ -1,39 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/14 18:30:05 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/23 16:34:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+void	ft_putnbr_fd(int n, int fd)
 {
-	va_list	args;
-	int		printed_chars;
+	long	num;
+	char	digit;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	if (fd < 0)
+		return ;
+	num = (long)n;
+	if (num < 0)
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		num = -num;
+		write(fd, &"-", 1);
 	}
-	va_end(args);
-	return (printed_chars);
+	if (num >= 10)
+		ft_putnbr_fd(num / 10, fd);
+	digit = (num % 10) + '0';
+	write(fd, &digit, 1);
 }

@@ -1,39 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_convert_string.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/05/05 17:25:25 by sisung            #+#    #+#             */
+/*   Updated: 2025/05/05 18:02:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+int	convert_string(va_list args)
 {
-	va_list	args;
-	int		printed_chars;
+	char *s;
+	int len;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
-	}
-	va_end(args);
-	return (printed_chars);
+	s = va_arg(args, char *);
+	len = ft_strlen(s);
+	ft_putstr_fd(s, 1);
+	return (len);
 }
+
+// !s 일 때도 처리를 해줘야하나?

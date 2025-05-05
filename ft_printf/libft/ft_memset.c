@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 12:33:15 by sisung           ###   ########.fr       */
+/*   Created: 2025/04/02 20:04:42 by sisung            #+#    #+#             */
+/*   Updated: 2025/04/04 10:49:50 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "libft.h"
 
-int	ft_printf(const char *format, ...)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	va_list	args;
-	int		printed_chars;
+	unsigned char	*ptr;
+	size_t			i;
 
-	printed_chars = 0;
-	va_start(args, format);
-	while (*format)
+	ptr = (unsigned char *)s;
+	i = 0;
+	while (i < n)
 	{
-		if (*format == '%')
-		{
-			format++;
-			printed_chars += handle_conversion(*format, args);
-			format++;
-		}
-		else
-		{
-			write(1, format, 1);
-			printed_chars++;
-			format++;
-		}
+		ptr[i] = (unsigned char)c;
+		i++;
 	}
-	va_end(args);
-	return (printed_chars);
+	return (s);
 }
