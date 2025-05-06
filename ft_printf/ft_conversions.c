@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:58:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/05 17:26:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/06 13:11:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int	handle_conversion(char conversion, va_list args)
 		return (convert_char(args));
 	else if (conversion == 's')
 		return (convert_string(args));
-	//else if (conversion == 'p')
-	//	return (convert_pointer(args));
+	else if (conversion == 'p')
+		return (convert_pointer(args));
 	//else if (conversion == 'd')
 	//	return (convert_decimal(args));
 	//else if (conversion == 'i')

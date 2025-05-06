@@ -3,7 +3,8 @@
 		"stdarg.h": "c",
 		"ft_printf.h": "c",
 		"stdlib.h": "c",
-		"stdio.h": "c"
+		"stdio.h": "c",
+		"libft.h": "c"
 	},
 	"editor.formatOnType": false
 }

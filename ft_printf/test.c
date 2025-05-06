@@ -1,27 +1,22 @@
 #include <stdio.h>
-#include <stdarg.h>
 
-void va_fct(int a, ...)
+int main()
 {
-	va_list list;
+	int* a = NULL;
+	char b = 's';
+	char *c = "abcd";
+	int ret1, ret2, ret3;
 
-	va_start(list, a);
-
-	for (int i = 0; i < a; i++) {
-		printf("%d ", va_arg(list, int));
-	}
+	ret1 = printf("%p", a);
+	printf("\n");
+	ret2 = printf("%p", &b);
+	printf("\n");
+	ret3 = printf("%p", &c);
 	printf("\n");
 
-	va_end(list);
-}
+	printf("printf(\"%%p\\n\", a)의 반환 값: %d\n", ret1);
+    printf("printf(\"%%p\\n\", &b)의 반환 값: %d\n", ret2);
+    printf("printf(\"%%p\\n\", &c)의 반환 값: %d\n", ret3);
 
-int main(void)
-{
-	va_fct(1, 1);
-	va_fct(2, 1, 2);
-	va_fct(3, 1, 2, 3);
-
-	printf("hi my name is %s!", 0);
-
-    return 0;
+	return 0;
 }
