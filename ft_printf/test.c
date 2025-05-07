@@ -1,22 +1,13 @@
 #include <stdio.h>
 
-int main()
-{
-	int* a = NULL;
-	char b = 's';
-	char *c = "abcd";
-	int ret1, ret2, ret3;
-
-	ret1 = printf("%p", a);
+int main() {
+    printf("%d", 123);
 	printf("\n");
-	ret2 = printf("%p", &b);
+    printf("%d", __INT_MAX__);
 	printf("\n");
-	ret3 = printf("%p", &c);
+    //printf("%d", ); 가장 작은 수 넣기
 	printf("\n");
 
-	printf("printf(\"%%p\\n\", a)의 반환 값: %d\n", ret1);
-    printf("printf(\"%%p\\n\", &b)의 반환 값: %d\n", ret2);
-    printf("printf(\"%%p\\n\", &c)의 반환 값: %d\n", ret3);
-
-	return 0;
+	// ?? printf가 출력할 수 있는 decimal 이니까 해줘야할 듯?
+    return 0;
 }

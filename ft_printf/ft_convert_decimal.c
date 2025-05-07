@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   ft_convert_decimal.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/29 16:50:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/07 16:37:30 by sisung           ###   ########.fr       */
+/*   Created: 2025/05/07 16:35:07 by sisung            #+#    #+#             */
+/*   Updated: 2025/05/07 18:28:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "ft_printf.h"
+#include "libft.h"
 
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdarg.h>
+int	decimal_len(int num)
+{
+	int	digits;
 
-int	ft_printf(const char *format, ...);
+	digits = 1;
+	while (num / 10)
+	{
+		digits++;
+		num /= 10;
+	}
+	return (digits);
+}
 
-int	handle_conversion(char conversion, va_list args);
+int	convert_decimal(va_list args)
+{
+	int	decimal;
+	int	count;
 
-int	convert_char(va_list args);
-int	convert_string(va_list args);
-int	convert_pointer(va_list args);
-int	convert_decimal(va_list args);
-
-#endif
+	decimal = va_arg(args, int);
+	ft_putnbr_fd(decimal, 1);
+	count = 0;
+	count += decimal_len(decimal);
+	return (count);
+}
