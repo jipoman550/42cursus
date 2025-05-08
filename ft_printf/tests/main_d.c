@@ -1,15 +1,25 @@
 #include <stdio.h>
+#include "ft_printf.h"
 
 int main() {
-    printf("%d", 123);
+    printf("printf :%d", 123);
 	printf("\n");
-    printf("%d", __INT_MAX__);
-	printf("\n");
-    printf("%d", -2147483649); //가장 작은 수 넣기
+    ft_printf("ft_printf :%d", 123);
 	printf("\n");
 
-	// ?? printf가 출력할 수 있는 decimal 이니까 해줘야할 듯?
-	// ?? int의 최소값이랑 최댓값을 넣어 줄 수 있나?
-	// 애초에 d,i 는 integer범위만 되는 건데 범위를 넘어버리는 경우에도 %d에 넣을 수 있나?
+    printf("printf :%d", 2147483647);
+	printf("\n");
+    ft_printf("ft_printf :%d", 2147483647);
+	printf("\n");
+
+    printf("printf :%d", (int)-2147483648);
+	printf("\n");
+    ft_printf("ft_printf :%d", -2147483648);
+	printf("\n");
+
+	/* ?? %d 에 -2147483648를 출력하려고 할 때
+	 printf일 때 : 컴파일에서 오류 뜸. a./out파일 실행하면 오버플로우 나타나서 2147483647 출력.
+	 그러면 ft_printf일 때도 위랑 같이 해야됨? 아니면 오버플로우 나타나는 것으로 해야됨?
+	 -> 답변 : 너가 말한 경우는 UB이기 때문에 무시해야도 됨. (int)-2147483648을 printf에 넣었을 때랑 같은 값을 출력하게 하면 됨.*/
     return 0;
 }

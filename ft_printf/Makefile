@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/29 16:22:45 by sisung            #+#    #+#              #
-#    Updated: 2025/05/07 18:27:00 by sisung           ###   ########.fr        #
+#    Updated: 2025/05/08 15:25:45 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,12 @@ SRC		=	ft_printf.c \
 			ft_convert_char.c \
 			ft_convert_string.c \
 			ft_convert_pointer.c \
-			ft_convert_decimal.c
+			ft_convert_decimal.c \
+			ft_convert_unsigned.c
 
 # 테스트 main 파일 (하나씩 교체 가능)
 TEST_DIR = tests
-TEST_SRC = $(TEST_DIR)/main_d.c # 요기를 바꾸면 다른 테스트로 교체 가능
+TEST_SRC = $(TEST_DIR)/main_u.c # 요기를 바꾸면 다른 테스트로 교체 가능
 
 # 오브젝트 파일 목록
 OBJS	 = $(SRC:.c=.o) $(TEST_SRC:.c=.o)

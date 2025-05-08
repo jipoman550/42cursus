@@ -1,13 +1,11 @@
 #include <stdio.h>
 
 int main() {
-    printf("%d", 123);
-	printf("\n");
-    printf("%d", __INT_MAX__);
-	printf("\n");
-    //printf("%d", ); 가장 작은 수 넣기
+    int a = -123;
+	unsigned int b = a;
+
+	printf("%u", b); // 4294967173가 나왔는데 이게 뭐냐
 	printf("\n");
 
-	// ?? printf가 출력할 수 있는 decimal 이니까 해줘야할 듯?
     return 0;
 }

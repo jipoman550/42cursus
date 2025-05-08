@@ -1,25 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convert_decimal.c                               :+:      :+:    :+:   */
+/*   ft_convert_unsigned.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 16:35:07 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/08 15:05:47 by sisung           ###   ########.fr       */
+/*   Created: 2025/05/08 14:46:13 by sisung            #+#    #+#             */
+/*   Updated: 2025/05/08 17:47:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int	decimal_len(int num)
+int	unsigned_len(unsigned int num)
 {
 	int	digits;
 
 	digits = 1;
-	if (num < 0)
-		digits++;
 	while (num / 10)
 	{
 		digits++;
@@ -28,14 +26,26 @@ int	decimal_len(int num)
 	return (digits);
 }
 
-int	convert_decimal(va_list args)
+void	ft_putnbr_unsigned_fd(unsigned int n, int fd)
 {
-	int	decimal;
-	int	count;
+	char	digit;
 
-	decimal = va_arg(args, int);
-	ft_putnbr_fd(decimal, 1);
+	if (fd < 0)
+		return ;
+	if (n >= 10)
+		ft_putnbr_fd(n / 10, fd);
+	digit = (n % 10) + '0';
+	write(fd, &digit, 1);
+}
+
+int	convert_unsigned(va_list args)
+{
+	unsigned int	uint_arg;
+	int				count;
+
+	uint_arg = va_arg(args, unsigned int);
+	ft_putnbr_unsigned_fd(uint_arg, 1);
 	count = 0;
-	count += decimal_len(decimal);
+	count += unsigned_len(uint_arg);
 	return (count);
 }
