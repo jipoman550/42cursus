@@ -9,7 +9,7 @@ int main() {
 	ft_printf("%u", 123);
 	printf("\n");
 
-	ret1 = printf("%u", -123); // 4294967173가 나왔는데 이게 뭐냐.
+	ret1 = printf("%u", -123);
 	printf("\n");
 	ret11 = ft_printf("%u", -123);
 	printf("\n");

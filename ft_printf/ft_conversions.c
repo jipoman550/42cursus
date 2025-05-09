@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 16:58:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/08 14:54:22 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:44:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,9 @@ int	handle_conversion(char conversion, va_list args)
 		return (convert_decimal(args));
 	else if (conversion == 'u')
 		return (convert_unsigned(args));
-	//else if (conversion == 'x')
-	//	return (convert_hex_lower(args));
-	//else if (conversion == 'X')
-	//	return (convert_hex_upper(args));
-	//else if (conversion == '%')
-	//	return (convert_percent());
+	else if (conversion == 'x' || conversion == 'X')
+		return (convert_hex(conversion, args));
+	else if (conversion == '%')
+		return (convert_percent());
 	return (0);
 }

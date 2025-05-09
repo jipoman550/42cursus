@@ -6,27 +6,12 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:35:07 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/08 15:05:47 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/09 16:50:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
-
-int	decimal_len(int num)
-{
-	int	digits;
-
-	digits = 1;
-	if (num < 0)
-		digits++;
-	while (num / 10)
-	{
-		digits++;
-		num /= 10;
-	}
-	return (digits);
-}
 
 int	convert_decimal(va_list args)
 {

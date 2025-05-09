@@ -17,6 +17,11 @@ int main() {
     ft_printf("ft_printf :%d", -2147483648);
 	printf("\n");
 
+	printf("printf :%d", 0xab);
+	printf("\n");
+    ft_printf("ft_printf :%d", 0xAB);
+	printf("\n");
+
 	/* ?? %d 에 -2147483648를 출력하려고 할 때
 	 printf일 때 : 컴파일에서 오류 뜸. a./out파일 실행하면 오버플로우 나타나서 2147483647 출력.
 	 그러면 ft_printf일 때도 위랑 같이 해야됨? 아니면 오버플로우 나타나는 것으로 해야됨?

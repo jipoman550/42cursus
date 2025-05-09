@@ -24,11 +24,11 @@ int main()
 	printf("\n===============\n");
 
 	printf("printf(\"%%p\\n\", a)의 반환 값: %d\n", ret1);
-	//ft_printf("ft_printf(\"%%p\\n\", a)의 반환 값: %d\n", ret11); %%와 %d를 구현하고 test해보기
+	ft_printf("ft_printf(\"%%p\\n\", a)의 반환 값: %d\n", ret11);
     printf("printf(\"%%p\\n\", &b)의 반환 값: %d\n", ret2);
-    //ft_printf("ft_printf(\"%%p\\n\", &b)의 반환 값: %d\n", ret22); %%와 %d를 구현하고 test해보기
+    ft_printf("ft_printf(\"%%p\\n\", &b)의 반환 값: %d\n", ret22);
     printf("printf(\"%%p\\n\", &c)의 반환 값: %d\n", ret3);
-    //ft_printf("ft_printf(\"%%p\\n\", &c)의 반환 값: %d\n", ret33); %%와 %d를 구현하고 test해보기
+    ft_printf("ft_printf(\"%%p\\n\", &c)의 반환 값: %d\n", ret33);
 
 	return 0;
 }

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convert_string.c                                :+:      :+:    :+:   */
+/*   ft_convert_hex.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 17:25:25 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/09 17:19:29 by sisung           ###   ########.fr       */
+/*   Created: 2025/05/09 12:36:26 by sisung            #+#    #+#             */
+/*   Updated: 2025/05/09 16:55:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int	convert_string(va_list args)
+int	convert_hex(char conversion, va_list args)
 {
-	char	*s;
-	int		len;
+	unsigned int	hex;
+	int				count;
 
-	s = va_arg(args, char *);
-	len = ft_strlen(s);
-	ft_putstr_fd(s, 1);
-	return (len);
+	hex = va_arg(args, unsigned int);
+	if (conversion == 'x')
+		print_hex((unsigned long)hex, 0);
+	else if (conversion == 'X')
+		print_hex((unsigned long)hex, 1);
+	count = 0;
+	count += hex_len((unsigned long) hex);
+	return (count);
 }
-
-// !s 일 때도 처리를 해줘야하나?

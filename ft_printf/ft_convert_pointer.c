@@ -6,42 +6,18 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:10:29 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/07 14:26:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/09 17:20:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int	hex_len(unsigned long num)
-{
-	int digits;
-
-	digits = 1;
-	while (num / 16)
-	{
-		digits++;
-		num /= 16;
-	}
-	return (digits);
-}
-
-void	print_hex(unsigned long num)
-{
-	char *hex;
-
-	hex = "0123456789abcdef";
-	if (num >= 16)
-		print_hex(num / 16);
-	ft_putchar_fd(hex[num % 16], 1);
-	return ;
-}
-
 int	convert_pointer(va_list args)
 {
-	void	*ptr;
+	void			*ptr;
 	unsigned long	address;
-	int		count;
+	int				count;
 
 	ptr = va_arg(args, void *);
 	address = (unsigned long)ptr;
@@ -56,7 +32,7 @@ int	convert_pointer(va_list args)
 		ft_putstr_fd("0x", 1);
 		count += 2;
 		count += hex_len(address);
-		print_hex(address);
+		print_hex(address, 0);
 	}
 	return (count);
 }
