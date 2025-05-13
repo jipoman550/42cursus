@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:50:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/09 17:18:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:57:04 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		convert_percent(void);
 
 int		decimal_len(int num);
 int		unsigned_len(unsigned int num);
-void	ft_putnbr_unsigned_fd(unsigned int n, int fd);
+int		ft_putnbr_unsigned_fd(unsigned int n, int fd);
 int		hex_len(unsigned long num);
-void	print_hex(unsigned long num, int is_upper);
+int		print_hex(unsigned long num, int is_upper);
 
 #endif

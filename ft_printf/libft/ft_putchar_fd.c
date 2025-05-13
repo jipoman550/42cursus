@@ -6,15 +6,15 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 15:12:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/23 16:17:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:05:44 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
 	if (fd < 0)
-		return ;
-	write(fd, &c, 1);
+		return (0);
+	return (write(fd, &c, 1));
 }

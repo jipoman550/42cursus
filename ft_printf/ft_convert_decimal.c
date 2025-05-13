@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 16:35:07 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/09 16:50:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:54:54 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	convert_decimal(va_list args)
 	int	count;
 
 	decimal = va_arg(args, int);
-	ft_putnbr_fd(decimal, 1);
+	if (ft_putnbr_fd(decimal, 1) == -1)
+		return (-1);
 	count = 0;
 	count += decimal_len(decimal);
 	return (count);

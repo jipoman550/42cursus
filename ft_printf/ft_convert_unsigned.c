@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/08 14:46:13 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/09 16:49:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:57:12 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	convert_unsigned(va_list args)
 	int				count;
 
 	uint_arg = va_arg(args, unsigned int);
-	ft_putnbr_unsigned_fd(uint_arg, 1);
+	if (ft_putnbr_unsigned_fd(uint_arg, 1) == -1)
+		return (-1);
 	count = 0;
 	count += unsigned_len(uint_arg);
 	return (count);

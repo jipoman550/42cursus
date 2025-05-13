@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:25:25 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/10 17:34:15 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:46:17 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	convert_string(va_list args)
 	s = va_arg(args, char *);
 	if (s == NULL)
 	{
-		ft_putstr_fd("(null)", 1);
+		if (ft_putstr_fd("(null)", 1) == -1)
+			return (-1);
 		len = 6;
 	}
 	else
 	{
+		if (ft_putstr_fd(s, 1) == -1)
+			return (-1);
 		len = ft_strlen(s);
-		ft_putstr_fd(s, 1);
 	}
 	return (len);
 }
-
-// !s 일 때도 처리를 해줘야하나? 그래ㅐ

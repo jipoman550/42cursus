@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:30:39 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/09 17:22:00 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:05:55 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 
 int	convert_percent(void)
 {
-	ft_putchar_fd('%', 1);
-	return (1);
+	return (ft_putchar_fd('%', 1));
 }

@@ -6,19 +6,21 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 17:55:34 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/23 16:28:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/13 18:06:59 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr_fd(char *s, int fd)
+int	ft_putstr_fd(char *s, int fd)
 {
 	if (!s || fd < 0)
-		return ;
+		return (0);
 	while (*s)
 	{
-		write(fd, s, 1);
+		if (write(fd, s, 1) == -1)
+			return (-1);
 		s++;
 	}
+	return (0);
 }

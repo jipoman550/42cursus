@@ -2,6 +2,6 @@
 
 int main()
 {
-	printf("%s", NULL);
+	ft_printf(NULL);
 	return 0;
 }

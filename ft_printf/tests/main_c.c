@@ -3,6 +3,13 @@
 
 int main()
 {
+	int a;
+	a = ft_printf(NULL);
+	ft_printf("%d\n", a);
+
+	/*printf("%c", NULL);
+	ft_printf("%c", NULL);
+
 	ft_printf("What's up bro,\n");
 	ft_printf("My name is %c!\n", 'S');
 
@@ -17,6 +24,6 @@ int main()
 	ft_printf("My name is %c!\n", NULL);
 
 	printf("What's up bro,\n");
-	printf("My name is %c!\n", NULL);
+	printf("My name is %c!\n", NULL);*/
 	return 0;
 }
