@@ -85,7 +85,10 @@ int main(void)
 	ret2 = ft_printf("ft_printf min int: [%d]\n", -2147483648);
 	printf("ret printf: %d, ft_printf: %d\n\n", ret1, ret2);
 
-	ft_printf("ft_printf max int: [%f]\n\n", 2147483647);
+	int ret42 = ft_printf("ft_printf max int: [%f]\n\n", 2147483647);
+	ft_printf("\n%d", ret42);
+	printf("\n%d", ret42);
+	printf("\n\n");
 
 	// 에러 유도 테스트 (write 실패 시 -1 확인)
 	// 1. stdout을 잘못된 fd로 임시 교체
