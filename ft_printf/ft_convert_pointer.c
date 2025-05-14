@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 13:10:29 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/13 13:44:59 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/14 12:09:56 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,18 @@ int	convert_pointer(va_list args)
 	count = 0;
 	if (!address)
 	{
-		ft_putstr_fd("(nil)", 1);
+		if (ft_putstr_fd("(nil)", 1) == -1)
+			return (-1);
 		count = 5;
 	}
 	else
 	{
-		ft_putstr_fd("0x", 1);
+		if (ft_putstr_fd("0x", 1) == -1)
+			return (-1);
 		count += 2;
+		if (print_hex(address, 0) == -1)
+			return (-1);
 		count += hex_len(address);
-		print_hex(address, 0);
 	}
 	return (count);
 }

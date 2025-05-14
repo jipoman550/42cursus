@@ -6,77 +6,50 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/13 18:25:15 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/14 17:18:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	printed_chars(const char *format, va_list args)
+static int	ft_printed_chars(const char *format, va_list args)
 {
-	int	printed_chars;
-	int	result;
+	int	count;
+	int	temp;
 
-	printed_chars = 0;
-	result = 0;
+	count = 0;
+	temp = 0;
 	while (*format)
 	{
 		if (*format == '%')
 		{
-			format++;
-			result = handle_conversion(*format, args);
-			if (result == -1)
+			temp = handle_conversion(*(++format), args);
+			if (temp == -1)
 				return (-1);
-			printed_chars += result;
+			count += temp;
 			format++;
 		}
 		else
 		{
 			if (write(1, format, 1) == -1)
-			{
-				va_end(args);
 				return (-1);
-			}
-			printed_chars++;
+			count++;
 			format++;
 		}
 	}
-	return (printed_chars);
+	return (count);
 }
 
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	int		printed_chars;
-	int		result;
+	int		count;
 
 	if (!format)
 		return (-1);
-	printed_chars = 0;
-	result = 0;
+	count = 0;
 	va_start(args, format);
-	while (*format)
-	{
-		if (*format == '%')
-		{
-			format++;
-			result = handle_conversion(*format, args);
-			if (result == -1)
-				return (-1);
-			printed_chars += result;
-			format++;
-		}
-		else
-		{
-			if (write(1, format, 1) == -1)
-			{
-				va_end(args);
-				return (-1);
-			}
-			printed_chars++;
-			format++;
-		}
-	}
+	count = ft_printed_chars(format, args);
 	va_end(args);
-	return (printed_chars);
+	return (count);
 }

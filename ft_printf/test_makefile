@@ -1,13 +1,16 @@
 # 컴파일러 설정
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -g -I. -I./libft # 과제제출 할 때 테스트 케이스 옵션들(-g, -I)같은 것들은 제거해야함. 아니면 test 용 makefile과 제출용 makefile을 따로 만들던가
+
+# 과제제출 할 때 테스트 케이스 옵션들(-g, -I)같은 것들은 제거해야함.
+# 아니면 test 용 makefile과 제출용 makefile을 따로 만들던가.
+CFLAGS	= -Wall -Wextra -Werror -g -I. -I./libft
 
 # libft 디렉토리 및 라이브러리
 LIBFT_DIR = libft
 LIBFT     = $(LIBFT_DIR)/libft.a
 
 # 실행 파일 이름
-NAME	= ft_printf_test
+NAME	= test_ft_printf
 
 # 소프 파일 목록
 SRC		=	ft_printf.c \
@@ -23,7 +26,7 @@ SRC		=	ft_printf.c \
 
 # 테스트 main 파일 (하나씩 교체 가능)
 TEST_DIR = tests
-TEST_SRC = $(TEST_DIR)/main_c.c # 요기를 바꾸면 다른 테스트로 교체 가능
+TEST_SRC = $(TEST_DIR)/main_all.c # 요기를 바꾸면 다른 테스트로 교체 가능
 
 # 오브젝트 파일 목록
 OBJS	 = $(SRC:.c=.o) $(TEST_SRC:.c=.o)
