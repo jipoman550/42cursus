@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/10 13:32:58 by sisung            #+#    #+#              #
-#    Updated: 2025/05/14 17:36:11 by sisung           ###   ########.fr        #
+#    Updated: 2025/05/15 18:12:50 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ all: $(LIBFT) $(NAME)
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFTDIR)
+	$(MAKE) bonus -C $(LIBFTDIR)
 
 $(NAME): $(LIBFT) $(OBJS)
 	@cp $(LIBFT) $(NAME)

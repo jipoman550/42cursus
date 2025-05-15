@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:23:01 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/14 17:18:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/15 14:58:54 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	ft_printed_chars(const char *format, va_list args)
 	{
 		if (*format == '%')
 		{
-			temp = handle_conversion(*(++format), args);
+			format++;
+			temp = handle_conversion(*format, args);
 			if (temp == -1)
 				return (-1);
 			count += temp;

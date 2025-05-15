@@ -26,7 +26,7 @@ SRC		=	ft_printf.c \
 
 # 테스트 main 파일 (하나씩 교체 가능)
 TEST_DIR = tests
-TEST_SRC = $(TEST_DIR)/main_all.c # 요기를 바꾸면 다른 테스트로 교체 가능
+TEST_SRC = $(TEST_DIR)/main_s.c # 요기를 바꾸면 다른 테스트로 교체 가능
 
 # 오브젝트 파일 목록
 OBJS	 = $(SRC:.c=.o) $(TEST_SRC:.c=.o)
