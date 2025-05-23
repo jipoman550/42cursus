@@ -1,0 +1,22 @@
+구현 방법
+
+1. read 함수로 txt 읽어라
+2. 읽은 부분을 출력해봐라
+3. get_next_line의 요구사항에 맞게 조건을 추가해라
+	read() 함수가 buffer_size 만큼 읽을 텐데, 읽은 buffer중에 \n이 있다면 \n을 포함해서 return 을 해줘야함. 그리고 남은 static buf에 있는 값에서 \n까지 지우고 남은 문자열을 static buf에 다시 저장해줘야하는데, 이때 malloc과 free를 어떻게 활용해야할지 고민임.
+	-> 지금 생각하기에는 read로 읽은 buf를 확인하는 동작으로 확인해줘야 할 듯?
+	 여기에 \n이나 \0이 없다면 static buf와 read_buf를 strjoin을 해주는 것.
+	\n이 있다면 static과 read_buf를 strjoin을 해주고, 조인된 static buf에서 \n까지 잘라서 return하고, return한 부분은 잘라주고, 남아있는 문자열을 static buf에 다시 저장해줘야함.
+	\0을 발견했다면(read()의 return 값이 0은 아님 0 < read_value <= buffer_size) strjoin을 해주고, \0까지 다 return 하기.
+	혹은 read_value가 0이면 strjoin하지 않고 남아 있는 static buf를 return 하기.
+
+
+읽음(read 함수) 멈춤 조건
+1. buffer size가 찼을 때
+	하지만! \n(개행문자)를 만나지 않았으니까
+	읽은 만큼을 static variable에 저장을 해줘야됨.
+2. \n을 만났을 때 -> 출력
+	buffer size랑 상관없이 출력해야됨
+	이게 get_next_line 조건임.
+3. read의 return 값이 0일 때 (읽을 것이 없을 때?)
+	\0 (null 문자)를 만나면 완전 끝내버리기 해야되나?
