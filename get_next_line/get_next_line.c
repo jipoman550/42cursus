@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/23 17:03:25 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/24 23:23:44 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*get_next_line(int fd)
 		free(read_buf);
 		return (NULL);
 	}
+	read_buf[read_value] = '\0';
 	tmp = ft_strjoin(buf, read_buf);
 	free(buf);
 	buf = tmp;
