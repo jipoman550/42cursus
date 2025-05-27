@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/23 17:03:25 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:04:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,38 @@ char	*get_next_line(int fd)
 	int			read_value;
 	char		*tmp;
 
+	if (fd < 0 || BUFFER_SIZE < 0)
+		return (NULL);
 	read_buf = (char *)malloc(BUFFER_SIZE + 1);
 	if (!read_buf)
 		return (NULL);
-	read_value = read(fd, read_buf, BUFFER_SIZE);
-	if (read_value < 0)
+	read_value = 1;
+	while (read_value > 0 && !ft_strchr(read_buf, '\n'))
 	{
-		free(read_buf);
-		return (NULL);
+		read_value = read(fd, read_buf, BUFFER_SIZE);
+		if (read_value == -1)
+		{
+			free(read_buf);
+			return (NULL);
+		}
+		read_buf[read_value] = '\0';
+		tmp = ft_strjoin(buf, read_buf);
+		free(buf);
+		buf = tmp;
 	}
-	tmp = ft_strjoin(buf, read_buf);
+	char *newline_char = ft_strchr(buf, '\n');
+	int newline_after_len = ft_strlen(newline_char);
+	tmp = ft_strndup(newline_char, newline_after_len);
+	int len = 0;
+	while (*buf != '\n')
+	{
+		len++;
+		buf++;
+	}
+	char *extract_line = (char *)malloc(len + 1);
+	extract_line = ft_strndup(buf, len);
 	free(buf);
 	buf = tmp;
-	return (read_buf);
+	free(read_buf);
+	return (extract_line);
 }

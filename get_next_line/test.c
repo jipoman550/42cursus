@@ -1,21 +1,20 @@
 #include <stdio.h>
 
-size_t	ft_strlen(const char *s)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t	cnt;
-
-	cnt = 0;
 	while (*s)
 	{
-		cnt++;
+		if (*s == (char)c)
+			return ((char *)s);
 		s++;
 	}
-	return (cnt);
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
 }
-
 int main(void)
 {
-	ft_strlen(NULL);
-
+	char *s = ft_strchr("aaabbbccc\nddd", '\n');
+	printf("%s\n", s);
 	return (0);
 }

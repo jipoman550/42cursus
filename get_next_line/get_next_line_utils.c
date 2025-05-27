@@ -6,13 +6,44 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:45 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/23 13:55:13 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/27 18:03:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static size_t	ft_strlen(const char *s)
+char	*ft_strndup(const char *s, size_t n)
+{
+	size_t		i;
+	char	*dup;
+
+	dup = (char *)malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (s[i] && i < n)
+	{
+		dup[i] = s[i];
+		i++;
+	}
+	dup[i] = '\0';
+	return (dup);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if ((char)c == '\0')
+		return ((char *)s);
+	return (NULL);
+}
+
+size_t	ft_strlen(const char *s)
 {
 	size_t	cnt;
 
