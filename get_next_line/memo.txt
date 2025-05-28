@@ -20,3 +20,23 @@
 	이게 get_next_line 조건임.
 3. read의 return 값이 0일 때 (읽을 것이 없을 때?)
 	\0 (null 문자)를 만나면 완전 끝내버리기 해야되나?
+
+
+while문에서 !ft_strchr(read_buf, '\n') 이 조건에 걸려서 나오고, 내가 원하는 동작은 아래와 같다.
+1. static 변수 buf에 저장되어 있는 문자열을 '\n'을 포함하여 return 하는 것
+2. '\n' 이후 나머지 문자열을 static 변수에 다시 저장하는 것.
+
+이를 위해 코드를 작성했는데,
+sisung@c2r17s4 ~/workspace/42cursus/get_next_line
+ % ls
+example.txt      get_next_line.o        main.c    memo.txt  test_get_next_line
+get_next_line.c  get_next_line_utils.c  main.o    pdf.txt
+get_next_line.h  get_next_line_utils.o  Makefile  test.c
+sisung@c2r17s4 ~/workspace/42cursus/get_next_line
+ % ./test_get_next_line
+zsh: segmentation fault (core dumped)  ./test_get_next_line
+
+이런 결과를 얻었다.
+
+1.내가 작성한 코드가 어디가, 무엇이 잘 못되었는지 알려줘.
+2.이를 바탕으로 내가 어떻게 코드를 작성해야하는지 알려줘라.

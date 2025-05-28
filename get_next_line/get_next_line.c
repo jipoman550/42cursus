@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/27 18:04:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/28 13:04:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*get_next_line(int fd)
 	int			read_value;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	read_buf = (char *)malloc(BUFFER_SIZE + 1);
 	if (!read_buf)
@@ -42,13 +42,9 @@ char	*get_next_line(int fd)
 	int newline_after_len = ft_strlen(newline_char);
 	tmp = ft_strndup(newline_char, newline_after_len);
 	int len = 0;
-	while (*buf != '\n')
-	{
+	while (buf[len] != '\n')
 		len++;
-		buf++;
-	}
-	char *extract_line = (char *)malloc(len + 1);
-	extract_line = ft_strndup(buf, len);
+	char *extract_line = ft_strndup(buf, len);
 	free(buf);
 	buf = tmp;
 	free(read_buf);
