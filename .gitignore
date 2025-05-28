@@ -1,0 +1,8 @@
+# VS Code settings
+.vscide/
+
+# Build artifacts
+*.a
+*.o
+*.out
+*.exe
