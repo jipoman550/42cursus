@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:45 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/28 15:16:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/29 12:18:31 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,17 +60,6 @@ size_t	ft_strlen(const char *s)
 	return (cnt);
 }
 
-static size_t	ft_strlen_safe(const char *s)
-{
-	size_t	len;
-
-	len = 0;
-	if (!s)
-		return (0);
-	len = ft_strlen(s);
-	return (len);
-}
-
 char	*ft_strjoin(char const *s1, char const *s2)
 {
 	size_t	s1_len;
@@ -78,8 +67,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*strjoin;
 	char	*p;
 
-	s1_len = ft_strlen_safe(s1);
-	s2_len = ft_strlen_safe(s2);
+	s1_len = ft_strlen(s1);
+	s2_len = ft_strlen(s2);
 	strjoin = (char *)malloc(s1_len + s2_len + 1);
 	if (!strjoin)
 		return (NULL);

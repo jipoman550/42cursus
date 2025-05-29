@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/28 17:43:32 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/29 14:07:58 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 
 	read_value = 1;
-	while (read_value > 0 && !ft_strchr(read_buf, '\n'))
+	while (read_value > 0)
 	{
 		read_value = read(fd, read_buf, BUFFER_SIZE);
 		if (read_value == 0)
@@ -41,6 +41,8 @@ char	*get_next_line(int fd)
 		tmp = ft_strjoin(buf, read_buf);
 		free(buf);
 		buf = tmp;
+		if (ft_strchr(read_buf, '\n'))
+			break ;
 	}
 	free(read_buf);
 
