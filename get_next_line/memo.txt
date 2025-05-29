@@ -44,31 +44,41 @@ int main(void)
 //get_next_line.c
 #include "get_next_line.h"
 
-char	*read_and_find_newline_char()
+static char	*extract_and_rest_buf(char *buffer)
 {
-	char		*read_buf;
+	char	*newline_char;
+	char	*extract_line;
+	char	*next_buf;
 
-	read_buf = (char *)malloc(BUFFER_SIZE + 1);
-	if (!read_buf)
-		return (NULL);
+	newline_char = ft_strchr(buffer, '\n');
+	if (newline_char)
+	{
+		int len = newline_char - buffer + 1;
+		extract_line = ft_strndup(buffer, len);
+		next_buf = ft_strndup(buffer + len, ft_strlen(buffer +len));
+		free(buffer);
+		buffer = next_buf;
+	}
+	else
+	{
+		extract_line = ft_strndup(buffer, ft_strlen(buffer));
+		free(buffer);
+		buffer = NULL;
+	}
+	return (extract_line);
 }
 
-char	*get_next_line(int fd)
+static char	*read_and_strjoin(int fd, char *buffer)
 {
-	static char	*buf = NULL;
 	char		*read_buf;
 	int			read_value;
 	char		*tmp;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-
 	read_buf = (char *)malloc(BUFFER_SIZE + 1);
 	if (!read_buf)
 		return (NULL);
-
 	read_value = 1;
-	while (read_value > 0 && !ft_strchr(read_buf, '\n'))
+	while (read_value > 0)
 	{
 		read_value = read(fd, read_buf, BUFFER_SIZE);
 		if (read_value == 0)
@@ -79,38 +89,31 @@ char	*get_next_line(int fd)
 			return (NULL);
 		}
 		read_buf[read_value] = '\0';
-		tmp = ft_strjoin(buf, read_buf);
-		free(buf);
-		buf = tmp;
+		tmp = ft_strjoin(buffer, read_buf);
+		free(buffer);
+		buffer = tmp;
+		if (ft_strchr(read_buf, '\n'))
+			break ;
 	}
 	free(read_buf);
+	return (buffer);
+}
 
+char	*get_next_line(int fd)
+{
+	static char	*buf;
+
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buf = NULL;
+	buf = read_and_strjoin(fd, buf);
 	if (!buf || buf[0] == '\0')
 	{
 		free(buf);
 		buf = NULL;
 		return (NULL);
 	}
-
-	char	*newline_char = ft_strchr(buf, '\n');
-	char	*extract_line;
-	char	*next_buf;
-
-	if (newline_char)
-	{
-		int len = newline_char - buf + 1;
-		extract_line = ft_strndup(buf, len);
-		next_buf = ft_strndup(buf + len, ft_strlen(buf +len));
-		free(buf);
-		buf = next_buf;
-	}
-	else
-	{
-		extract_line = ft_strndup(buf, ft_strlen(buf));
-		free(buf);
-		buf = NULL;
-	}
-	return (extract_line);
+	return (extract_and_rest_buf(buf));
 }
 
 //get_next_line_utils.c
@@ -188,31 +191,35 @@ char	*ft_strjoin(char const *s1, char const *s2)
 위의 코드를 컴파일해서 실행파일을 가지고 valgrind를 실행했을 떄 아래와 같이 나온다.
 
 sisung@C2r16s6 ~/workspace/42cursus/get_next_line
- % valgrind ./test_get_next_line 
-==2951541== Memcheck, a memory error detector
-==2951541== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==2951541== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==2951541== Command: ./test_get_next_line
-==2951541== 
-==2951541== Conditional jump or move depends on uninitialised value(s)
-==2951541==    at 0x401552: ft_strchr (get_next_line_utils.c:37)
-==2951541==    by 0x40126B: get_next_line (get_next_line.c:30)
-==2951541==    by 0x4011BB: main (main.c:10)
-==2951541== 
-hihi ojum bassa!
-hello, world!
+ % valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./test_get_next_line 
+==2978444== Memcheck, a memory error detector
+==2978444== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==2978444== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==2978444== Command: ./test_get_next_line
+==2978444== 
+hihi ojum balssa!
+llo, world!
+ung.
+==2978444== 
+==2978444== HEAP SUMMARY:
+==2978444==     in use at exit: 14 bytes in 3 blocks
+==2978444==   total heap usage: 16 allocs, 13 frees, 1,191 bytes allocated
+==2978444== 
+==2978444== 14 bytes in 3 blocks are definitely lost in loss record 1 of 1
+==2978444==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==2978444==    by 0x4014B4: ft_strndup (get_next_line_utils.c:22)
+==2978444==    by 0x401426: extract_and_rest_buf (get_next_line.c:26)
+==2978444==    by 0x40129B: get_next_line (get_next_line.c:84)
+==2978444==    by 0x4011BB: main (main.c:10)
+==2978444== 
+==2978444== LEAK SUMMARY:
+==2978444==    definitely lost: 14 bytes in 3 blocks
+==2978444==    indirectly lost: 0 bytes in 0 blocks
+==2978444==      possibly lost: 0 bytes in 0 blocks
+==2978444==    still reachable: 0 bytes in 0 blocks
+==2978444==         suppressed: 0 bytes in 0 blocks
+==2978444== 
+==2978444== For lists of detected and suppressed errors, rerun with: -s
+==2978444== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
 
-I'm sisung.
-
-==2951541== 
-==2951541== HEAP SUMMARY:
-==2951541==     in use at exit: 0 bytes in 0 blocks
-==2951541==   total heap usage: 22 allocs, 22 frees, 1,256 bytes allocated
-==2951541== 
-==2951541== All heap blocks were freed -- no leaks are possible
-==2951541== 
-==2951541== Use --track-origins=yes to see where uninitialised values come from
-==2951541== For lists of detected and suppressed errors, rerun with: -s
-==2951541== ERROR SUMMARY: 6 errors from 1 contexts (suppressed: 0 from 0)
-
-여기서 ==2951541== ERROR SUMMARY: 6 errors from 1 contexts (suppressed: 0 from 0) 문구가 나오는데, 괜찮은건가?
+뭐가 문제인지 알려줘라.

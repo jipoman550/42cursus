@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:45 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/29 12:18:31 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/29 17:11:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strndup(const char *s, size_t n)
 {
 	size_t		i;
-	char	*dup;
+	char		*dup;
 
 	if (!s)
 		return (NULL);
