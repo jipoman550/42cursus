@@ -1,6 +1,6 @@
 CC		= cc
 
-CFLAGS	= -Wall -Wextra -Werror -g
+CFLAGS	= -Wall -Wextra -Werror -g -D BUFFER_SIZE=4
 
 NAME	= test_get_next_line
 

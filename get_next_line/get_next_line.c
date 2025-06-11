@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/29 17:11:20 by sisung           ###   ########.fr       */
+/*   Updated: 2025/05/30 15:02:39 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*extract_and_rest_buf(char **buffer)
 	return (extract_line);
 }
 
-static char	*read_and_strjoin(int fd, char *buffer)
+static char	*read_and_strjoin(int fd, char **buffer)
 {
 	char		*read_buf;
 	int			read_value;
@@ -53,15 +53,15 @@ static char	*read_and_strjoin(int fd, char *buffer)
 		if (read_value == 0)
 			break ;
 		if (read_value == -1)
-			return (free(read_buf), NULL);
+			return (free(read_buf), free(*buffer), *buffer = NULL, NULL);
 		read_buf[read_value] = '\0';
-		tmp = ft_strjoin(buffer, read_buf);
-		free(buffer);
-		buffer = tmp;
+		tmp = ft_strjoin(*buffer, read_buf);
+		free(*buffer);
+		*buffer = tmp;
 		if (ft_strchr(read_buf, '\n'))
 			break ;
 	}
-	return (free(read_buf), buffer);
+	return (free(read_buf), *buffer);
 }
 
 char	*get_next_line(int fd)
@@ -70,7 +70,7 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buf = read_and_strjoin(fd, buf);
+	buf = read_and_strjoin(fd, &buf);
 	if (!buf || buf[0] == '\0')
 	{
 		free(buf);

@@ -1,0 +1,23 @@
+abcdefghijklmnopqrstuvwxyz
+12345678901234567890123456
+
+m = 77
+z = 90 - 26 = 64
+
+65 - 90 = 155
+66 - 89 = 155
+67 - 88 = 155
+68 - 87 = 155
+69 - 86 = 155
+.
+.
+.
+
+
+git add .
+git commit -m ""
+git push
+
+한 후에 grademe !!!
+
+trace 파일 존재.
