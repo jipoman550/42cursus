@@ -1,3 +1,5 @@
+//int len = (end - start) < 0 ? ((end - start) * -1) + 1 : (end - start) + 1; 이게 핵심인듯?
+
 #include <stdlib.h>
 
 int     *ft_range(int start, int end)
@@ -9,7 +11,7 @@ int     *ft_range(int start, int end)
 		return (NULL);
 
 	int i = 0;
-	if (start >= end)
+	if (start <= end)
 	{
 		while (i < len)
 		{
@@ -18,7 +20,7 @@ int     *ft_range(int start, int end)
 			start++;
 		}
 	}
-	else if (start < end)
+	else
 	{
 		while (i < len)
 		{

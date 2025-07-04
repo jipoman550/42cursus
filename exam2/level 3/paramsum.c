@@ -1,3 +1,7 @@
+/*
+int argc에서 argc는 정수이기 때문에, 이걸 char 형으로 바꾸어 write로 찍는게 중요함. 10이상일 때 해주어야
+*/
+
 #include <unistd.h>
 
 void ft_putnbr(int num)

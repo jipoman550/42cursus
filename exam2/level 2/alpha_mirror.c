@@ -11,13 +11,13 @@ int main(int argc, char *argv[])
 			if (s[i] >= 65 && s[i] <= 90)
 			{
 				int	n = s[i] - 65;
-				char	c = 90 - n;
+				char c = 90 - n;
 				write(1, &c, 1);
 			}
 			else if (s[i] >= 97 && s[i] <= 122)
 			{
 				int	n = s[i] - 97;
-				char	c = 122 - n;
+				char c = 122 - n;
 				write(1, &c, 1);
 			}
 			else

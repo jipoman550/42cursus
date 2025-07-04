@@ -11,6 +11,20 @@ int is_power_of_2(unsigned int n)
 	return (n == 1);
 }
 
+/*int	    is_power_of_2(unsigned int n)
+{
+	int test = 1;
+
+	while (test <= n)
+	{
+		if (test == n)
+			return  (1); // test is a power of 2
+		test = test * 2;
+	}
+	return (0);
+}*/
+
+
 #include <stdio.h>
 
 int main()

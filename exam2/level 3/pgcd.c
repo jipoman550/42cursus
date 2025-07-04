@@ -1,11 +1,7 @@
-#include <stdio.h> // Required for printf
-#include <stdlib.h> // Required for atoi
+#include <stdio.h>
+#include <stdlib.h>
 
-// Function to calculate the Greatest Common Divisor (GCD) using the Euclidean algorithm.
-// This function takes two integers, 'a' and 'b', and returns their GCD.
 int gcd(int a, int b) {
-    // The Euclidean algorithm states that if b is 0, the GCD is a.
-    // Otherwise, the GCD of (a, b) is the same as the GCD of (b, a % b).
     while (b != 0) {
         int temp = b;
         b = a % b;
@@ -15,31 +11,66 @@ int gcd(int a, int b) {
 }
 
 int main(int argc, char *argv[]) {
-    // Check if the number of command-line arguments is exactly 2 (program name + two numbers).
-    // If not, print a newline and exit as per the problem requirements.
     if (argc != 3) {
         printf("\n");
-        return 0; // Exit successfully
+        return 0;
     }
 
-    // Convert the first and second command-line arguments from strings to integers.
-    // atoi (ASCII to integer) converts a string to an integer.
-    // argv[0] is the program name, argv[1] is the first argument, argv[2] is the second.
     int num1 = atoi(argv[1]);
     int num2 = atoi(argv[2]);
 
-    // As per the problem description, inputs are "strictly positive integers".
-    // The Euclidean algorithm expects positive integers.
-    // If for some reason atoi returns 0 for a non-numeric string, it might still proceed.
-    // However, given the problem context, we assume valid strictly positive integer inputs.
-    // If the input was "0" or negative, the problem statement implies such cases won't occur for valid runs.
-
-    // Calculate the GCD of the two numbers.
     int result = gcd(num1, num2);
 
-    // Display the calculated GCD followed by a newline.
     printf("%d\n", result);
 
-    // Return 0 to indicate successful execution.
     return 0;
 }
+
+/*
+네, 아주 좋은 질문입니다! `gcd` 함수에 `num1`과 `num2`의 순서가 바뀌어도 결과가 동일하게 나오는 이유에 대해 설명해 드릴게요. 이는 유클리드 호제법의 특성 때문에 그렇습니다.
+
+### 유클리드 호제법의 대칭성
+
+유클리드 호제법은 두 수 $a$와 $b$의 최대공약수를 구할 때, $a$가 $b$보다 크든 작든 상관없이 작동합니다. 그 이유는 다음과 같습니다.
+
+1.  **`a`가 `b`보다 큰 경우 (예: `gcd(42, 10)`)**
+    * 첫 번째 반복에서 `b = a % b` (10 = 42 % 10 = 2)가 되고, `a = temp` (a = 10)가 됩니다.
+    * 결과적으로 `(a, b)` 쌍은 `(42, 10)`에서 `(10, 2)`로 변환됩니다. 이 과정은 일반적인 유클리드 호제법의 단계와 동일합니다.
+
+2.  **`a`가 `b`보다 작은 경우 (예: `gcd(14, 77)`)**
+    * **첫 번째 반복:**
+        * `a = 14`, `b = 77`
+        * `temp = b` (즉, `temp = 77`)
+        * `b = a % b` (즉, `b = 14 % 77`). 14를 77로 나눈 나머지는 **14**입니다. (14 = 0 * 77 + 14)
+        * `a = temp` (즉, `a = 77`)
+        * **결과적으로 `(a, b)` 쌍은 `(14, 77)`에서 `(77, 14)`로 변환됩니다.**
+
+    * **두 번째 반복부터:**
+        * 이제 `a=77, b=14`가 되어 `a`가 `b`보다 큰 일반적인 상황이 됩니다.
+        * `temp = 14`
+        * `b = 77 % 14 = 7`
+        * `a = 14`
+        * (새로운 상태: `a=14, b=7`)
+
+    * **세 번째 반복:**
+        * `a=14, b=7`
+        * `temp = 7`
+        * `b = 14 % 7 = 0`
+        * `a = 7`
+        * (새로운 상태: `a=7, b=0`)
+
+    * `b`가 0이 되었으므로 반복 종료. `a` 값인 `7`을 반환합니다.
+
+### 왜 이렇게 동작하는가?
+
+`a`가 `b`보다 작은 경우, 첫 번째 `while` 루프에서 `b = a % b` 연산이 수행될 때, 작은 수를 큰 수로 나눈 나머지는 항상 작은 수 자신이 됩니다.
+
+예를 들어, `14 % 77`은 `14`입니다.
+따라서 `(a, b)`가 `(14, 77)`일 때, 첫 번째 반복 후 `(77, 14)`로 위치가 바뀌게 됩니다. 즉, **한 번의 반복을 통해 자동으로 큰 수가 `a` 위치로, 작은 수가 `b` 위치로 오게 됩니다.**
+
+이후부터는 일반적인 유클리드 호제법의 흐름대로 큰 수를 작은 수로 나누는 과정이 반복됩니다.
+
+### 결론
+
+따라서 `gcd` 함수는 입력된 두 정수의 순서에 상관없이 항상 올바른 최대공약수를 반환합니다. 첫 번째 반복에서 필요하다면 자동으로 큰 수가 `a` 위치로, 작은 수가 `b` 위치로 정렬되는 효과가 있기 때문입니다. 이 점이 유클리드 호제법이 매우 견고하고 유연하게 작동하는 이유 중 하나입니다.
+*/

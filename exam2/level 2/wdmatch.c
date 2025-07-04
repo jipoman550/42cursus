@@ -1,3 +1,8 @@
+/*
+1. s1[i]와 s2[j]가 same이면 i++해줌.j는 계속 ++ 해줌.
+2. s1[i] == '\0' 을 만나면 조건에 만족한다는 것이니까 s1을 len길이 만큼 출력.
+*/
+
 #include <unistd.h>
 
 int main(int argc, char *argv[])
