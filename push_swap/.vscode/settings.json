@@ -1,0 +1,10 @@
+{
+	"editor.insertSpaces": false,
+	"editor.comments.insertSpace": false,
+	"files.associations": {
+		"limits.h": "c",
+		"stdlib.h": "c",
+		"stdbool.h": "c",
+		"push_swap.h": "c"
+	}
+}
