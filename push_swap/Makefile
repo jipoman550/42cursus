@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/07/11 15:44:20 by sisung           ###   ########.fr        #
+#    Updated: 2025/07/28 22:10:10 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ NAME = push_swap
 
 SRCS = push_swap.c \
 	   parsing.c \
-	   utils.c
+	   utils.c \
+	   input_validation.c \
+	   ft_split.c
 
 OBJS = $(SRCS:.c=.o)
 

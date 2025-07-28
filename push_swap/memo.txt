@@ -44,7 +44,11 @@ push_swap
 
 ?? argv[i] 를 돌면서 split에 넣는데, 이걸 같은 배열 (char *) 형태에 담아서 split된 각각의 요소?들을 input_word_count로 malloc해서 만든 배열인 split_arr에 인덱스 0번부터 쭉 넣는 로직을 하고 싶은데, 이게 되는 건가?
 
+?? parsing.c 에서 collect_tokens func.에서 char **parts를 initialize하지 않고 이렇게 사용해도 되는건지 의문. 맨날 malloc으로 메모리 할당하고 사용해서 그런가 생소하다.
 
+
+
+--------------------------------------------------------
 
 할일
 1. test case 작성 v
@@ -55,8 +59,7 @@ push_swap
 6. test 해보기
 7. stack 구현을 어떻게 할건지 생각하기
 
-
-
+---------------------------------------------------------
 
 test case
 ./push_swap          
