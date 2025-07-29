@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_validation.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:01:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/13 17:45:09 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/29 17:35:12 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static int	is_numberic(const char *s)
 	}
 	while (s[i] != '\0')
 	{
-		if (s[i] < '0' && s[i] > '9')
+		if (s[i] < '0' || s[i] > '9')
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static int	ft_atoi_long(const char *nptr)
+static long long	ft_atoi_long(const char *nptr)
 {
 	int			i;
 	int			sign;
@@ -80,7 +80,7 @@ static int	is_duplicate(long long n, int *arr, int current_count)
 {
 	int	i;
 
-	i = 1;
+	i = 0;
 	while (i < current_count)
 	{
 		if (arr[i] == n)
@@ -90,24 +90,24 @@ static int	is_duplicate(long long n, int *arr, int current_count)
 	return (0);
 }
 
-bool is_validate_input(int ac, char **av, int *arr)
+bool is_validate_input(int tokens_count, char **tokens, int *arr)
 {
 	int 		i;
 	long long num;
 
-	i = 1;
-	while (i < ac)
+	i = 0;
+	while (i < tokens_count)
 	{
-		if (is_all_whitespace_or_is_len_zero(av[i]))
+		if (is_all_whitespace_or_is_len_zero(tokens[i]))
 			return (0);
-		if (!is_numberic(av[i]))
+		if (!is_numberic(tokens[i]))
 			return (0);
-		num = ft_atoi_long(av[i]);
+		num = ft_atoi_long(tokens[i]);
 		if (num < INT_MIN || num > INT_MAX)
 			return (0);
-		if (is_duplicate(num, arr, i - 1))
+		if (is_duplicate(num, arr, i))
 			return (0);
-		arr[i - 1] = (int)num;
+		arr[i] = (int)num;
 		i++;
 	}
 	return (1);

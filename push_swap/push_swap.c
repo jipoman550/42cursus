@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:37:54 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/28 22:14:32 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/29 16:56:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ int main(int argc, char *argv[])
 
 	token_count = 0;
 	tokens = collect_tokens(argc, argv, &token_count);
+
+	// test code
+	for (int i = 0; i < token_count; i++)
+	{
+		printf("tokens[%d] : %s\n", i, tokens[i]);
+	}
+	printf("\n");
 
 	arr = malloc(sizeof(int) * token_count);
 	if (!arr)

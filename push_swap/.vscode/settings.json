@@ -5,6 +5,8 @@
 		"limits.h": "c",
 		"stdlib.h": "c",
 		"stdbool.h": "c",
-		"push_swap.h": "c"
+		"push_swap.h": "c",
+		"cstdlib": "c",
+		"new": "c"
 	}
 }
