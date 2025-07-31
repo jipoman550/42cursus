@@ -5,7 +5,7 @@ NODE_VERSION="22.17.0" # 설치하려는 Node.js LTS 버전
 # ==============================================================================
 # TODO: 아래 API_KEY 변수에 자신의 Gemini API 키를 입력하세요.
 # https://aistudio.google.com/app/apikey 에서 키를 발급받을 수 있습니다.
-API_KEY="" # 자신의 API_KEY
+API_KEY="AIzaSyDFZga3rmauMKmNE3fpQO28tmm48L6H_IU" # 자신의 API_KEY
 # ==============================================================================
 NODE_FILENAME="node-v${NODE_VERSION}-linux-x64.tar.xz"
 NODE_DOWNLOAD_URL="https://nodejs.org/dist/v${NODE_VERSION}/${NODE_FILENAME}"

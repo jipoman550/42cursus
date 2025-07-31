@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:37:54 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/29 16:56:34 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/31 21:21:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,12 @@ int main(int argc, char *argv[])
 	if (argc < 2)
 		return (0);
 
-	int		token_count;
+	size_t	token_count;
 	char	**tokens;
 	int		*arr;
 
 	token_count = 0;
 	tokens = collect_tokens(argc, argv, &token_count);
-
-	// test code
-	for (int i = 0; i < token_count; i++)
-	{
-		printf("tokens[%d] : %s\n", i, tokens[i]);
-	}
-	printf("\n");
-
 	arr = malloc(sizeof(int) * token_count);
 	if (!arr)
 		ft_error();
@@ -40,12 +32,12 @@ int main(int argc, char *argv[])
 		ft_error();
 	}
 
-	// test code
-	for (int i = 0; i < token_count; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
+	//// test code
+	//for (size_t i = 0; i < token_count; i++)
+	//	printf("%d ", arr[i]);
+	//printf("\n");
 
-	free_all(tokens, arr);
+	//free_all(tokens, arr);
 
 	return (0);
 }

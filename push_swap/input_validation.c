@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:01:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/29 17:35:12 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/31 20:37:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_all_whitespace_or_is_len_zero(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	if (!s || *s == '\0')
 		return (1);
@@ -30,7 +30,7 @@ static int	is_all_whitespace_or_is_len_zero(const char *s)
 
 static int	is_numberic(const char *s)
 {
-	int	i;
+	size_t	i;
 
 	if (!s || *s == '\0')
 		return (0);
@@ -52,7 +52,7 @@ static int	is_numberic(const char *s)
 
 static long long	ft_atoi_long(const char *nptr)
 {
-	int			i;
+	size_t		i;
 	int			sign;
 	long long	ret;
 
@@ -76,9 +76,9 @@ static long long	ft_atoi_long(const char *nptr)
 	return (sign * ret);
 }
 
-static int	is_duplicate(long long n, int *arr, int current_count)
+static int	is_duplicate(long long n, int *arr, size_t current_count)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < current_count)
@@ -90,10 +90,10 @@ static int	is_duplicate(long long n, int *arr, int current_count)
 	return (0);
 }
 
-bool is_validate_input(int tokens_count, char **tokens, int *arr)
+bool	is_validate_input(size_t tokens_count, char **tokens, int *arr)
 {
-	int 		i;
-	long long num;
+	size_t		i;
+	long long	num;
 
 	i = 0;
 	while (i < tokens_count)

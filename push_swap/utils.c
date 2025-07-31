@@ -6,34 +6,18 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:18:48 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/28 22:19:12 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/31 20:08:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/push_swap.h"
-
-size_t	ft_strlen(const char *s)
-{
-	if (!s)
-		return (0);
-
-	size_t	cnt;
-
-	cnt = 0;
-	while (*s)
-	{
-		cnt++;
-		s++;
-	}
-	return (cnt);
-}
 
 void	free_str_array(char **arr)
 {
 	if (!arr)
 		ft_error();
 
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (arr[i])

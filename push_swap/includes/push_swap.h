@@ -8,14 +8,13 @@
 # include <unistd.h> // write 사용 위해
 # include <stdio.h> // printf(test 용) 사용 위해
 
-bool	is_validate_input(int ac, char **av, int *arr);
+bool	is_validate_input(size_t tokens_count, char **tokens, int *arr);
 char	**ft_split(char const *s, char c);
 size_t	count_words(const char *s, char c);
-char	**collect_tokens(int argc, char **argv, int *out_count);
+char	**collect_tokens(int argc, char **argv, size_t *out_count);
 void	ft_error();
 void	free_all(char **strs, int *nums);
 void	free_int_array(int *arr);
 void	free_str_array(char **arr);
-size_t	ft_strlen(const char *s);
 
 #endif

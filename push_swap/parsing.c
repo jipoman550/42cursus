@@ -6,20 +6,26 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:32:58 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/29 16:33:48 by sisung           ###   ########.fr       */
+/*   Updated: 2025/07/31 21:09:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/push_swap.h"
 
-static void	free_split(char **sp)
+static size_t	ft_strlen(const char *s)
 {
-	int	i;
+	if (!s)
+		return (0);
 
-	i = 0;
-	while (sp[i])
-		free(sp[i++]);
-	free(sp);
+	size_t	cnt;
+
+	cnt = 0;
+	while (*s)
+	{
+		cnt++;
+		s++;
+	}
+	return (cnt);
 }
 
 static char	*ft_strdup(const char *s)
@@ -27,9 +33,8 @@ static char	*ft_strdup(const char *s)
 	if (!s)
 		return (NULL);
 
-	int		i;
+	size_t	i;
 	char	*dup;
-
 	dup = (char *)malloc(ft_strlen(s) + 1);
 	if (!dup)
 		return (NULL);
@@ -43,14 +48,35 @@ static char	*ft_strdup(const char *s)
 	return (dup);
 }
 
-char	**collect_tokens(int argc, char **argv, int *out_count)
+char	**parts_to_tokens(int argc, char **argv, char **tokens)
 {
-	int		total;
+	size_t	idx;
 	int		i;
-	int		j;
-	char	**tokens;
-	int		idx;
+	size_t	j;
 	char	**parts;
+
+	idx = 0;
+	i = 1;
+	while (i < argc)
+	{
+		parts = ft_split(argv[i], ' ');
+		if (!parts)
+			ft_error();
+		j = 0;
+		while (parts[j])
+			tokens[idx++] = ft_strdup(parts[j++]);
+		free_str_array(parts);
+		i++;
+	}
+	tokens[idx] = NULL;
+	return (tokens);
+}
+
+char	**collect_tokens(int argc, char **argv, size_t *out_count)
+{
+	size_t	total;
+	int		i;
+	char	**tokens;
 
 	total = 0;
 	i = 1;
@@ -62,20 +88,6 @@ char	**collect_tokens(int argc, char **argv, int *out_count)
 	tokens = malloc(sizeof(char *) * (total + 1));
 	if (!tokens)
 		ft_error();
-	idx = 0;
-	i = 1;
-	while (i < argc)
-	{
-		parts = ft_split(argv[i], ' ');
-		if (!parts)
-			ft_error();
-		j = 0;
-		while (parts[j])
-			tokens[idx++] = ft_strdup(parts[j++]);
-		free_split(parts);
-		i++;
-	}
-	tokens[idx] = NULL;
 	*out_count = total;
-	return (tokens);
+	return (parts_to_tokens(argc, argv, tokens));
 }
