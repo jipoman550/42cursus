@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:06:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/31 15:49:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/01 17:24:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ size_t	count_words(const char *s, char c)
 {
 	size_t	count;
 
+	if (!s)
+		return (0);
 	count = 0;
 	while (*s)
 	{

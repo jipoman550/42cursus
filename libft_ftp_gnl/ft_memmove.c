@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 10:39:36 by sisung            #+#    #+#             */
-/*   Updated: 2025/05/02 16:28:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/01 18:20:42 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,4 @@ void	*ft_memmove(void *dest, const void *src, size_t n)
 		}
 	}
 	return (dest);
-}
-
-#include <stdio.h>
-
-int main()
-{
-	char s[] = "abc";
-	char d[10];
-	size_t n = 3;
-
-	ft_memmove(d, s, n);
-
-	printf("%s",d);
-	return (0);
 }

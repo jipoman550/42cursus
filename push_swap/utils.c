@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:18:48 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/31 20:08:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/01 18:18:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 void	free_str_array(char **arr)
 {
-	if (!arr)
-		ft_error();
-
 	size_t	i;
 
+	if (!arr)
+		ft_error();
 	i = 0;
 	while (arr[i])
 		free(arr[i++]);
@@ -38,7 +37,7 @@ void	free_all(char **strs, int *nums)
 	free_int_array(nums);
 }
 
-void	ft_error()
+void	ft_error(void)
 {
 	write(2, "Error\n", 6);
 	exit(1);

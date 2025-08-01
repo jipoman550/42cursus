@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
+/*   Updated: 2025/08/01 18:19:11 by sisung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -12,7 +24,7 @@ bool	is_validate_input(size_t tokens_count, char **tokens, int *arr);
 char	**ft_split(char const *s, char c);
 size_t	count_words(const char *s, char c);
 char	**collect_tokens(int argc, char **argv, size_t *out_count);
-void	ft_error();
+void	ft_error(void);
 void	free_all(char **strs, int *nums);
 void	free_int_array(int *arr);
 void	free_str_array(char **arr);

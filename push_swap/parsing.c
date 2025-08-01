@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:32:58 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/31 21:09:26 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/01 18:15:04 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 static size_t	ft_strlen(const char *s)
 {
-	if (!s)
-		return (0);
-
 	size_t	cnt;
 
+	if (!s)
+		return (0);
 	cnt = 0;
 	while (*s)
 	{
@@ -30,11 +29,11 @@ static size_t	ft_strlen(const char *s)
 
 static char	*ft_strdup(const char *s)
 {
-	if (!s)
-		return (NULL);
-
 	size_t	i;
 	char	*dup;
+
+	if (!s)
+		return (NULL);
 	dup = (char *)malloc(ft_strlen(s) + 1);
 	if (!dup)
 		return (NULL);

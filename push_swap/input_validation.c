@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:01:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/07/31 20:37:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/01 16:37:36 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/push_swap.h"
 
-static int	is_all_whitespace_or_is_len_zero(const char *s)
+static bool	is_all_whitespace_or_is_len_zero(const char *s)
 {
 	size_t	i;
 
@@ -28,7 +28,7 @@ static int	is_all_whitespace_or_is_len_zero(const char *s)
 	return (1);
 }
 
-static int	is_numberic(const char *s)
+static bool	is_numberic(const char *s)
 {
 	size_t	i;
 
@@ -76,7 +76,7 @@ static long long	ft_atoi_long(const char *nptr)
 	return (sign * ret);
 }
 
-static int	is_duplicate(long long n, int *arr, size_t current_count)
+static bool	is_duplicate(long long n, int *arr, size_t current_count)
 {
 	size_t	i;
 
