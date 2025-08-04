@@ -1,42 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   push_swap.c                                        :+:      :+:    :+:   */
+/*   stack_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/09 19:37:54 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 21:26:19 by sisung           ###   ########.fr       */
+/*   Created: 2025/08/04 21:13:37 by sisung            #+#    #+#             */
+/*   Updated: 2025/08/04 21:19:13 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/push_swap.h"
 
-int	main(int argc, char *argv[])
+int	peek(t_stack *stack)
 {
-	size_t	token_count;
-	char	**tokens;
-	int		*arr;
-
-	if (argc < 2)
-		return (0);
-	token_count = 0;
-	tokens = collect_tokens(argc, argv, &token_count);
-	arr = malloc(sizeof(int) * token_count);
-	if (!arr)
+	if (stack->top == NULL)
 		ft_error();
-	if (!is_validate_input(token_count, tokens, arr))
-	{
-		free_all(tokens, arr);
-		ft_error();
-	}
+	return (stack->top->data);
+}
 
-	// test code
-	for (size_t i = 0; i < token_count; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-
-	free_all(tokens, arr);
-
+bool	is_empty(t_stack *stack)
+{
+	if (stack->top == NULL)
+		return (1);
 	return (0);
+}
+
+size_t	get_stack_size(t_stack *stack)
+{
+	return (stack->size);
 }

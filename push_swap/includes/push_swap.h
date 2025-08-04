@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 18:19:11 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/04 21:33:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,26 @@ void	ft_error(void);
 void	free_all(char **strs, int *nums);
 void	free_int_array(int *arr);
 void	free_str_array(char **arr);
+t_node	*new_node(int data);
+t_stack	*create_stack(void);
+void	free_stack(t_stack *stack);
+void	push(t_stack *stack, int data);
+void	pop(t_stack *stack);
+int		peek(t_stack *stack);
+bool	is_empty(t_stack *stack);
+size_t	get_stack_size(t_stack *stack);
+
+typedef struct s_node
+{
+	int				data;
+	struct s_node	*next;
+	struct s_node	*prev;
+}	t_node;
+
+typedef struct s_stack
+{
+	t_node	*top;
+	size_t	size;
+}	t_stack;
 
 #endif

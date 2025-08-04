@@ -7,6 +7,7 @@
 		"stdbool.h": "c",
 		"push_swap.h": "c",
 		"cstdlib": "c",
-		"new": "c"
+		"new": "c",
+		"libft.h": "c"
 	}
 }
