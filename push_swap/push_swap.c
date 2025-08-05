@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:37:54 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 21:26:19 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/05 13:24:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,5 @@ int	main(int argc, char *argv[])
 		free_all(tokens, arr);
 		ft_error();
 	}
-
-	// test code
-	for (size_t i = 0; i < token_count; i++)
-		printf("%d ", arr[i]);
-	printf("\n");
-
-	free_all(tokens, arr);
-
 	return (0);
 }
