@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:32:58 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 18:15:04 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:33:07 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "push_swap.h"
 
 static size_t	ft_strlen(const char *s)
 {

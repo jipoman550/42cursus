@@ -1,4 +1,4 @@
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 #include <stdio.h>
 
 // 스택의 상태를 출력해주는 유틸리티 함수

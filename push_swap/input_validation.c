@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:01:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 16:37:36 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:32:59 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "push_swap.h"
 
 static bool	is_all_whitespace_or_is_len_zero(const char *s)
 {

@@ -58,10 +58,10 @@
 - [v] 스택 메모리 해제 함수 (free_stack) 구현 (메모리 누수 방지)
 
 ### 3단계: 명령어 함수 구현
-- [ ] sa, sb, ss
-- [ ] pa, pb
-- [ ] ra, rb, rr
-- [ ] rra, rrb, rrr
+- [v] sa, sb, ss
+- [v] pa, pb
+- [v] ra, rb, rr
+- [v] rra, rrb, rrr
 - [ ] 각 명령어 실행 후 해당 명령어 문자열을 표준 출력에 출력하는 로직 포함
 
 ### 4단계: 정렬 알고리즘

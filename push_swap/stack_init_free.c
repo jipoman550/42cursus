@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:13:03 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/05 15:55:51 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:33:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "push_swap.h"
 
 t_node	*new_node(int data)
 {

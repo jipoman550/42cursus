@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 09:17:43 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 10:37:23 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:54:49 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "push_swap.h"
 
 void	push(t_stack *stack, int data)
 {
@@ -32,16 +32,19 @@ void	push(t_stack *stack, int data)
 	stack->size++;
 }
 
-void	pop(t_stack *stack)
+int	pop(t_stack *stack)
 {
 	t_node	*temp_ptr;
+	int		pop_data;
 
 	if (stack->top == NULL)
-		return ;
+		return (0);
 	temp_ptr = stack->top;
+	pop_data = temp_ptr->data;
 	stack->top = stack->top->next;
 	if (stack->top != NULL)
 		stack->top->prev = NULL;
 	free(temp_ptr);
 	stack->size--;
+	return (pop_data);
 }

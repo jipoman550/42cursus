@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:46:13 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 10:37:06 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:34:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 void	sa(t_stack *stack_a)
 {
@@ -23,17 +23,14 @@ void	sa(t_stack *stack_a)
 	first_node = stack_a->top;
 	second_node = first_node->next;
 	third_node = second_node->next;
-
 	stack_a->top = second_node;
 	second_node->prev = NULL;
 	second_node->next = first_node;
-
 	first_node->prev = second_node;
 	first_node->next = third_node;
 
 	if (third_node != NULL)
 		third_node->prev = first_node;
-
 	write(1, "sa\n", 3);
 }
 
@@ -48,17 +45,13 @@ void	sb(t_stack *stack_b)
 	first_node = stack_b->top;
 	second_node = first_node->next;
 	third_node = second_node->next;
-
 	stack_b->top = second_node;
 	second_node->prev = NULL;
 	second_node->next = first_node;
-
 	first_node->prev = second_node;
 	first_node->next = third_node;
-
 	if (third_node != NULL)
 		third_node->prev = first_node;
-
 	write(1, "sb\n", 3);
 }
 

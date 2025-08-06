@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 20:06:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/01 17:24:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/06 21:32:51 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/push_swap.h"
+#include "push_swap.h"
 
 static char	**free_split_array(char **arr, size_t count)
 {
