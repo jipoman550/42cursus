@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 09:17:43 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:54:49 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/07 12:47:22 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	pop(t_stack *stack)
 	t_node	*temp_ptr;
 	int		pop_data;
 
-	if (stack->top == NULL)
-		return (0);
+	if (stack == NULL || stack->size == 0)
+		ft_error();
 	temp_ptr = stack->top;
 	pop_data = temp_ptr->data;
 	stack->top = stack->top->next;

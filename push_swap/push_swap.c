@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 19:37:54 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:33:14 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/07 20:40:35 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,10 @@ int	main(int argc, char *argv[])
 		free_all(tokens, arr);
 		ft_error();
 	}
+	// arr에 있는 값들을 정렬해서 인덱싱해야됨.
+	t_stack	*stack_a = create_stack();
+	create_indexed_stack(stack_a, arr, token_count);
+
+
 	return (0);
 }

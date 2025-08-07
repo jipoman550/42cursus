@@ -62,17 +62,20 @@
 - [v] pa, pb
 - [v] ra, rb, rr
 - [v] rra, rrb, rrr
-- [ ] 각 명령어 실행 후 해당 명령어 문자열을 표준 출력에 출력하는 로직 포함
+- [v] 각 명령어 실행 후 해당 명령어 문자열을 표준 출력에 출력하는 로직 포함
 
 ### 4단계: 정렬 알고리즘
+- radix sort 사용
+- (다른 전략) chunk 전략, greedy insert, quick sort, sort-merge based on replacement selection, followed by a two-way polyphase merge, etc...
+- [ ] 입력 숫자 인덱싱
 - [ ] 3개 이하 숫자: 조건 분기
 - [ ] 4~5개 숫자: 최소 명령어 조합
 - [ ] 100개 이상: radix sort 기반 정렬
-- [ ] (가능하다면...) chunk 전략, greedy insert, quick sort, sort-merge based on replacement selection, followed by a two-way polyphase merge, etc...
+- [ ] 메인 정렬 함수 통합
 
 ### 5단계. 명령어 출력 시스템
 - [ ] 수행된 명령어를 stdout에 한 줄씩 출력
-- [ ] 디버깅용 명령어 기록 및 stack 상태 출력 함수 추가 ?? 3단계에서 명령어 표준출력에 출력하는데, 왜 디버깅용을 따로 또 하는 거임?
+- [ ] 디버깅용 명령어 기록 및 stack 상태 출력 함수 추가 // ?? 3단계에서 명령어 표준출력에 출력하는데, 왜 디버깅용을 따로 또 하는 거임?
 
 ### 6단계. 테스트 및 최적화
 - [ ] 다양한 입력 시나리오에 대한 정확성 테스트 (checker_OS 사용)
