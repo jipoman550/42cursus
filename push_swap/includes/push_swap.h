@@ -46,6 +46,8 @@ t_node	*new_node(int data);
 t_stack	*create_stack(void);
 void	free_stack(t_stack *stack);
 
+void	create_indexed_stack(t_stack *stack_a, int *input_arr, int size);
+
 void	push(t_stack *stack, int data);
 int		pop(t_stack *stack);
 

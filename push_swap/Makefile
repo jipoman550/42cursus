@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/06 21:45:49 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/08 19:32:13 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,17 @@ TEST_FUNC_SRCS = tests/test_func.c \
 
 TEST_FUNC_OBJS = $(TEST_FUNC_SRCS:.c=.o)
 
+# ===== test sort program =====
+TEST_SORT_NAME = test_sort
+
+TEST_SORT_SRCS = tests/test_sort.c \
+				 stack_init_free.c \
+				 stack_ops.c \
+				 input_indexing.c \
+				 utils.c
+
+TEST_SORT_OBJS = $(TEST_SORT_SRCS:.c=.o)
+
 .PHONY: all clean fclean re
 
 # 'make'만 실행하면 메인 프로그램(push_swap)이 빌드됨.
@@ -78,13 +89,19 @@ test_func : $(TEST_FUNC_NAME)
 $(TEST_FUNC_NAME): $(TEST_FUNC_OBJS)
 	$(CC) $(CFLAGS) $(TEST_FUNC_OBJS) -o $(TEST_FUNC_NAME)
 
+# 'make test_sort'를 실행하면 테스트 프로그램이 빌드됨
+test_sort : $(TEST_SORT_NAME)
+
+$(TEST_SORT_NAME): $(TEST_SORT_OBJS)
+	$(CC) $(CFLAGS) $(TEST_SORT_OBJS) -o $(TEST_SORT_NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS)
+	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME)
+	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME)
 
 re: fclean all

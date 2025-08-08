@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:46:13 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:34:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/08 09:56:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	sa(t_stack *stack_a)
 	second_node->next = first_node;
 	first_node->prev = second_node;
 	first_node->next = third_node;
-
 	if (third_node != NULL)
 		third_node->prev = first_node;
 	write(1, "sa\n", 3);
