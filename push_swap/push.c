@@ -14,22 +14,24 @@
 
 void	pa(t_stack *stack_a, t_stack *stack_b)
 {
-	int	stack_b_pop_data;
+	t_node	*node_to_push;
 
 	if (stack_b == NULL || stack_b->size == 0)
 		return ;
-	stack_b_pop_data = pop(stack_b);
-	push(stack_a, stack_b_pop_data);
+	node_to_push = pop(stack_b);
+	push(stack_a, node_to_push->data, node_to_push->index);
+	free(node_to_push);
 	write(1, "pa\n", 3);
 }
 
 void	pb(t_stack *stack_a, t_stack *stack_b)
 {
-	int	stack_a_pop_data;
+	t_node	*node_to_push;
 
 	if (stack_a == NULL || stack_a->size == 0)
 		return ;
-	stack_a_pop_data = pop(stack_a);
-	push(stack_b, stack_a_pop_data);
+	node_to_push = pop(stack_a);
+	push(stack_b, node_to_push->data, node_to_push->index);
+	free(node_to_push);
 	write(1, "pb\n", 3);
 }

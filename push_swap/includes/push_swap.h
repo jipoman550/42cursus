@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 20:50:20 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/19 11:01:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef struct s_node
 {
 	int				data;
+	size_t			index;
 	struct s_node	*next;
 	struct s_node	*prev;
 }	t_node;
@@ -41,15 +42,16 @@ void	ft_error(void);
 void	free_all(char **strs, int *nums);
 void	free_int_array(int *arr);
 void	free_str_array(char **arr);
+int		get_min_index_pos(t_stack *stack);
 
-t_node	*new_node(int data);
+t_node	*new_node(int data, size_t index);
 t_stack	*create_stack(void);
 void	free_stack(t_stack *stack);
 
 void	create_indexed_stack(t_stack *stack_a, int *input_arr, int size);
 
-void	push(t_stack *stack, int data);
-int		pop(t_stack *stack);
+void	push(t_stack *stack, int data, size_t index);
+t_node	*pop(t_stack *stack);
 
 int		peek(t_stack *stack);
 bool	is_empty(t_stack *stack);
@@ -69,5 +71,7 @@ void	rr(t_stack *stack_a, t_stack *stack_b);
 void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
+
+void	sort_small(t_stack *stack_a, t_stack *stack_b);
 
 #endif

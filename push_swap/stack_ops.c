@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-void	push(t_stack *stack, int data)
+void	push(t_stack *stack, int data, size_t index)
 {
 	t_node	*new_node_ptr;
 
-	new_node_ptr = new_node(data);
+	new_node_ptr = new_node(data, index);
 	if (!new_node_ptr)
 		ft_error();
 	if (stack->top == NULL)
@@ -32,19 +32,18 @@ void	push(t_stack *stack, int data)
 	stack->size++;
 }
 
-int	pop(t_stack *stack)
+t_node	*pop(t_stack *stack)
 {
 	t_node	*temp_ptr;
-	int		pop_data;
 
 	if (stack == NULL || stack->size == 0)
-		ft_error();
+		return (NULL);
 	temp_ptr = stack->top;
-	pop_data = temp_ptr->data;
 	stack->top = stack->top->next;
 	if (stack->top != NULL)
 		stack->top->prev = NULL;
-	free(temp_ptr);
 	stack->size--;
-	return (pop_data);
+	temp_ptr->next = NULL;
+	temp_ptr->prev = NULL;
+	return (temp_ptr);
 }

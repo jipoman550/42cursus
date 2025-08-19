@@ -67,7 +67,7 @@
 ### 4단계: 정렬 알고리즘
 - radix sort 사용
 - (다른 전략) chunk 전략, greedy insert, quick sort, sort-merge based on replacement selection, followed by a two-way polyphase merge, etc...
-- [ ] 입력 숫자 인덱싱
+- [v] 입력 숫자 인덱싱
 - [ ] 3개 이하 숫자: 조건 분기
 - [ ] 4~5개 숫자: 최소 명령어 조합
 - [ ] 100개 이상: radix sort 기반 정렬

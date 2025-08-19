@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_node	*new_node(int data)
+t_node	*new_node(int data, size_t index)
 {
 	t_node	*new_node;
 
@@ -20,6 +20,7 @@ t_node	*new_node(int data)
 	if (!new_node)
 		ft_error();
 	new_node->data = data;
+	new_node->index = index;
 	new_node->next = NULL;
 	new_node->prev = NULL;
 	return (new_node);

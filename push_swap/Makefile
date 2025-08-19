@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
+#    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/08 19:32:13 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/14 13:44:12 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRCS = push_swap.c \
 	   swap.c \
 	   push.c \
 	   rotate.c \
-	   reverse_rotate.c
+	   reverse_rotate.c \
+	   src/sort_small.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -69,6 +70,23 @@ TEST_SORT_SRCS = tests/test_sort.c \
 
 TEST_SORT_OBJS = $(TEST_SORT_SRCS:.c=.o)
 
+# ===== test sort small program =====
+TEST_SORT_SMALL_NAME = test_sort_small
+
+TEST_SORT_SMALL_SRCS = tests/test_sort_small.c \
+		stack_init_free.c \
+		stack_ops.c \
+		stack_utils.c \
+		input_indexing.c \
+		utils.c \
+		swap.c \
+		push.c \
+		rotate.c \
+		reverse_rotate.c \
+		src/sort_small.c
+
+TEST_SORT_SMALL_OBJS = $(TEST_SORT_SMALL_SRCS:.c=.o)
+
 .PHONY: all clean fclean re
 
 # 'make'만 실행하면 메인 프로그램(push_swap)이 빌드됨.
@@ -95,13 +113,19 @@ test_sort : $(TEST_SORT_NAME)
 $(TEST_SORT_NAME): $(TEST_SORT_OBJS)
 	$(CC) $(CFLAGS) $(TEST_SORT_OBJS) -o $(TEST_SORT_NAME)
 
+# 'make test_sort_small'를 실행하면 테스트 프로그램이 빌드됨
+test_sort_small : $(TEST_SORT_SMALL_NAME)
+
+$(TEST_SORT_SMALL_NAME): $(TEST_SORT_SMALL_OBJS)
+	$(CC) $(CFLAGS) $(TEST_SORT_SMALL_OBJS) -o $(TEST_SORT_SMALL_NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS)
+	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS) $(TEST_SORT_SMALL_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME)
+	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME) $(TEST_SORT_SMALL_NAME)
 
 re: fclean all

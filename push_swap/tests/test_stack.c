@@ -22,9 +22,9 @@ int main(void)
 
 	// --------- 1단계: 푸시(push) 테스트 -----------
 	printf("--- PUSH TEST ---\n");
-	push(stack_a, 5);
-	push(stack_a, 10);
-	push(stack_a, 15);
+	push(stack_a, 5, 0);
+	push(stack_a, 10, 1);
+	push(stack_a, 15, 2);
 	print_stack(stack_a, 'A'); // 출력: Stack A (size: 3): 15 10 5
 	printf("Is stack A empty? %s\n", is_empty(stack_a) ? "Yes" : "No");
 	printf("Top of stack A: %d\n\n", peek(stack_a));
@@ -50,9 +50,9 @@ int main(void)
 	// --------- 4단계: 메모리 해제 테스트 -----------
 	printf("\n--- FREE TEST ---\n");
 	// 스택 A와 B에 메모리를 할당한 뒤 해제
-	push(stack_a, 100);
-	push(stack_b, 200);
-	push(stack_b, 300);
+	push(stack_a, 100, 0);
+	push(stack_b, 200, 1);
+	push(stack_b, 300, 2);
 
 	print_stack(stack_a, 'A');
 	print_stack(stack_b, 'B');

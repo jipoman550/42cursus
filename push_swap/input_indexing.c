@@ -53,7 +53,7 @@ static void	stack_in_index(t_stack *stk_a, int *i_a, int *s_a, int s)
 		{
 			if (i_a[i] == s_a[j])
 			{
-				push(stk_a, j);
+				push(stk_a, i_a[i], j);
 				break ;
 			}
 			j++;
