@@ -68,8 +68,8 @@
 - radix sort 사용
 - (다른 전략) chunk 전략, greedy insert, quick sort, sort-merge based on replacement selection, followed by a two-way polyphase merge, etc...
 - [v] 입력 숫자 인덱싱
-- [ ] 3개 이하 숫자: 조건 분기
-- [ ] 4~5개 숫자: 최소 명령어 조합
+- [v] 3개 이하 숫자: 조건 분기
+- [v] 4~5개 숫자: 최소 명령어 조합
 - [ ] 100개 이상: radix sort 기반 정렬
 - [ ] 메인 정렬 함수 통합
 - [ ] 입력된 값이 이미 정렬된 경우
