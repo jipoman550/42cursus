@@ -1,5 +1,5 @@
 # VS Code settings
-.vscide/
+.vscode/
 
 # Build artifacts
 *.a
