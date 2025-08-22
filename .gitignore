@@ -6,3 +6,6 @@
 *.o
 *.out
 *.exe
+
+# Gemini
+GEMINI.md
