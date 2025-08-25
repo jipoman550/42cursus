@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/19 11:01:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/25 15:37:04 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sb(t_stack *stack_b);
 void	ss(t_stack *stack_a, t_stack *stack_b);
 
 void	pa(t_stack *stack_a, t_stack *stack_b);
-void	pb(t_stack *stack_b, t_stack *stack_a);
+void	pb(t_stack *stack_a, t_stack *stack_b);
 
 void	ra(t_stack *stack_a);
 void	rb(t_stack *stack_b);
