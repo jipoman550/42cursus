@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/21 12:49:57 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/26 13:31:57 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRCS = push_swap.c \
 	   push.c \
 	   rotate.c \
 	   reverse_rotate.c \
-	   sort_small.c
+	   sort_small.c \
+	   src/sort_big.c
 
 OBJS = $(SRCS:.c=.o)
 

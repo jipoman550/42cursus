@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/23 16:29:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/25 21:50:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:30:15 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-size_t	find_max_bits(t_stack *stack)
+static size_t	find_max_bits(t_stack *stack)
 {
 	size_t	max_val;
 	size_t	bits;

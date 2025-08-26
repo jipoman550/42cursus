@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/25 15:37:04 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/26 13:30:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 
 void	sort_small(t_stack *stack_a, t_stack *stack_b);
+
+void	radix_sort(t_stack *stack_a, t_stack * stack_b);
 
 #endif
