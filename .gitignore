@@ -1,8 +1,11 @@
 # VS Code settings
-.vscide/
+.vscode/
 
 # Build artifacts
 *.a
 *.o
 *.out
 *.exe
+
+# Gemini
+GEMINI.md
