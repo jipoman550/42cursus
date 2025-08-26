@@ -88,6 +88,22 @@ TEST_SORT_SMALL_SRCS = tests/test_sort_small.c \
 
 TEST_SORT_SMALL_OBJS = $(TEST_SORT_SMALL_SRCS:.c=.o)
 
+# ===== test sort big program =====
+TEST_SORT_BIG_NAME = test_sort_big
+TEST_SORT_BIG_SRCS = tests/test_sort_big.c \
+					 src/sort_big.c \
+					 stack_init_free.c \
+					 stack_utils.c \
+					 input_indexing.c \
+					 utils.c \
+					 push.c \
+					 rotate.c \
+					 reverse_rotate.c \
+					 swap.c \
+					 stack_ops.c
+
+TEST_SORT_BIG_OBJS = $(TEST_SORT_BIG_SRCS:.c=.o)
+
 .PHONY: all clean fclean re
 
 # 'make'만 실행하면 메인 프로그램(push_swap)이 빌드됨.
@@ -120,13 +136,19 @@ test_sort_small : $(TEST_SORT_SMALL_NAME)
 $(TEST_SORT_SMALL_NAME): $(TEST_SORT_SMALL_OBJS)
 	$(CC) $(CFLAGS) $(TEST_SORT_SMALL_OBJS) -o $(TEST_SORT_SMALL_NAME)
 
+# 'make test_sort_big'를 실행하면 테스트 프로그램이 빌드됨
+test_sort_big : $(TEST_SORT_BIG_NAME)
+
+$(TEST_SORT_BIG_NAME): $(TEST_SORT_BIG_OBJS)
+	$(CC) $(CFLAGS) $(TEST_SORT_BIG_OBJS) -o $(TEST_SORT_BIG_NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS) $(TEST_SORT_SMALL_OBJS)
+	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS) $(TEST_SORT_SMALL_OBJS) $(TEST_SORT_BIG_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME) $(TEST_SORT_SMALL_NAME)
+	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME) $(TEST_SORT_SMALL_NAME) $(TEST_SORT_BIG_NAME)
 
 re: fclean all
