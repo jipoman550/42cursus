@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/27 16:43:03 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/27 21:18:47 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,6 +92,7 @@ TEST_SORT_SMALL_OBJS = $(TEST_SORT_SMALL_SRCS:.c=.o)
 
 # ===== test sort big program =====
 TEST_SORT_BIG_NAME = test_sort_big
+
 TEST_SORT_BIG_SRCS = tests/test_sort_big.c \
 					 sort_big.c \
 					 stack_init_free.c \
@@ -105,6 +106,28 @@ TEST_SORT_BIG_SRCS = tests/test_sort_big.c \
 					 stack_ops.c
 
 TEST_SORT_BIG_OBJS = $(TEST_SORT_BIG_SRCS:.c=.o)
+
+# ===== test sort all program =====
+TEST_SORT_ALL_NAME = test_sort_all
+
+TEST_SORT_ALL_SRCS = tests/test_sort_all.c \
+                     sort_dispatcher.c \
+                     sort_small.c \
+                     sort_big.c \
+                     stack_init_free.c \
+                     stack_ops.c \
+                     stack_utils.c \
+                     input_indexing.c \
+                     swap.c \
+                     push.c \
+                     rotate.c \
+                     reverse_rotate.c \
+                     utils.c \
+                     parsing.c \
+                     input_validation.c \
+					 ft_split.c
+
+TEST_SORT_ALL_OBJS = $(TEST_SORT_ALL_SRCS:.c=.o)
 
 .PHONY: all clean fclean re
 
@@ -144,13 +167,19 @@ test_sort_big : $(TEST_SORT_BIG_NAME)
 $(TEST_SORT_BIG_NAME): $(TEST_SORT_BIG_OBJS)
 	$(CC) $(CFLAGS) $(TEST_SORT_BIG_OBJS) -o $(TEST_SORT_BIG_NAME)
 
+# 'make test_sort_all'를 실행하면 테스트 프로그램이 빌드됨
+test_sort_all: $(TEST_SORT_ALL_NAME)
+
+$(TEST_SORT_ALL_NAME): $(TEST_SORT_ALL_OBJS)
+	$(CC) $(CFLAGS) $(TEST_SORT_ALL_OBJS) -o $(TEST_SORT_ALL_NAME)
+
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS) $(TEST_SORT_SMALL_OBJS) $(TEST_SORT_BIG_OBJS)
+	rm -f $(OBJS) $(TEST_STACK_OBJS) $(TEST_FUNC_OBJS) $(TEST_SORT_OBJS) $(TEST_SORT_SMALL_OBJS) $(TEST_SORT_BIG_OBJS) $(TEST_SORT_ALL_OBJS)
 
 fclean: clean
-	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME) $(TEST_SORT_SMALL_NAME) $(TEST_SORT_BIG_NAME)
+	rm -f $(NAME) $(TEST_STACK_NAME) $(TEST_FUNC_NAME) $(TEST_SORT_NAME) $(TEST_SORT_SMALL_NAME) $(TEST_SORT_BIG_NAME) $(TEST_SORT_ALL_NAME)
 
 re: fclean all
