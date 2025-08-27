@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/27 14:19:48 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/27 16:43:03 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS = push_swap.c \
 	   parsing.c \
 	   utils.c \
 	   input_validation.c \
+	   input_indexing.c \
 	   ft_split.c \
 	   stack_init_free.c \
 	   stack_ops.c \
@@ -30,7 +31,8 @@ SRCS = push_swap.c \
 	   rotate.c \
 	   reverse_rotate.c \
 	   sort_small.c \
-	   sort_big.c
+	   sort_big.c \
+	   sort_dispatcher.c
 
 OBJS = $(SRCS:.c=.o)
 

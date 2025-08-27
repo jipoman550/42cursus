@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/26 13:30:34 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:44:20 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int		get_min_index_pos(t_stack *stack);
 t_node	*new_node(int data, size_t index);
 t_stack	*create_stack(void);
 void	free_stack(t_stack *stack);
+void	free_stack_a_and_stack_b(t_stack* stack_a, t_stack* stack_b);
 
 void	create_indexed_stack(t_stack *stack_a, int *input_arr, int size);
 
@@ -75,5 +76,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 void	sort_small(t_stack *stack_a, t_stack *stack_b);
 
 void	radix_sort(t_stack *stack_a, t_stack * stack_b);
+
+void	run_sort(t_stack* stack_a, t_stack* stack_b);
 
 #endif

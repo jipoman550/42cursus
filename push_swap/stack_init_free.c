@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:13:03 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:33:43 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/27 16:00:14 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,10 @@ void	free_stack(t_stack *stack)
 		current_node = next_node;
 	}
 	free(stack);
+}
+
+void	free_stack_a_and_stack_b(t_stack* stack_a, t_stack* stack_b)
+{
+	free_stack(stack_a);
+	free_stack(stack_b);
 }
