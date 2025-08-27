@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
+#    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/26 13:31:57 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/27 14:19:48 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS = push_swap.c \
 	   rotate.c \
 	   reverse_rotate.c \
 	   sort_small.c \
-	   src/sort_big.c
+	   sort_big.c
 
 OBJS = $(SRCS:.c=.o)
 
@@ -91,7 +91,7 @@ TEST_SORT_SMALL_OBJS = $(TEST_SORT_SMALL_SRCS:.c=.o)
 # ===== test sort big program =====
 TEST_SORT_BIG_NAME = test_sort_big
 TEST_SORT_BIG_SRCS = tests/test_sort_big.c \
-					 src/sort_big.c \
+					 sort_big.c \
 					 stack_init_free.c \
 					 stack_utils.c \
 					 input_indexing.c \
