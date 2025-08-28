@@ -6,18 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 21:13:37 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:33:58 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/28 20:00:20 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-int	peek(t_stack *stack)
-{
-	if (stack->top == NULL)
-		ft_error();
-	return (stack->top->data);
-}
 
 bool	is_empty(t_stack *stack)
 {

@@ -1,6 +1,13 @@
 #include "push_swap.h"
 #include <stdio.h>
 
+int	peek(t_stack *stack)
+{
+	if (stack->top == NULL)
+		ft_error();
+	return (stack->top->data);
+}
+
 // 스택의 상태를 출력해주는 유틸리티 함수
 void print_stack(t_stack *stack, char name)
 {

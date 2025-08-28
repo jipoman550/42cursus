@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 18:18:56 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/27 16:44:20 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/28 20:00:00 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	create_indexed_stack(t_stack *stack_a, int *input_arr, int size);
 void	push(t_stack *stack, int data, size_t index);
 t_node	*pop(t_stack *stack);
 
-int		peek(t_stack *stack);
 bool	is_empty(t_stack *stack);
 size_t	get_stack_size(t_stack *stack);
 
