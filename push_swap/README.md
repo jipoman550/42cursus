@@ -123,7 +123,7 @@
 
 ## 📂 디렉토리 구조
 
-<pre><code>
+```
 push_swap/
 │
 ├── Makefile
@@ -158,10 +158,77 @@ push_swap/
     ├── test_sort.c
     ├── test_sort_small.c
     └── test_stack.c
+```
 
 ---
 
 ## 빌드방법, 컴파일 명령어,  테스트 명령어
+
+#### **1. 프로젝트 빌드**
+
+프로젝트 루트 디렉토리에서 다음 명령어를 사용해 `push_swap` 실행 파일과 테스트 프로그램을 빌드할 수 있습니다.
+
+```bash
+make
+make <test_name>
+```
+
+#### **2. 프로그램 실행 및 기능 테스트**
+
+**2.1. 기본 실행**
+
+`push_swap` 프로그램에 정수 목록을 인자로 전달하여 정렬을 수행합니다.
+
+```bash
+./push_swap 2 1 3 6 5 4
+```
+
+**2.2. 체커(Checker)를 사용한 검증**
+
+`push_swap`이 출력한 명령어들이 올바른 정렬을 수행하는지 `checker_linux` 프로그램을 통해 검증할 수 있습니다.
+
+```bash
+ARG="4 67 3 87 23"; ./push_swap $ARG | ./checker_linux $ARG
+```
+
+  * 성공 시: `OK`를 출력합니다.
+  * 실패 시: `KO`를 출력합니다.
+
+**2.3. 오류 처리 테스트**
+
+잘못된 입력에 대해 `Error`를 정확하게 출력하는지 확인합니다.
+
+```bash
+./push_swap "1 2 2"
+./push_swap 2147483648
+./push_swap 1 a 3
+```
+
+#### **3. 성능 및 품질 테스트**
+
+**3.1. 명령어 수 확인**
+
+`push_swap`이 출력한 명령어의 수를 세어 벤치마크 목표를 달성했는지 검증합니다.
+
+```bash
+ARG="4 67 3 87 23"; ./push_swap $ARG | wc -l
+```
+
+**3.2. 메모리 누수 검사**
+
+`valgrind`를 사용하여 프로그램 실행 중 메모리 누수가 없는지 확인합니다.
+
+```bash
+valgrind --leak-check=full ./push_swap 5 1 4 2 3
+```
+
+**3.3. Norm 규정 확인**
+
+`norminette`를 사용하여 모든 `.c` 및 `.h` 파일이 42 Norm 규정을 준수하는지 확인합니다.
+
+```bash
+norminette src includes
+```
 
 ---
 
