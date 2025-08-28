@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/11 15:07:19 by sisung            #+#    #+#              #
-#    Updated: 2025/08/27 21:18:47 by sisung           ###   ########.fr        #
+#    Updated: 2025/08/28 19:34:04 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,22 +17,9 @@ CFLAGS = -Wall -Wextra -Werror -Iincludes
 # ===== main program: push_swap =====
 NAME = push_swap
 
-SRCS = push_swap.c \
-	   parsing.c \
-	   utils.c \
-	   input_validation.c \
-	   input_indexing.c \
-	   ft_split.c \
-	   stack_init_free.c \
-	   stack_ops.c \
-	   stack_utils.c \
-	   swap.c \
-	   push.c \
-	   rotate.c \
-	   reverse_rotate.c \
-	   sort_small.c \
-	   sort_big.c \
-	   sort_dispatcher.c
+SRC_DIR = src
+
+SRCS = $(wildcard $(SRC_DIR)/*.c)
 
 OBJS = $(SRCS:.c=.o)
 
