@@ -11,17 +11,15 @@
 ## Circle 1
 - [get_next_line](./get_next_line) : 파일 디스크립터에서 한 줄씩 읽어오기
 - [ft_printf](./ft_printf) : printf 함수 구현
+- Born2beroot : 가상 머신에 Linux 서버 설치 및 보안 설정
 
 ## Circle 2
 - [exam2](./exam2)
-- [pipex](./pipex) : 파이프와 프로세스 제어
 - [so_long](./so_long) : 간단한 2D 게임
-
-## Circle 3
 - [push_swap](./push_swap) : 스택 정렬 알고리즘
 - [minitalk](./minitalk) : 시그널 기반 클라이언트-서버 통신
 
-## Circle 4
+## Circle 3
 - (진행 예정)
 
 ---
