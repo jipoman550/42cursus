@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/13 17:01:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/08/06 21:32:59 by sisung           ###   ########.fr       */
+/*   Updated: 2025/08/31 16:02:54 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ bool	is_validate_input(size_t tokens_count, char **tokens, int *arr)
 	long long	num;
 
 	i = 0;
+	if (tokens_count == 0)
+		return (0);
 	while (i < tokens_count)
 	{
 		if (is_all_whitespace_or_is_len_zero(tokens[i]))
