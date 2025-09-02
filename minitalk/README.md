@@ -25,7 +25,8 @@
   - 실행 파일 이름은 반드시 `server`, `client`.
   - 허용 함수:
     `write`, `signal`, `sigaction`, `kill`, `getpid`,
-    `malloc`, `free`, `pause`, `sleep`, `usleep`, `exit`.
+    `malloc`, `free`, `pause`, `sleep`, `usleep`, `exit`,
+    `libft에 구현된 함수`.
 
 ---
 
