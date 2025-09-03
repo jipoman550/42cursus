@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   minitalk.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/03 12:52:48 by sisung           ###   ########.fr       */
+/*   Created: 2025/09/03 12:46:20 by sisung            #+#    #+#             */
+/*   Updated: 2025/09/03 12:58:35 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#ifndef MINITALK_H
+# define MINITALK_H
 
-int main(void)
-{
-	ft_printf("Server PID: %d\n", getpid());
-}
+# include <unistd.h>
+
+# include "ft_printf.h"
+
+#endif

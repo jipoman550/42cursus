@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/02 17:32:43 by sisung            #+#    #+#              #
-#    Updated: 2025/09/02 21:08:30 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/03 12:58:29 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 %.o:%.c
-	$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(SERVER_SRC_DIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I$(LIBFT_DIR)/include -I$(SERVER_SRC_DIR) -Iinclude -c $< -o $@
 
 clean:
 	$(MAKE) -C $(LIBFT_DIR) clean
