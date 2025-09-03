@@ -6,21 +6,32 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/03 20:02:30 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/03 21:44:18 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+struct s_state	g_server_state;
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
 	(void)info;
 	(void)context;
 
-	if (signum == SIGUSR1)
-		ft_printf("Received SIGUSR1\n");
-	else if (signum == SIGUSR2)
-		ft_printf("Received SIGUSR2\n");
+	g_server_state.current_char <<= 1;
+
+	if (signum == SIGUSR2)
+		g_server_state.current_char |= 1;
+
+	g_server_state.bit_count++;
+
+	if (g_server_state.bit_count == 8)
+	{
+		write(1, &g_server_state.current_char, 1);
+		g_server_state.current_char = 0;
+		g_server_state.bit_count = 0;
+	}
 }
 
 int main(void)
