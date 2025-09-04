@@ -6,17 +6,18 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/02 17:32:43 by sisung            #+#    #+#              #
-#    Updated: 2025/09/04 13:36:39 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/04 19:22:06 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-NAME = server
+NAME = server client
 
 SRC_DIR = src
-SRCS = $(SRC_DIR)/server.c
+SRCS = $(SRC_DIR)/server.c\
+       $(SRC_DIR)/client.c
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
@@ -27,8 +28,12 @@ OBJS = $(SRCS:.c=.o)
 .PHONY: all clean fclean re
 
 all: $(NAME)
-$(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_PATH) -o $(NAME)
+
+server: $(SRC_DIR)/server.o $(LIBFT)
+	$(CC) $(CFLAGS) $(SRC_DIR)/server.o $(LIBFT_PATH) -o server
+
+client: $(SRC_DIR)/client.o $(LIBFT)
+	$(CC) $(CFLAGS) $(SRC_DIR)/client.o $(LIBFT_PATH) -o client
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
@@ -45,4 +50,3 @@ fclean: clean
 	rm -f $(NAME)
 
 re: fclean all
-
