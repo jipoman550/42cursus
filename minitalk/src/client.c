@@ -6,26 +6,38 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:33:06 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/04 21:26:32 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/05 09:10:11 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
+static volatile int	g_ack_received = 0;
+
+void	handle_ack(int signum)
+{
+	(void)signum;
+	g_ack_received = 1;
+}
+
 void	send_message(pid_t pid, const char *str)
 {
-	size_t	bit_index;
+	size_t				bit_index;
 
 	while (*str)
 	{
 		bit_index = 8;
 		while (bit_index--)
 		{
+			g_ack_received = 0;
 			if ((*str >> bit_index) & 1)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
-			usleep(100);
+			while (!g_ack_received)
+			{
+
+			}
 		}
 		str++;
 	}
@@ -33,7 +45,8 @@ void	send_message(pid_t pid, const char *str)
 
 int	main(int argc, char *argv[])
 {
-	pid_t	pid;
+	pid_t				pid;
+	struct sigaction	sa;
 
 	if (argc != 3)
 	{
@@ -46,6 +59,10 @@ int	main(int argc, char *argv[])
 		ft_printf("Error: Invalid PID\n");
 		return (1);
 	}
+	sa.sa_handler = handle_ack;
+	sa.sa_flags = 0;
+	sigemptyset(&sa.sa_mask);
+	sigaction(SIGUSR1, &sa, NULL);
 	send_message(pid, argv[2]);
 	return (0);
 }
