@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:33:06 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/05 09:10:11 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/06 09:05:12 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ int	main(int argc, char *argv[])
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	send_message(pid, argv[2]);
+	pause();
+	ft_printf("Message received!\n");
 	return (0);
 }

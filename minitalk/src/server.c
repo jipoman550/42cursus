@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/05 10:24:10 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/06 09:05:18 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,29 @@ struct s_state	g_server_state;
 void	handler(int signum, siginfo_t *info, void *context)
 {
 	(void)context;
+	static pid_t	client_pid;
+
+	if (client_pid != info->si_pid)
+		client_pid = info->si_pid;
 	g_server_state.current_char <<= 1;
 	if (signum == SIGUSR2)
 		g_server_state.current_char |= 1;
 	g_server_state.bit_count++;
 	if (g_server_state.bit_count == 8)
 	{
-		write(1, &g_server_state.current_char, 1);
+		if (g_server_state.current_char == '\0')
+		{
+			write(1, "\n", 1);
+			kill(client_pid, SIGUSR1);
+		}
+		else
+		{
+			write(1, &g_server_state.current_char, 1);
+			kill(info->si_pid, SIGUSR1);
+		}
 		g_server_state.current_char = 0;
 		g_server_state.bit_count = 0;
 	}
-	kill(info->si_pid, SIGUSR1);
 }
 
 int	main(void)
