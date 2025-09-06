@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/06 09:05:18 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/06 13:46:30 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,8 @@
 
 struct s_state	g_server_state;
 
-void	handler(int signum, siginfo_t *info, void *context)
+void	process_byte(pid_t client_pid, siginfo_t *info)
 {
-	(void)context;
-	static pid_t	client_pid;
-
-	if (client_pid != info->si_pid)
-		client_pid = info->si_pid;
-	g_server_state.current_char <<= 1;
-	if (signum == SIGUSR2)
-		g_server_state.current_char |= 1;
-	g_server_state.bit_count++;
 	if (g_server_state.bit_count == 8)
 	{
 		if (g_server_state.current_char == '\0')
@@ -40,6 +31,22 @@ void	handler(int signum, siginfo_t *info, void *context)
 		g_server_state.current_char = 0;
 		g_server_state.bit_count = 0;
 	}
+	else
+		kill(client_pid, SIGUSR1);
+}
+
+void	handler(int signum, siginfo_t *info, void *context)
+{
+	(void)context;
+	static pid_t	client_pid;
+
+	if (client_pid != info->si_pid)
+		client_pid = info->si_pid;
+	g_server_state.current_char <<= 1;
+	if (signum == SIGUSR2)
+		g_server_state.current_char |= 1;
+	g_server_state.bit_count++;
+	process_byte(client_pid, info);
 }
 
 int	main(void)
