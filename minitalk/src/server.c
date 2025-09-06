@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/06 19:00:39 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/06 19:24:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ void	handler(int signum, siginfo_t *info, void *context)
 int	main(void)
 {
 	struct sigaction	sa;
+	sigset_t			blocked_signals;
 
 	ft_printf("Server PID: %d\n", getpid());
+	sigemptyset(&blocked_signals);
+	sigaddset(&blocked_signals,SIGUSR1);
+	sigaddset(&blocked_signals,SIGUSR2);
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO;
-	sigemptyset(&sa.sa_mask);
+	sa.sa_mask = blocked_signals;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	while (1)
