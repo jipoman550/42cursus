@@ -80,11 +80,9 @@ minitalk/
 ├── src/
 │   ├── client.c
 │   ├── server.c
-│   ├── utils.c
 │   └── bonus/
 │       ├── client_bonus.c
 │       ├── server_bonus.c
-│       └── utils_bonus.c
 └── README.md
 ```
 
