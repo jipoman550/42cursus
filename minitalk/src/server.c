@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/06 19:24:19 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/07 16:25:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	process_byte(pid_t client_pid)
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
-	(void)context;
 	static pid_t	client_pid;
 
+	(void) context;
 	if (client_pid != info->si_pid)
 		client_pid = info->si_pid;
 	g_server_state.current_char <<= 1;
@@ -56,8 +56,8 @@ int	main(void)
 
 	ft_printf("Server PID: %d\n", getpid());
 	sigemptyset(&blocked_signals);
-	sigaddset(&blocked_signals,SIGUSR1);
-	sigaddset(&blocked_signals,SIGUSR2);
+	sigaddset(&blocked_signals, SIGUSR1);
+	sigaddset(&blocked_signals, SIGUSR2);
 	sa.sa_sigaction = handler;
 	sa.sa_flags = SA_SIGINFO;
 	sa.sa_mask = blocked_signals;
