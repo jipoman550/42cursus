@@ -159,8 +159,3 @@ Message received!
 * [ ] 보너스: UTF-8 문자 처리
 
 ---
-
-## 📚 참고
-
-* UNIX 시그널 매뉴얼: `man 2 kill`, `man 2 sigaction`, `man 7 signal`
-* 42 과제 PDF: Minitalk Subject

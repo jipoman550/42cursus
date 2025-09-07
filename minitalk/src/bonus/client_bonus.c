@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 14:33:06 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/05 09:10:11 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/06 12:38:33 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,19 @@ void	handle_ack(int signum)
 {
 	(void)signum;
 	g_ack_received = 1;
+}
+
+void	send_null_char(size_t bit_index, pid_t pid)
+{
+	bit_index = 8;
+	while (bit_index--)
+	{
+		g_ack_received = 0;
+		kill(pid, SIGUSR1);
+		while (!g_ack_received)
+		{
+		}
+	}
 }
 
 void	send_message(pid_t pid, const char *str)
@@ -36,11 +49,11 @@ void	send_message(pid_t pid, const char *str)
 				kill(pid, SIGUSR1);
 			while (!g_ack_received)
 			{
-
 			}
 		}
 		str++;
 	}
+	send_null_char(bit_index, pid);
 }
 
 int	main(int argc, char *argv[])
@@ -64,5 +77,9 @@ int	main(int argc, char *argv[])
 	sigemptyset(&sa.sa_mask);
 	sigaction(SIGUSR1, &sa, NULL);
 	send_message(pid, argv[2]);
+	while (!g_ack_received)
+	{
+	}
+	ft_printf("Message received!\n");
 	return (0);
 }
