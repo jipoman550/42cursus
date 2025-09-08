@@ -82,7 +82,7 @@ minitalk/
 │   ├── server.c
 │   └── bonus/
 │       ├── client_bonus.c
-│       ├── server_bonus.c
+│       └── server_bonus.c
 └── README.md
 ```
 
