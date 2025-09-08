@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/07 16:25:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/08 19:44:59 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-struct s_state	g_server_state;
+static struct s_state	g_server_state;
 
 void	process_byte(pid_t client_pid)
 {

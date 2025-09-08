@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/02 17:09:59 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/05 10:24:10 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/08 19:45:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-struct s_state	g_server_state;
+static struct s_state	g_server_state;
 
 void	handler(int signum, siginfo_t *info, void *context)
 {
