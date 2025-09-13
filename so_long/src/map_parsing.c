@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:04 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/11 16:46:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/13 16:40:21 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,6 @@ char	**parse_map(char *file_path)
 	}
 	map = ft_split(temp_map_str, '\n');
 	free(temp_map_str);
+	//TODO: map validation func
 	return (map);
 }
