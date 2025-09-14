@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/21 13:45:26 by sisung            #+#    #+#             */
 /*   Updated: 2025/09/13 16:05:15 by sisung           ###   ########.fr       */
@@ -30,8 +30,7 @@ static char	*extract_and_rest_buf(char **buffer)
 	}
 	else
 	{
-		extract_line = gnl_strndup(*buffer, gnl_strlen(*buffer));
-		free(*buffer);
+		extract_line = *buffer;
 		*buffer = NULL;
 	}
 	return (extract_line);
@@ -40,13 +39,14 @@ static char	*extract_and_rest_buf(char **buffer)
 static char	*read_and_strjoin(int fd, char **buffer)
 {
 	char		*read_buf;
-	int			read_value;
+	int		read_value;
 	char		*tmp;
 
 	read_buf = (char *)malloc(BUFFER_SIZE + 1);
 	if (!read_buf)
 		return (NULL);
 	read_value = 1;
+
 	while (read_value > 0)
 	{
 		read_value = read(fd, read_buf, BUFFER_SIZE);

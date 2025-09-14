@@ -32,6 +32,7 @@ char	**parse_map(char *file_path)
 		char *old_temp = temp_map_str;
 		temp_map_str = ft_strjoin(temp_map_str, line);
 		free(old_temp);
+		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
