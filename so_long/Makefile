@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/09/13 15:39:32 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/15 15:50:42 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,10 @@ NAME = so_long
 
 # 소스 파일 경로
 SRC_DIR = src
-SRC = $(addprefix $(SRC_DIR)/, main.c map_parsing.c map_validation.c)
+SRC = $(addprefix \
+	  $(SRC_DIR)/, main.c \
+	  			   map_parsing.c \
+	  			   map_validation.c)
 
 # 오브젝트 파일 경로
 OBJ_DIR = obj

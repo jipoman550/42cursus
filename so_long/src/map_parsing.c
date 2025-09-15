@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:04 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/13 16:40:21 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/15 18:29:31 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ char	**parse_map(char *file_path)
 
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-	{
-		ft_printf("Error\n");
-		exit(1);
-	}
+		ft_error();
 	temp_map_str = ft_strdup("");
 	line = get_next_line(fd);
 	while (line != NULL)
@@ -38,12 +35,10 @@ char	**parse_map(char *file_path)
 	close(fd);
 	if (ft_strlen(temp_map_str) == 0)
 	{
-		ft_printf("Error\n");
 		free(temp_map_str);
-		exit(1);
+		ft_error();
 	}
 	map = ft_split(temp_map_str, '\n');
 	free(temp_map_str);
-	//TODO: map validation func
 	return (map);
 }
