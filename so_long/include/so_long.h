@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/15 15:59:33 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/25 17:00:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,31 @@
 # include <unistd.h>
 # include <stdbool.h>
 
-typedef struct	s_pos
+typedef struct s_pos
 {
 	int	x;
 	int	y;
-} t_pos;
+}	t_pos;
 
-typedef struct	s_list
+typedef struct s_qlist
 {
 	t_pos			pos;
-	struct s_list	*next;
-} t_list;
+	struct s_qlist	*next;
+}	t_qlist;
+
+void	ft_error(void);
+void	free_map(char **map);
 
 char	**parse_map(char *file_path);
-void	ft_error(void);
+
+bool	map_validation(char **map);
+
+bool	check_valid_path(char **map, size_t total_c);
+
+t_pos	dequeue(t_qlist **queue);
+bool	enqueue(t_qlist **queue, t_pos pos);
+char	**map_copy_duplicate_fail(char **map_copy, size_t i);
+bool	free_map_and_return_false(char **map_copy);
+bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
 
 #endif

@@ -6,19 +6,13 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/15 15:40:38 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/16 20:28:14 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	ft_error(void)
-{
-	ft_printf("Error\n");
-	exit(1);
-}
-
-static void	check_map_elements(char **map, bool	*p, bool *e, size_t *c)
+static bool	check_map_elements(char **map, size_t	*p, size_t *e, size_t *c)
 {
 	size_t	i;
 	size_t	j;
@@ -36,14 +30,15 @@ static void	check_map_elements(char **map, bool	*p, bool *e, size_t *c)
 			else if (map[i][j] == 'C')
 				(*c)++;
 			else if (map[i][j] != '0' && map[i][j] != '1')
-				ft_error();
+				return (false);
 			j++;
 		}
 		i++;
 	}
+	return (true);
 }
 
-static void	check_map_shape_and_walls(char **map, size_t height, size_t width)
+static bool	check_map_shape_and_walls(char **map, size_t height, size_t width)
 {
 	size_t	i;
 
@@ -53,30 +48,31 @@ static void	check_map_shape_and_walls(char **map, size_t height, size_t width)
 	while (i < height)
 	{
 		if (ft_strlen(map[i]) != width)
-			ft_error();
+			return (false);
 		if (map[i][0] != '1' || map[i][width - 1] != '1')
-			ft_error();
+			return (false);
 		i++;
 	}
 	i = 0;
 	while (i < width)
 	{
 		if (map[0][i] != '1' || map[height - 1][i] != '1')
-			ft_error();
+			return (false);
 		++i;
 	}
+	return (true);
 }
 
-void	map_validation(char **map)
+bool	map_validation(char **map)
 {
-	size_t 	height;
+	size_t	height;
 	size_t	width;
-	bool	player;
-	bool	exit;
+	size_t	player;
+	size_t	exit;
 	size_t	collectible;
 
 	if (!map || !map[0])
-		ft_error();
+		return (false);
 	player = 0;
 	exit = 0;
 	collectible = 0;
@@ -84,10 +80,13 @@ void	map_validation(char **map)
 	while (map[height])
 		height++;
 	width = ft_strlen(map[0]);
-	check_map_shape_and_walls(map, height, width);
-	check_map_elements(map, &player, &exit, &collectible);
+	if (!check_map_shape_and_walls(map, height, width))
+		return (false);
+	if (!check_map_elements(map, &player, &exit, &collectible))
+		return (false);
 	if (player != 1 || exit != 1 || collectible < 1)
-		ft_error();
-	//TODO: BFS/DFS 를 이용한 유효 경로 검사 로직 추가
-	check_valid_path(map, collectible);
+		return (false);
+	if (!check_valid_path(map, collectible))
+		return (false);
+	return (true);
 }

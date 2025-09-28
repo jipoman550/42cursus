@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:04 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/15 18:29:31 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/16 19:56:40 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	**parse_map(char *file_path)
 	char	**map;
 	char	*line;
 	char	*temp_map_str;
+	char	*old_temp;
 
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
@@ -26,7 +27,7 @@ char	**parse_map(char *file_path)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		char *old_temp = temp_map_str;
+		old_temp = temp_map_str;
 		temp_map_str = ft_strjoin(temp_map_str, line);
 		free(old_temp);
 		free(line);
@@ -34,10 +35,7 @@ char	**parse_map(char *file_path)
 	}
 	close(fd);
 	if (ft_strlen(temp_map_str) == 0)
-	{
-		free(temp_map_str);
-		ft_error();
-	}
+		return (NULL);
 	map = ft_split(temp_map_str, '\n');
 	free(temp_map_str);
 	return (map);
