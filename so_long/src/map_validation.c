@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/29 16:14:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:17:48 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static bool	check_map_shape_and_walls(char **map, size_t height, size_t width)
 	size_t	i;
 
 	if (height <= 2 || width <= 2)
-		ft_error();
+		return (false);
 	i = 0;
 	while (i < height)
 	{
