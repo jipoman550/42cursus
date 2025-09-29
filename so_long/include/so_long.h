@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/25 17:00:19 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:14:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
-# define SO_LONH_H
+# define SO_LONG_H
 
 # include "ft_printf.h"
 # include "get_next_line.h"
