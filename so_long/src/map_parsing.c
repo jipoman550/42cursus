@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_parsing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:04 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/16 19:56:40 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/29 20:24:37 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**parse_map(char *file_path)
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
 		ft_error();
-	temp_map_str = ft_strdup("");
+	temp_map_str = NULL;
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
@@ -34,7 +34,7 @@ char	**parse_map(char *file_path)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	if (ft_strlen(temp_map_str) == 0)
+	if (temp_map_str == NULL)
 		return (NULL);
 	map = ft_split(temp_map_str, '\n');
 	free(temp_map_str);

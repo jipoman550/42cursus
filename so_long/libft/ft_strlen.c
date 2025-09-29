@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 17:01:50 by sisung            #+#    #+#             */
-/*   Updated: 2025/04/09 15:16:18 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/29 16:51:47 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	cnt;
 
+	if (!s)
+		return (0);
 	cnt = 0;
 	while (*s)
 	{
