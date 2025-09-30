@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/09/30 11:39:15 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/30 15:25:50 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ TEST_SUCCESS = $(wildcard $(TEST_DIR)/success_cases/*.ber)
 
 # 테스트 타겟 정의
 .PHONY: test test_initial_fail test_path_fail test_success clean_test
-VALGRIND_LOG = valgrind_log.txt
+ERROR_LOG_TEMP = .error_log_temp
 
 # make test: Exit Code 검사와 Valgrind 검사를 모두 실행
 test: all test_exit_codes test_valgrind
@@ -96,31 +96,41 @@ test: all test_exit_codes test_valgrind
 # --- 1. Exit Code 검사 타겟 (기존 *_fail 타겟을 통합) ---
 test_exit_codes: test_initial_fail test_path_fail test_success
 
-# 1-1. 초기 맵 유효성 검사 실패 테스트 (Exit Code 1 기대)
+# 1-1. 초기 맵 유효성 검사 실패 테스트 (Exit Code 1 & "Error" 출력 기대)
 test_initial_fail:
-	@echo "\n--- [Exit Code] INITIAL VALIDATION FAIL TESTS (Expecting Exit 1) ---"
+	@echo "\n--- [Exit Code & Message] INITIAL FAIL TESTS (Expecting Exit 1 and 'Error') ---"
+	@rm -f $(ERROR_LOG_TEMP) # 임시 로그 파일 삭제
 	@for file in $(TEST_INITIAL_FAIL); do \
-		echo -n "   - Testing $$file (Exit 1)... "; \
-		./$(NAME) $$file > /dev/null 2>&1; \
-		if [ $$? -ne 0 ]; then \
-			echo "✅ PASSED"; \
+		echo -n "   - Testing $$file... "; \
+		\
+		./$(NAME) $$file > /dev/null > $(ERROR_LOG_TEMP); \
+		PROGRAM_EXIT_CODE=$$? ; \
+		\
+		if [ $$PROGRAM_EXIT_CODE -eq 1 ] && grep -q "Error" $(ERROR_LOG_TEMP); then \
+			echo "✅ PASSED (Exit 1, Message OK)"; \
 		else \
-			echo "❌ FAILED (No Error Exit)"; \
+			echo "❌ FAILED (Exit $$PROGRAM_EXIT_CODE, Message Fail)"; \
 		fi; \
 	done
+	@rm -f $(ERROR_LOG_TEMP) # 테스트 후 임시 로그 파일 정리
 
-# 1-2. 경로 유효성 검사 실패 테스트 (Exit Code 1 기대)
+# 1-2. 경로 유효성 검사 실패 테스트 (Exit Code 1 & "Error" 출력 기대)
 test_path_fail:
-	@echo "\n--- [Exit Code] PATH VALIDATION FAIL TESTS (Expecting Exit 1) ---"
+	@echo "\n--- [Exit Code & Message] PATH FAIL TESTS (Expecting Exit 1 and 'Error') ---"
+	@rm -f $(ERROR_LOG_TEMP) # 임시 로그 파일 삭제
 	@for file in $(TEST_PATH_FAIL); do \
-		echo -n "   - Testing $$file (Exit 1)... "; \
-		./$(NAME) $$file > /dev/null 2>&1; \
-		if [ $$? -ne 0 ]; then \
-			echo "✅ PASSED"; \
+		echo -n "   - Testing $$file... "; \
+		\
+		./$(NAME) $$file > /dev/null > $(ERROR_LOG_TEMP); \
+		PROGRAM_EXIT_CODE=$$? ; \
+		\
+		if [ $$PROGRAM_EXIT_CODE -eq 1 ] && grep -q "Error" $(ERROR_LOG_TEMP); then \
+			echo "✅ PASSED (Exit 1, Message OK)"; \
 		else \
-			echo "❌ FAILED (No Error Exit)"; \
+			echo "❌ FAILED (Exit $$PROGRAM_EXIT_CODE, Message Fail)"; \
 		fi; \
 	done
+	@rm -f $(ERROR_LOG_TEMP) # 테스트 후 임시 로그 파일 정리
 
 # 1-3. 성공 테스트 (Exit Code 0 기대)
 test_success:
