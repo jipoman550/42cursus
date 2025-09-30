@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
+#    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/09/25 17:31:49 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/30 11:39:15 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,35 +136,32 @@ test_success:
 	done
 
 # --- 2. Valgrind 메모리 누수 검사 타겟 (전체 대상) ---
+VALGRIND_LOG = valgrind_log.txt
+VALGRIND_TEMP = .valgrind_temp
+
+# Valgrind 옵션: Full check + Still Reachable까지 모두 보고
+VALGRIND_OPTS = --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all
+
 test_valgrind:
 	@echo "\n--- [Valgrind] STARTING MEMORY LEAK CHECK (All Test Cases) ---"
-	@rm -f $(VALGRIND_LOG) # 기존 로그 파일 삭제
+	@rm -f $(VALGRIND_LOG) $(VALGRIND_TEMP) # 로그 및 임시 파일 삭제
 	@touch $(VALGRIND_LOG)
-
 	@echo "Valgrind Logs will be saved to: $(VALGRIND_LOG)"
 
-	# 모든 실패 테스트 케이스에 대해 Valgrind 실행
-	@for file in $(TEST_INITIAL_FAIL) $(TEST_PATH_FAIL); do \
-		echo -n "   - Checking FAIL CASE $$file... "; \
-		valgrind --leak-check=full --show-leak-kinds=all \
-				 --errors-for-leak-kinds=all --error-exitcode=100 \
-				 ./$(NAME) $$file > /dev/null 2>> $(VALGRIND_LOG); \
-		if [ $$? -ne 0 ]; then \
-			echo "✅ PASSED (No Leaks)"; \
+	@for file in $(TEST_INITIAL_FAIL) $(TEST_PATH_FAIL) $(TEST_SUCCESS); do \
+		echo -n "   - Checking $$file... "; \
+		\
+		valgrind $(VALGRIND_OPTS) ./$(NAME) $$file > /dev/null 2> $(VALGRIND_TEMP); \
+		\
+		cat $(VALGRIND_TEMP) >> $(VALGRIND_LOG); \
+		\
+		if grep -q "definitely lost" $(VALGRIND_TEMP) && \
+		   grep -q "indirectly lost" $(VALGRIND_TEMP) && \
+		   grep -q "still reachable" $(VALGRIND_TEMP); then \
+				echo "❌ FAILED (Leak or Still Reachable Detected)"; \
 		else \
-			echo "❌ FAILED (Leak or Error)"; \
+				echo "✅ PASSED (No Leaks, No Still Reachable)"; \
 		fi; \
 	done
 
-	# 모든 성공 테스트 케이스에 대해 Valgrind 실행
-	@for file in $(TEST_SUCCESS); do \
-		echo -n "   - Checking SUCCESS CASE $$file... "; \
-		valgrind --leak-check=full --show-leak-kinds=all \
-				 --errors-for-leak-kinds=all --error-exitcode=100 \
-				 ./$(NAME) $$file > /dev/null 2>> $(VALGRIND_LOG); \
-		if [ $$? -ne 0 ]; then \
-			echo "❌ FAILED (Leak or Error)"; \
-		else \
-			echo "✅ PASSED (No Leaks)"; \
-		fi; \
-	done
+	@rm -f $(VALGRIND_TEMP) # 임시 파일 정리
