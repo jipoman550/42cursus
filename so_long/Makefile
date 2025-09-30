@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/09/30 15:25:50 by sisung           ###   ########.fr        #
+#    Updated: 2025/09/30 20:30:10 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,20 +34,31 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(notdir $(SRC:.c=.o)))
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
+# MinilibX 추가
+MLX_DIR = minilibx-linux
+MLX_LIB = $(MLX_DIR)/libmlx.a
+
 # 헤더 파일 경로
-INCLUDES = -Iinclude -I$(LIBFT_DIR)/include
+INCLUDES = -Iinclude -I$(LIBFT_DIR)/include -I$(MLX_DIR)
+
+# MinilibX가 필요로하는 외부 라이브러리 링크 옵션
+MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 # ========================================================================= #
 
 # 최종 실행 파일 생성 규칙
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT_LIB)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) -o $(NAME) $(INCLUDES)
+$(NAME): $(OBJ) $(LIBFT_LIB) $(MLX_LIB)
+	$(CC) $(CFLAGS) $(OBJ) $(LIBFT_LIB) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME) $(INCLUDES)
 
 # Libft 라이브러리 빌드 (make -C를 사용하여 libft 디렉토리로 이동 후 빌드)
 $(LIBFT_LIB):
 	@make -C $(LIBFT_DIR)
+
+# MinilibX 라이브러리 빌드 규칙
+$(MLX_LIB):
+	@make -C $(MLX_DIR)
 
 # 소스 파일을 오브젝트 파일로 컴파일
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -59,11 +70,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # make clean: 오브젝트 파일 삭제
 clean:
 	@make clean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
 	@rm -rf $(OBJ_DIR)
 
 # make fclean: 오브젝트 파일과 실행 파일 삭제
 fclean: clean
 	@make fclean -C $(LIBFT_DIR)
+	@make clean -C $(MLX_DIR)
 	@rm -f $(NAME)
 
 # make re: 전체 재빌드 (fclean 후 all)

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/29 16:14:43 by sisung           ###   ########.fr       */
+/*   Updated: 2025/09/30 20:58:40 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,27 @@
 # include "get_next_line.h"
 # include "libft.h"
 
+# include "mlx.h"
+
 # include <fcntl.h> // open(), O_RDONLY
 # include <stdlib.h> // free(), exit()
 # include <unistd.h>
 # include <stdbool.h>
+
+# define TILE_SIZE 64
+
+typedef struct	s_game
+{
+	void	*mlx;
+	void	*win;
+	char	**map;
+	size_t	win_width;
+	size_t	win_height;
+	size_t	player_x;
+	size_t	player_y;
+	size_t	moves;
+	size_t	collectables;
+} t_game;
 
 typedef struct s_pos
 {
