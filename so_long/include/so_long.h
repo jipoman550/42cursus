@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 12:56:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 13:27:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ bool	free_map_and_return_false(char **map_copy);
 bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
 
 void	load_images(t_game *game);
+void	render_map(t_game *game);
 
 #endif
