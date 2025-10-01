@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 13:27:46 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 16:19:00 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define KEY_W	119
 # define KEY_A	97
 # define KEY_D	100
+
+# define KEY_ESC	65307
 
 typedef struct	s_game
 {
@@ -75,8 +77,8 @@ typedef struct s_qlist
 	struct s_qlist	*next;
 }	t_qlist;
 
-//void	ft_error(t_game *game, const char *msg);
-void	free_map(char **map);
+int		handle_exit(t_game *game);
+int		handle_keypress(int	keycode, t_game *game);
 
 char	**parse_map(char *file_path);
 
@@ -95,5 +97,9 @@ bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
 
 void	load_images(t_game *game);
 void	render_map(t_game *game);
+
+void	ft_error(t_game *game, const char *msg);
+void	free_map(char **map);
+void	ft_cleanup_resources(t_game *game);
 
 #endif

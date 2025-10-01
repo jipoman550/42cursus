@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/10/01 12:18:12 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/01 16:13:17 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,13 +20,15 @@ NAME = so_long
 # 소스 파일 경로
 SRC_DIR = src
 SRC = $(addprefix \
-	  $(SRC_DIR)/, main.c \
+	  $(SRC_DIR)/, event_handler.c \
+	  			   main.c \
 	  			   map_parsing.c \
 				   map_utils.c \
 	  			   map_validation.c \
 				   path_validation.c \
 				   path_validation_utils.c \
-				   rendering.c)
+				   rendering.c \
+				   utils.c)
 
 # 오브젝트 파일 경로
 OBJ_DIR = obj

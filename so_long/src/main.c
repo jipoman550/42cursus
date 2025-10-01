@@ -6,40 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 14:06:18 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 16:20:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-static void	ft_error(t_game *game, const char *msg)
-{
-	ft_printf("Error\n");
-	if (msg)
-		ft_printf("Debug Info: %s\n", msg);
-	if (game->map)
-		free_map(game->map);
-	if (game->win)
-		mlx_destroy_window(game->mlx, game->win);
-	if (game->mlx)
-		mlx_destroy_display(game->mlx);
-	exit(1);
-}
-
-void	free_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	if (!map)
-		return ;
-	while (map[i])
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -75,10 +46,15 @@ int	main(int argc, char *argv[])
 
 	render_map(&game);
 
+	mlx_key_hook(game.win, handle_keypress, &game);
+
+	mlx_hook(game.win, 17, 0, handle_exit, &game);
+
+	mlx_loop(game.mlx);
+
 	// 게임 루프 시작
 
 	// 정리 (정상 종료 시)
 
-	free_map(game.map);
 	return (0);
 }
