@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:04 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/30 11:34:15 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 09:32:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**parse_map(char *file_path)
 
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		ft_error();
+		return (NULL);
 	temp_map_str = NULL;
 	line = get_next_line(fd);
 	while (line != NULL)

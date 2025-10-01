@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/09/30 20:30:10 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/01 10:34:55 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC_DIR = src
 SRC = $(addprefix \
 	  $(SRC_DIR)/, main.c \
 	  			   map_parsing.c \
+				   map_utils.c \
 	  			   map_validation.c \
 				   path_validation.c \
 				   path_validation_utils.c)

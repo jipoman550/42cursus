@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/30 20:58:40 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 10:37:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ typedef struct s_qlist
 	struct s_qlist	*next;
 }	t_qlist;
 
-void	ft_error(void);
+//void	ft_error(t_game *game, const char *msg);
 void	free_map(char **map);
 
 char	**parse_map(char *file_path);
+
+size_t	get_map_width(char **map);
+size_t	get_map_height(char **map);
 
 bool	map_validation(char **map);
 
