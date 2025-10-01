@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/10/01 10:34:55 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/01 12:18:12 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,8 @@ SRC = $(addprefix \
 				   map_utils.c \
 	  			   map_validation.c \
 				   path_validation.c \
-				   path_validation_utils.c)
+				   path_validation_utils.c \
+				   rendering.c)
 
 # 오브젝트 파일 경로
 OBJ_DIR = obj

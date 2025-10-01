@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 10:37:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 12:56:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@
 
 # define TILE_SIZE 64
 
+# define WALL_PATH			"./textures/w.xpm"
+# define FLOOR_PATH			"./textures/es.xpm"
+# define EXIT_PATH			"./textures/exit.xpm"
+# define COLLECT_PATH		"./textures/c.xpm"
+# define PLAYER_RIGHT_PATH	"./textures/r.xpm"
+# define PLAYER_LEFT_PATH	"./textures/l.xpm"
+# define PLAYER_UP_PATH		"./textures/u.xpm"
+# define PLAYER_DOWN_PATH	"./textures/d.xpm"
+
+# define KEY_S	115
+# define KEY_W	119
+# define KEY_A	97
+# define KEY_D	100
+
 typedef struct	s_game
 {
 	void	*mlx;
@@ -37,6 +51,16 @@ typedef struct	s_game
 	size_t	player_y;
 	size_t	moves;
 	size_t	collectables;
+
+	void	*img_wall;
+	void	*img_floor;
+	void	*img_exit;
+	void	*img_collect;
+	void	*img_player_up;
+	void	*img_player_down;
+	void	*img_player_left;
+	void	*img_player_right;
+	size_t	player_direction;
 } t_game;
 
 typedef struct s_pos
@@ -68,5 +92,7 @@ bool	enqueue(t_qlist **queue, t_pos pos);
 char	**map_copy_duplicate_fail(char **map_copy, size_t i);
 bool	free_map_and_return_false(char **map_copy);
 bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
+
+void	load_images(t_game *game);
 
 #endif

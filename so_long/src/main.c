@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 10:47:47 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 12:29:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,10 @@ int	main(int argc, char *argv[])
 	game.win = mlx_new_window(game.mlx, game.win_width, game.win_height, "so_long");
 	if (!game.win)
 		ft_error(&game, "MiniLibX new window generation failed.");
+
+	load_images(&game);
+
+	// 초기 맵 랜더링
 
 	// 게임 루프 시작
 
