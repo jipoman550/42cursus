@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 16:19:00 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 19:47:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_qlist
 int		handle_exit(t_game *game);
 int		handle_keypress(int	keycode, t_game *game);
 
+void	move_player(t_game *game, int keycode);
+
 char	**parse_map(char *file_path);
 
 size_t	get_map_width(char **map);
@@ -97,6 +99,7 @@ bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
 
 void	load_images(t_game *game);
 void	render_map(t_game *game);
+int		render_map_return_int(t_game *game);
 
 void	ft_error(t_game *game, const char *msg);
 void	free_map(char **map);

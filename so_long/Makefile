@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/11 14:11:38 by sisung            #+#    #+#              #
-#    Updated: 2025/10/01 16:13:17 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/01 16:53:29 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ NAME = so_long
 SRC_DIR = src
 SRC = $(addprefix \
 	  $(SRC_DIR)/, event_handler.c \
+	  			   game_logic.c \
 	  			   main.c \
 	  			   map_parsing.c \
 				   map_utils.c \

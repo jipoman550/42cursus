@@ -1,252 +1,292 @@
-==1334313== Memcheck, a memory error detector
-==1334313== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334313== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334313== Command: ./so_long tests/initial_fail/empty_file.ber
-==1334313== 
-==1334313== 
-==1334313== HEAP SUMMARY:
-==1334313==     in use at exit: 0 bytes in 0 blocks
-==1334313==   total heap usage: 1 allocs, 1 frees, 43 bytes allocated
-==1334313== 
-==1334313== All heap blocks were freed -- no leaks are possible
-==1334313== 
-==1334313== For lists of detected and suppressed errors, rerun with: -s
-==1334313== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334316== Memcheck, a memory error detector
-==1334316== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334316== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334316== Command: ./so_long tests/initial_fail/invalid_map_C_cnt_0.ber
-==1334316== 
-==1334316== 
-==1334316== HEAP SUMMARY:
-==1334316==     in use at exit: 0 bytes in 0 blocks
-==1334316==   total heap usage: 26 allocs, 26 frees, 587 bytes allocated
-==1334316== 
-==1334316== All heap blocks were freed -- no leaks are possible
-==1334316== 
-==1334316== For lists of detected and suppressed errors, rerun with: -s
-==1334316== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334319== Memcheck, a memory error detector
-==1334319== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334319== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334319== Command: ./so_long tests/initial_fail/invalid_map_E_cnt_0.ber
-==1334319== 
-==1334319== 
-==1334319== HEAP SUMMARY:
-==1334319==     in use at exit: 0 bytes in 0 blocks
-==1334319==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
-==1334319== 
-==1334319== All heap blocks were freed -- no leaks are possible
-==1334319== 
-==1334319== For lists of detected and suppressed errors, rerun with: -s
-==1334319== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334322== Memcheck, a memory error detector
-==1334322== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334322== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334322== Command: ./so_long tests/initial_fail/invalid_map_E_cnt_2.ber
-==1334322== 
-==1334322== 
-==1334322== HEAP SUMMARY:
-==1334322==     in use at exit: 0 bytes in 0 blocks
-==1334322==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
-==1334322== 
-==1334322== All heap blocks were freed -- no leaks are possible
-==1334322== 
-==1334322== For lists of detected and suppressed errors, rerun with: -s
-==1334322== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334325== Memcheck, a memory error detector
-==1334325== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334325== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334325== Command: ./so_long tests/initial_fail/invalid_map_include_other_char.ber
-==1334325== 
-==1334325== 
-==1334325== HEAP SUMMARY:
-==1334325==     in use at exit: 0 bytes in 0 blocks
-==1334325==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
-==1334325== 
-==1334325== All heap blocks were freed -- no leaks are possible
-==1334325== 
-==1334325== For lists of detected and suppressed errors, rerun with: -s
-==1334325== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334328== Memcheck, a memory error detector
-==1334328== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334328== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334328== Command: ./so_long tests/initial_fail/invalid_map_P_cnt_0.ber
-==1334328== 
-==1334328== 
-==1334328== HEAP SUMMARY:
-==1334328==     in use at exit: 0 bytes in 0 blocks
-==1334328==   total heap usage: 21 allocs, 21 frees, 423 bytes allocated
-==1334328== 
-==1334328== All heap blocks were freed -- no leaks are possible
-==1334328== 
-==1334328== For lists of detected and suppressed errors, rerun with: -s
-==1334328== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334331== Memcheck, a memory error detector
-==1334331== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334331== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334331== Command: ./so_long tests/initial_fail/invalid_map_P_cnt_2.ber
-==1334331== 
-==1334331== 
-==1334331== HEAP SUMMARY:
-==1334331==     in use at exit: 0 bytes in 0 blocks
-==1334331==   total heap usage: 21 allocs, 21 frees, 423 bytes allocated
-==1334331== 
-==1334331== All heap blocks were freed -- no leaks are possible
-==1334331== 
-==1334331== For lists of detected and suppressed errors, rerun with: -s
-==1334331== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334334== Memcheck, a memory error detector
-==1334334== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334334== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334334== Command: ./so_long tests/initial_fail/invalid_map_shape.ber
-==1334334== 
-==1334334== 
-==1334334== HEAP SUMMARY:
-==1334334==     in use at exit: 0 bytes in 0 blocks
-==1334334==   total heap usage: 16 allocs, 16 frees, 281 bytes allocated
-==1334334== 
-==1334334== All heap blocks were freed -- no leaks are possible
-==1334334== 
-==1334334== For lists of detected and suppressed errors, rerun with: -s
-==1334334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334337== Memcheck, a memory error detector
-==1334337== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334337== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334337== Command: ./so_long tests/initial_fail/invalid_map_small.ber
-==1334337== 
-==1334337== 
-==1334337== HEAP SUMMARY:
-==1334337==     in use at exit: 0 bytes in 0 blocks
-==1334337==   total heap usage: 11 allocs, 11 frees, 182 bytes allocated
-==1334337== 
-==1334337== All heap blocks were freed -- no leaks are possible
-==1334337== 
-==1334337== For lists of detected and suppressed errors, rerun with: -s
-==1334337== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334340== Memcheck, a memory error detector
-==1334340== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334340== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334340== Command: ./so_long tests/initial_fail/invalid_map_small_ver2.ber
-==1334340== 
-==1334340== 
-==1334340== HEAP SUMMARY:
-==1334340==     in use at exit: 0 bytes in 0 blocks
-==1334340==   total heap usage: 11 allocs, 11 frees, 191 bytes allocated
-==1334340== 
-==1334340== All heap blocks were freed -- no leaks are possible
-==1334340== 
-==1334340== For lists of detected and suppressed errors, rerun with: -s
-==1334340== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334343== Memcheck, a memory error detector
-==1334343== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334343== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334343== Command: ./so_long tests/initial_fail/invalid_map_surrounding_by_1.ber
-==1334343== 
-==1334343== 
-==1334343== HEAP SUMMARY:
-==1334343==     in use at exit: 0 bytes in 0 blocks
-==1334343==   total heap usage: 21 allocs, 21 frees, 396 bytes allocated
-==1334343== 
-==1334343== All heap blocks were freed -- no leaks are possible
-==1334343== 
-==1334343== For lists of detected and suppressed errors, rerun with: -s
-==1334343== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334346== Memcheck, a memory error detector
-==1334346== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334346== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334346== Command: ./so_long tests/initial_fail/invalid_ber.txt
-==1334346== 
-==1334346== 
-==1334346== HEAP SUMMARY:
-==1334346==     in use at exit: 0 bytes in 0 blocks
-==1334346==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
-==1334346== 
-==1334346== All heap blocks were freed -- no leaks are possible
-==1334346== 
-==1334346== For lists of detected and suppressed errors, rerun with: -s
-==1334346== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334349== Memcheck, a memory error detector
-==1334349== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334349== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334349== Command: ./so_long tests/path_fail/unreachable_collectible.ber
-==1334349== 
-==1334349== 
-==1334349== HEAP SUMMARY:
-==1334349==     in use at exit: 0 bytes in 0 blocks
-==1334349==   total heap usage: 98 allocs, 98 frees, 2,547 bytes allocated
-==1334349== 
-==1334349== All heap blocks were freed -- no leaks are possible
-==1334349== 
-==1334349== For lists of detected and suppressed errors, rerun with: -s
-==1334349== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334352== Memcheck, a memory error detector
-==1334352== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334352== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334352== Command: ./so_long tests/path_fail/unreachable_exit.ber
-==1334352== 
-==1334352== 
-==1334352== HEAP SUMMARY:
-==1334352==     in use at exit: 0 bytes in 0 blocks
-==1334352==   total heap usage: 96 allocs, 96 frees, 2,515 bytes allocated
-==1334352== 
-==1334352== All heap blocks were freed -- no leaks are possible
-==1334352== 
-==1334352== For lists of detected and suppressed errors, rerun with: -s
-==1334352== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334355== Memcheck, a memory error detector
-==1334355== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334355== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334355== Command: ./so_long tests/success_cases/edge_cases.ber
-==1334355== 
-==1334355== 
-==1334355== HEAP SUMMARY:
-==1334355==     in use at exit: 0 bytes in 0 blocks
-==1334355==   total heap usage: 63 allocs, 63 frees, 1,236 bytes allocated
-==1334355== 
-==1334355== All heap blocks were freed -- no leaks are possible
-==1334355== 
-==1334355== For lists of detected and suppressed errors, rerun with: -s
-==1334355== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334358== Memcheck, a memory error detector
-==1334358== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334358== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334358== Command: ./so_long tests/success_cases/large_map.ber
-==1334358== 
-==1334358== 
-==1334358== HEAP SUMMARY:
-==1334358==     in use at exit: 0 bytes in 0 blocks
-==1334358==   total heap usage: 646 allocs, 646 frees, 34,839 bytes allocated
-==1334358== 
-==1334358== All heap blocks were freed -- no leaks are possible
-==1334358== 
-==1334358== For lists of detected and suppressed errors, rerun with: -s
-==1334358== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334361== Memcheck, a memory error detector
-==1334361== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334361== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334361== Command: ./so_long tests/success_cases/valid_path.ber
-==1334361== 
-==1334361== 
-==1334361== HEAP SUMMARY:
-==1334361==     in use at exit: 0 bytes in 0 blocks
-==1334361==   total heap usage: 139 allocs, 139 frees, 3,951 bytes allocated
-==1334361== 
-==1334361== All heap blocks were freed -- no leaks are possible
-==1334361== 
-==1334361== For lists of detected and suppressed errors, rerun with: -s
-==1334361== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
-==1334364== Memcheck, a memory error detector
-==1334364== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==1334364== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==1334364== Command: ./so_long tests/success_cases/valid_path_complex.ber
-==1334364== 
-==1334364== 
-==1334364== HEAP SUMMARY:
-==1334364==     in use at exit: 0 bytes in 0 blocks
-==1334364==   total heap usage: 200 allocs, 200 frees, 6,994 bytes allocated
-==1334364== 
-==1334364== All heap blocks were freed -- no leaks are possible
-==1334364== 
-==1334364== For lists of detected and suppressed errors, rerun with: -s
-==1334364== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41851== Memcheck, a memory error detector
+==41851== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41851== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41851== Command: ./so_long tests/initial_fail/empty_file.ber
+==41851== 
+==41851== 
+==41851== HEAP SUMMARY:
+==41851==     in use at exit: 0 bytes in 0 blocks
+==41851==   total heap usage: 1 allocs, 1 frees, 43 bytes allocated
+==41851== 
+==41851== All heap blocks were freed -- no leaks are possible
+==41851== 
+==41851== For lists of detected and suppressed errors, rerun with: -s
+==41851== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41854== Memcheck, a memory error detector
+==41854== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41854== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41854== Command: ./so_long tests/initial_fail/invalid_map_C_cnt_0.ber
+==41854== 
+==41854== 
+==41854== HEAP SUMMARY:
+==41854==     in use at exit: 0 bytes in 0 blocks
+==41854==   total heap usage: 26 allocs, 26 frees, 587 bytes allocated
+==41854== 
+==41854== All heap blocks were freed -- no leaks are possible
+==41854== 
+==41854== For lists of detected and suppressed errors, rerun with: -s
+==41854== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41857== Memcheck, a memory error detector
+==41857== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41857== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41857== Command: ./so_long tests/initial_fail/invalid_map_E_cnt_0.ber
+==41857== 
+==41857== 
+==41857== HEAP SUMMARY:
+==41857==     in use at exit: 0 bytes in 0 blocks
+==41857==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
+==41857== 
+==41857== All heap blocks were freed -- no leaks are possible
+==41857== 
+==41857== For lists of detected and suppressed errors, rerun with: -s
+==41857== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41860== Memcheck, a memory error detector
+==41860== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41860== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41860== Command: ./so_long tests/initial_fail/invalid_map_E_cnt_2.ber
+==41860== 
+==41860== 
+==41860== HEAP SUMMARY:
+==41860==     in use at exit: 0 bytes in 0 blocks
+==41860==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
+==41860== 
+==41860== All heap blocks were freed -- no leaks are possible
+==41860== 
+==41860== For lists of detected and suppressed errors, rerun with: -s
+==41860== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41863== Memcheck, a memory error detector
+==41863== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41863== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41863== Command: ./so_long tests/initial_fail/invalid_map_include_other_char.ber
+==41863== 
+==41863== 
+==41863== HEAP SUMMARY:
+==41863==     in use at exit: 0 bytes in 0 blocks
+==41863==   total heap usage: 26 allocs, 26 frees, 548 bytes allocated
+==41863== 
+==41863== All heap blocks were freed -- no leaks are possible
+==41863== 
+==41863== For lists of detected and suppressed errors, rerun with: -s
+==41863== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41866== Memcheck, a memory error detector
+==41866== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41866== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41866== Command: ./so_long tests/initial_fail/invalid_map_P_cnt_0.ber
+==41866== 
+==41866== 
+==41866== HEAP SUMMARY:
+==41866==     in use at exit: 0 bytes in 0 blocks
+==41866==   total heap usage: 21 allocs, 21 frees, 423 bytes allocated
+==41866== 
+==41866== All heap blocks were freed -- no leaks are possible
+==41866== 
+==41866== For lists of detected and suppressed errors, rerun with: -s
+==41866== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41869== Memcheck, a memory error detector
+==41869== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41869== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41869== Command: ./so_long tests/initial_fail/invalid_map_P_cnt_2.ber
+==41869== 
+==41869== 
+==41869== HEAP SUMMARY:
+==41869==     in use at exit: 0 bytes in 0 blocks
+==41869==   total heap usage: 21 allocs, 21 frees, 423 bytes allocated
+==41869== 
+==41869== All heap blocks were freed -- no leaks are possible
+==41869== 
+==41869== For lists of detected and suppressed errors, rerun with: -s
+==41869== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41872== Memcheck, a memory error detector
+==41872== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41872== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41872== Command: ./so_long tests/initial_fail/invalid_map_shape.ber
+==41872== 
+==41872== 
+==41872== HEAP SUMMARY:
+==41872==     in use at exit: 0 bytes in 0 blocks
+==41872==   total heap usage: 16 allocs, 16 frees, 281 bytes allocated
+==41872== 
+==41872== All heap blocks were freed -- no leaks are possible
+==41872== 
+==41872== For lists of detected and suppressed errors, rerun with: -s
+==41872== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41875== Memcheck, a memory error detector
+==41875== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41875== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41875== Command: ./so_long tests/initial_fail/invalid_map_small.ber
+==41875== 
+==41875== 
+==41875== HEAP SUMMARY:
+==41875==     in use at exit: 0 bytes in 0 blocks
+==41875==   total heap usage: 11 allocs, 11 frees, 182 bytes allocated
+==41875== 
+==41875== All heap blocks were freed -- no leaks are possible
+==41875== 
+==41875== For lists of detected and suppressed errors, rerun with: -s
+==41875== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41878== Memcheck, a memory error detector
+==41878== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41878== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41878== Command: ./so_long tests/initial_fail/invalid_map_small_ver2.ber
+==41878== 
+==41878== 
+==41878== HEAP SUMMARY:
+==41878==     in use at exit: 0 bytes in 0 blocks
+==41878==   total heap usage: 11 allocs, 11 frees, 191 bytes allocated
+==41878== 
+==41878== All heap blocks were freed -- no leaks are possible
+==41878== 
+==41878== For lists of detected and suppressed errors, rerun with: -s
+==41878== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41881== Memcheck, a memory error detector
+==41881== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41881== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41881== Command: ./so_long tests/initial_fail/invalid_map_surrounding_by_1.ber
+==41881== 
+==41881== 
+==41881== HEAP SUMMARY:
+==41881==     in use at exit: 0 bytes in 0 blocks
+==41881==   total heap usage: 21 allocs, 21 frees, 396 bytes allocated
+==41881== 
+==41881== All heap blocks were freed -- no leaks are possible
+==41881== 
+==41881== For lists of detected and suppressed errors, rerun with: -s
+==41881== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41884== Memcheck, a memory error detector
+==41884== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41884== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41884== Command: ./so_long tests/initial_fail/invalid_ber.txt
+==41884== 
+==41884== 
+==41884== HEAP SUMMARY:
+==41884==     in use at exit: 0 bytes in 0 blocks
+==41884==   total heap usage: 0 allocs, 0 frees, 0 bytes allocated
+==41884== 
+==41884== All heap blocks were freed -- no leaks are possible
+==41884== 
+==41884== For lists of detected and suppressed errors, rerun with: -s
+==41884== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41887== Memcheck, a memory error detector
+==41887== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41887== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41887== Command: ./so_long tests/path_fail/unreachable_collectible.ber
+==41887== 
+==41887== 
+==41887== HEAP SUMMARY:
+==41887==     in use at exit: 0 bytes in 0 blocks
+==41887==   total heap usage: 98 allocs, 98 frees, 2,547 bytes allocated
+==41887== 
+==41887== All heap blocks were freed -- no leaks are possible
+==41887== 
+==41887== For lists of detected and suppressed errors, rerun with: -s
+==41887== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41890== Memcheck, a memory error detector
+==41890== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41890== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41890== Command: ./so_long tests/path_fail/unreachable_exit.ber
+==41890== 
+==41890== 
+==41890== HEAP SUMMARY:
+==41890==     in use at exit: 0 bytes in 0 blocks
+==41890==   total heap usage: 96 allocs, 96 frees, 2,515 bytes allocated
+==41890== 
+==41890== All heap blocks were freed -- no leaks are possible
+==41890== 
+==41890== For lists of detected and suppressed errors, rerun with: -s
+==41890== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==41893== Memcheck, a memory error detector
+==41893== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41893== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41893== Command: ./so_long tests/success_cases/edge_cases.ber
+==41893== 
+==41893== 
+==41893== HEAP SUMMARY:
+==41893==     in use at exit: 136 bytes in 1 blocks
+==41893==   total heap usage: 1,021 allocs, 1,020 frees, 164,230 bytes allocated
+==41893== 
+==41893== 136 bytes in 1 blocks are still reachable in loss record 1 of 1
+==41893==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41893==    by 0x4058CF: mlx_init (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41893==    by 0x4028D2: main (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41893== 
+==41893== LEAK SUMMARY:
+==41893==    definitely lost: 0 bytes in 0 blocks
+==41893==    indirectly lost: 0 bytes in 0 blocks
+==41893==      possibly lost: 0 bytes in 0 blocks
+==41893==    still reachable: 136 bytes in 1 blocks
+==41893==         suppressed: 0 bytes in 0 blocks
+==41893== 
+==41893== For lists of detected and suppressed errors, rerun with: -s
+==41893== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==41898== Memcheck, a memory error detector
+==41898== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41898== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41898== Command: ./so_long tests/success_cases/large_map.ber
+==41898== 
+==41898== 
+==41898== HEAP SUMMARY:
+==41898==     in use at exit: 136 bytes in 1 blocks
+==41898==   total heap usage: 6,655 allocs, 6,654 frees, 594,697 bytes allocated
+==41898== 
+==41898== 136 bytes in 1 blocks are still reachable in loss record 1 of 1
+==41898==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41898==    by 0x4058CF: mlx_init (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41898==    by 0x4028D2: main (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41898== 
+==41898== LEAK SUMMARY:
+==41898==    definitely lost: 0 bytes in 0 blocks
+==41898==    indirectly lost: 0 bytes in 0 blocks
+==41898==      possibly lost: 0 bytes in 0 blocks
+==41898==    still reachable: 136 bytes in 1 blocks
+==41898==         suppressed: 0 bytes in 0 blocks
+==41898== 
+==41898== For lists of detected and suppressed errors, rerun with: -s
+==41898== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==41903== Memcheck, a memory error detector
+==41903== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41903== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41903== Command: ./so_long tests/success_cases/valid_path.ber
+==41903== 
+==41903== 
+==41903== HEAP SUMMARY:
+==41903==     in use at exit: 136 bytes in 1 blocks
+==41903==   total heap usage: 1,586 allocs, 1,585 frees, 197,313 bytes allocated
+==41903== 
+==41903== 136 bytes in 1 blocks are still reachable in loss record 1 of 1
+==41903==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41903==    by 0x4058CF: mlx_init (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41903==    by 0x4028D2: main (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41903== 
+==41903== LEAK SUMMARY:
+==41903==    definitely lost: 0 bytes in 0 blocks
+==41903==    indirectly lost: 0 bytes in 0 blocks
+==41903==      possibly lost: 0 bytes in 0 blocks
+==41903==    still reachable: 136 bytes in 1 blocks
+==41903==         suppressed: 0 bytes in 0 blocks
+==41903== 
+==41903== For lists of detected and suppressed errors, rerun with: -s
+==41903== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)
+==41908== Memcheck, a memory error detector
+==41908== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==41908== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==41908== Command: ./so_long tests/success_cases/valid_path_complex.ber
+==41908== 
+==41908== 
+==41908== HEAP SUMMARY:
+==41908==     in use at exit: 136 bytes in 1 blocks
+==41908==   total heap usage: 2,113 allocs, 2,112 frees, 229,580 bytes allocated
+==41908== 
+==41908== 136 bytes in 1 blocks are still reachable in loss record 1 of 1
+==41908==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==41908==    by 0x4058CF: mlx_init (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41908==    by 0x4028D2: main (in /home/sisung/workspace/42cursus/so_long/so_long)
+==41908== 
+==41908== LEAK SUMMARY:
+==41908==    definitely lost: 0 bytes in 0 blocks
+==41908==    indirectly lost: 0 bytes in 0 blocks
+==41908==      possibly lost: 0 bytes in 0 blocks
+==41908==    still reachable: 136 bytes in 1 blocks
+==41908==         suppressed: 0 bytes in 0 blocks
+==41908== 
+==41908== For lists of detected and suppressed errors, rerun with: -s
+==41908== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 1 from 1)

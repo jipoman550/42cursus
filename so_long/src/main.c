@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 16:20:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 19:48:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	main(int argc, char *argv[])
 	mlx_key_hook(game.win, handle_keypress, &game);
 
 	mlx_hook(game.win, 17, 0, handle_exit, &game);
+
+	mlx_hook(game.win, 9, 0, render_map_return_int, &game);
 
 	mlx_loop(game.mlx);
 

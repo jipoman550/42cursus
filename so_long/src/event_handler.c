@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 14:32:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 16:29:25 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/01 17:42:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	handle_keypress(int	keycode, t_game *game)
 			|| keycode == KEY_S || keycode == KEY_D)
 	{
 		// 플레이어 이동 로직 호출
-		// move_player(game, keycode);
+		move_player(game, keycode);
 	}
 	// ft_printf("Keycode: %d\n", keycode); // 디버깅용
 	return (0);
