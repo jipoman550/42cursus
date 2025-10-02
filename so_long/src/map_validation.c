@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 16:07:46 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 17:12:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,28 @@ static bool	check_map_shape_and_walls(char **map, size_t height, size_t width)
 	return (true);
 }
 
-bool	map_validation(char **map)
+bool	map_validation(t_game *game)
 {
 	size_t	height;
 	size_t	width;
 	size_t	player;
 	size_t	exit;
-	size_t	collectible;
 
-	if (!map || !map[0])
+	if (!game->map || !game->map[0])
 		return (false);
 	player = 0;
 	exit = 0;
-	collectible = 0;
 	height = 0;
-	while (map[height])
+	while (game->map[height])
 		height++;
-	width = ft_strlen(map[0]);
-	if (!check_map_shape_and_walls(map, height, width))
+	width = ft_strlen(game->map[0]);
+	if (!check_map_shape_and_walls(game->map, height, width))
 		return (false);
-	if (!check_map_elements(map, &player, &exit, &collectible))
+	if (!check_map_elements(game->map, &player, &exit, &game->collectables))
 		return (false);
-	if (player != 1 || exit != 1 || collectible < 1)
+	if (player != 1 || exit != 1 || game->collectables < 1)
 		return (false);
-	if (!check_valid_path(map, collectible))
+	if (!check_valid_path(game->map, game->collectables))
 		return (false);
 	return (true);
 }

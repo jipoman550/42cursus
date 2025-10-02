@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 16:52:48 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 14:54:56 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 17:18:30 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,6 @@ void	move_player(t_game *game, int keycode)
 	{
 		update_player_position(game, next_x, next_y, keycode);
 		game->moves++;
-		ft_printf("Moves: %zu\n", game->moves); // 디버깅용
+		ft_printf("Moves: %d\n", game->moves); // 디버깅용
 	}
 }

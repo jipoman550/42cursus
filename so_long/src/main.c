@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 16:18:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 17:06:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[])
 	game.map = parse_map(argv[1]);
 	if (!game.map)
 		ft_error(&game, "failed parsing map.");
-	if (!map_validation(game.map))
+	if (!map_validation(&game))
 		ft_error(&game, "invalid map.");
 // ------------------------------------------
 	game.mlx = mlx_init();
@@ -55,10 +55,6 @@ int	main(int argc, char *argv[])
 	mlx_hook(game.win, 9, 0, render_map_return_int, &game);
 
 	mlx_loop(game.mlx);
-
-	// 게임 루프 시작
-
-	// 정리 (정상 종료 시)
 
 	return (0);
 }
