@@ -1,0 +1,94 @@
+# so_long 프로젝트 코드 설명
+
+## 1. 전체적인 구조
+
+so_long 프로젝트는 C로 작성되었으며, MiniLibX 라이브러리를 사용하여 간단한 2D 게임을 만듭니다. 플레이어(P)가 모든 수집품(C)을 모아 출구(E)로 탈출하는 것이 목표입니다.
+
+프로젝트의 주요 흐름은 다음과 같습니다.
+1.  **맵 파일 파싱**: `.ber` 확장자를 가진 맵 파일을 읽어 2차원 배열이나 리스트 형태로 메모리에 저장합니다.
+2.  **맵 유효성 검사**: 읽어온 맵이 게임 규칙에 맞는지 검사합니다. (벽으로 둘러싸여 있는지, P, C, E의 개수가 올바른지, 모든 C와 E에 도달할 수 있는 경로가 있는지 등)
+3.  **게임 초기화**: MiniLibX를 사용하여 윈도우를 생성하고, 게임에 필요한 텍스처(이미지)를 로드합니다.
+4.  **맵 렌더링**: 맵 데이터를 기반으로 윈도우에 타일별로 이미지를 그립니다.
+5.  **이벤트 처리**: 키보드 입력이나 윈도우 종료 버튼 클릭 같은 이벤트를 받아 처리합니다.
+    *   키 입력 -> 플레이어 이동, 이동 횟수 출력
+    *   윈도우 종료 -> 게임 종료
+6.  **게임 루프**: 이벤트가 발생할 때까지 대기하고, 이벤트가 발생하면 등록된 함수를 호출하여 게임 상태를 업데이트하고 화면을 다시 그립니다.
+
+## 2. 디렉토리 및 파일별 역할
+
+*   **`include/so_long.h`**: 프로젝트 전반에서 사용되는 구조체(t_game 등), 상수, 함수 프로토타입을 정의하는 헤더 파일입니다.
+*   **`src/`**: 핵심 로직이 들어있는 소스 코드 디렉토리입니다.
+    *   `main.c`: 프로그램의 시작점. 인자 검사, 맵 파싱 및 유효성 검사, mlx 초기화 및 루프 실행을 담당합니다.
+    *   `map_parsing.c`: `.ber` 맵 파일을 읽고 파싱하여 게임 데이터 구조에 저장하는 함수들이 있습니다.
+    *   `map_validation.c`: 맵의 기본적인 유효성(직사각형 여부, 벽, P/C/E 개수 등)을 검사합니다.
+    *   `path_validation.c`: DFS나 BFS 같은 알고리즘을 사용하여 플레이어가 모든 수집품을 모으고 출구까지 도달할 수 있는 유효한 경로가 있는지 검사합니다.
+    *   `rendering.c`: `mlx_put_image_to_window` 등을 사용하여 맵과 구성요소(플레이어, 수집품 등)를 화면에 그리는 함수들이 있습니다.
+    *   `event_handler.c`: 키보드 입력 처리(`handle_keypress`), 창 닫기 버튼 처리(`handle_exit`) 등 사용자 이벤트를 다루는 함수들이 있습니다.
+    *   `game_logic.c`: 플레이어 이동, 수집품 획득, 게임 종료 조건 확인 등 핵심 게임 플레이 로직을 담당합니다.
+    *   `utils.c`, `map_utils.c`: 오류 처리, 메모리 해제, 맵 관련 보조 함수 등 유틸리티 함수들이 있습니다.
+*   **`libft/`**: 42서울 과제에서 공통으로 사용하는 표준 라이브러리 함수들의 커스텀 구현체입니다.
+*   **`minilibx-linux/`**: 리눅스 환경에서 그래픽 처리를 도와주는 MiniLibX 라이브러리입니다.
+*   **`textures/`**: 게임에 사용될 `.xpm` 이미지 파일들이 저장되어 있습니다.
+*   **`tests/`**: 유효하거나 유효하지 않은 다양한 맵 케이스들을 모아둔 테스트용 디렉토리입니다.
+
+---
+
+## 3. MiniLibX (MLX) 함수 상세 설명
+
+`src/main.c`의 `mlx_part` 함수와 다른 파일들에서 사용된 주요 mlx 함수들의 역할은 다음과 같습니다.
+
+### `void *mlx_init()`
+*   **역할**: MiniLibX 라이브러리를 사용하기 위한 가장 첫 단계입니다. 그래픽 시스템과의 연결을 초기화하고, 이 연결을 식별할 수 있는 포인터(`void *`, 흔히 `mlx_ptr`로 부름)를 반환합니다.
+*   **실패 시**: 그래픽 서버(X-Server)에 연결할 수 없으면 `NULL`을 반환합니다. 따라서 반환값을 반드시 확인하여 오류 처리를 해야 합니다.
+*   **예시**: `game.mlx = mlx_init();`
+
+### `void *mlx_new_window(void *mlx_ptr, int size_x, int size_y, char *title)`
+*   **역할**: 화면에 새로운 창(window)을 생성합니다.
+*   **인자**:
+    *   `mlx_ptr`: `mlx_init()`으로 얻은 mlx 연결 포인터.
+    *   `size_x`, `size_y`: 생성할 창의 가로, 세로 크기 (픽셀 단위).
+    *   `title`: 창 상단에 표시될 제목.
+*   **반환값**: 생성된 창을 식별하는 포인터(`void *`, 흔히 `win_ptr`로 부름). 실패 시 `NULL`을 반환합니다.
+*   **예시**: `game.win = mlx_new_window(game.mlx, game.win_width, game.win_height, "win");`
+
+### `int mlx_key_hook(void *win_ptr, int (*funct_ptr)(), void *param)`
+*   **역할**: 키보드의 키가 **눌렸을 때** 특정 함수(`funct_ptr`)가 호출되도록 등록(hooking)합니다.
+*   **인자**:
+    *   `win_ptr`: 이벤트를 감지할 창의 포인터.
+    *   `funct_ptr`: 키가 눌렸을 때 호출될 함수의 포인터. 이 함수는 보통 `int function_name(int keycode, void *param)` 형태로 정의됩니다.
+    *   `param`: `funct_ptr` 함수에 전달될 인자. 보통 게임의 상태를 담고 있는 구조체 포인터를 전달합니다.
+*   **특징**: `mlx_hook`의 특수한 버전으로, 키 누름 이벤트(KeyPress)에 특화되어 있습니다.
+*   **예시**: `mlx_key_hook(game.win, handle_keypress, &game);` -> `game.win` 창에서 키가 눌리면 `handle_keypress` 함수가 호출되고, 이때 `&game` 주소가 `param`으로 전달됩니다.
+
+### `int mlx_hook(void *win_ptr, int x_event, int x_mask, int (*funct_ptr)(), void *param)`
+*   **역할**: 다양한 종류의 이벤트(키 누름, 마우스 움직임, 창 닫기 등)가 발생했을 때 호출될 함수를 등록하는 범용적인 함수입니다.
+*   **인자**:
+    *   `win_ptr`: 이벤트를 감지할 창의 포인터.
+    *   `x_event`: 이벤트의 종류를 나타내는 정수. (예: `17` 또는 `DestroyNotify`는 창 닫기 버튼 클릭, `9` 또는 `Expose`는 창의 일부가 가려졌다가 다시 나타날 때)
+    *   `x_mask`: 이벤트 마스크. 보통 `0`을 사용합니다. (고급 기능)
+    *   `funct_ptr`: 이벤트 발생 시 호출될 함수.
+    *   `param`: `funct_ptr`에 전달될 인자.
+*   **예시**:
+    *   `mlx_hook(game.win, 17, 0, handle_exit, &game);`: 창 닫기 버튼(X)을 누르면(`event 17`) `handle_exit` 함수를 호출합니다.
+    *   `mlx_hook(game.win, 9, 0, render_map_return_int, &game);`: 창이 다른 창에 의해 가려졌다가 다시 화면에 나타나는 등 다시 그려야 할 필요가 있을 때(`event 9`) `render_map_return_int` 함수를 호출하여 화면을 새로 그립니다. (macOS에서는 필수적인 경우가 많습니다)
+
+### `int mlx_loop(void *mlx_ptr)`
+*   **역할**: 이벤트 루프를 시작합니다. 이 함수가 호출되면 프로그램은 무한 루프에 들어가서 이벤트를 기다립니다. 이벤트가 발생하면 `mlx_key_hook`이나 `mlx_hook`으로 등록된 해당 함수를 호출합니다.
+*   **특징**: 이 함수는 **반환되지 않습니다**. 프로그램은 이 루프 안에서 계속 실행되며, 종료 함수(예: `exit(0)`)가 호출되어야 끝납니다. 코드 상으로 `mlx_loop` 다음 줄에 있는 코드는 실행되지 않습니다.
+*   **예시**: `mlx_loop(game.mlx);`
+
+### (rendering.c 등에서 사용될 함수)
+
+### `void *mlx_xpm_file_to_image(void *mlx_ptr, char *filename, int *width, int *height)`
+*   **역할**: `.xpm` 형식의 이미지 파일을 읽어서 mlx에서 사용할 수 있는 이미지 객체로 변환합니다.
+*   **인자**:
+    *   `filename`: 이미지 파일의 경로.
+    *   `width`, `height`: 이미지의 가로/세로 크기를 저장할 변수의 주소.
+*   **예시**: `game.img_wall = mlx_xpm_file_to_image(game.mlx, "textures/wall.xpm", &w, &h);`
+
+### `int mlx_put_image_to_window(void *mlx_ptr, void *win_ptr, void *img_ptr, int x, int y)`
+*   **역할**: `mlx_xpm_file_to_image` 등으로 생성한 이미지 객체를 지정된 창의 특정 좌표에 그립니다.
+*   **인자**:
+    *   `img_ptr`: 화면에 그릴 이미지 포인터.
+    *   `x`, `y`: 창의 좌측 상단을 (0, 0)으로 기준으로 이미지를 그릴 위치.
+*   **예시**: `mlx_put_image_to_window(game.mlx, game.win, game.img_wall, x * TILE_SIZE, y * TILE_SIZE);`

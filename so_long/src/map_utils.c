@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 10:33:15 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 18:07:35 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 19:52:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,10 @@ void	find_player_position(t_game *game)
 		}
 		i++;
 	}
+}
+
+int	render_map_return_int(t_game *game)
+{
+	render_map(game);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 16:12:43 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 18:38:23 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 19:52:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,4 @@ void	ft_cleanup_resources(t_game *game)
 	if (game->map)
 		free_map(game->map);
 	free(game->mlx);
-}
-
-int	render_map_return_int(t_game *game)
-{
-	render_map(game);
-	return (0);
 }
