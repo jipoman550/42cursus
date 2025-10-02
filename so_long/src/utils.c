@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 16:12:43 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 16:21:21 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 15:50:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,5 @@ void	ft_cleanup_resources(t_game *game)
 		mlx_destroy_display(game->mlx);
 	if (game->map)
 		free_map(game->map);
+	free(game->mlx);
 }

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 15:01:35 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:18:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(int argc, char *argv[])
 	load_images(&game);
 
 	render_map(&game);
+
+	find_player_position(&game);
 
 	mlx_key_hook(game.win, handle_keypress, &game);
 

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 19:47:06 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:21:02 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ char	**parse_map(char *file_path);
 
 size_t	get_map_width(char **map);
 size_t	get_map_height(char **map);
+void 	find_player_position(t_game* game);
 
 bool	map_validation(char **map);
 

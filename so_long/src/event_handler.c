@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 14:32:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 14:48:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:01:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	handle_exit(t_game *game)
 
 int	handle_keypress(int	keycode, t_game *game)
 {
+	ft_printf("x: %d, y: %d\n", game->player_x, game->player_y);
+
 	if (keycode == KEY_ESC)
 		handle_exit(game);
 	else if (keycode == KEY_W || keycode == KEY_A

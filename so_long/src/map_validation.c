@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/09/30 11:34:20 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 16:07:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static bool	check_map_elements(char **map, size_t	*p, size_t *e, size_t *c)
+static bool	check_map_elements(char **map, size_t *p, size_t *e, size_t *c)
 {
 	size_t	i;
 	size_t	j;

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:17:29 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/01 20:31:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 15:39:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	put_tile(t_game *game, size_t x, size_t y)
 		mlx_put_image_to_window(game->mlx, game->win, game->img_collect, px, py);
 	else if (tile == 'E')
 		mlx_put_image_to_window(game->mlx, game->win, game->img_exit, px, py);
+	write(1, &tile, 1);//debug
 }
 
 void	render_map(t_game *game)
@@ -85,6 +86,7 @@ void	render_map(t_game *game)
 			x++;
 		}
 		y++;
+		write(1, "\n", 1);//debug
 	}
 }
 
