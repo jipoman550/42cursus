@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 12:17:29 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 15:39:19 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 18:38:27 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	load_images(t_game *game)
 	game->img_wall = load_xpm(game, WALL_PATH);
 	game->img_floor = load_xpm(game, FLOOR_PATH);
 	game->img_exit = load_xpm(game, EXIT_PATH);
-	game->img_collect = load_xpm(game, COLLECT_PATH);
+	game->img_c = load_xpm(game, COLLECT_PATH);
 	game->img_player_right = load_xpm(game, PLAYER_RIGHT_PATH);
 	game->img_player_left = load_xpm(game, PLAYER_LEFT_PATH);
 	game->img_player_up = load_xpm(game, PLAYER_UP_PATH);
@@ -37,7 +37,7 @@ void	load_images(t_game *game)
 	game->player_direction = KEY_S;
 }
 
-static void	*get_player_image(t_game *game)
+static void	*p_image(t_game *game)
 {
 	if (game->player_direction == KEY_W)
 		return (game->img_player_up);
@@ -63,12 +63,11 @@ static void	put_tile(t_game *game, size_t x, size_t y)
 	if (tile == '1')
 		mlx_put_image_to_window(game->mlx, game->win, game->img_wall, px, py);
 	else if (tile == 'P')
-		mlx_put_image_to_window(game->mlx, game->win, get_player_image(game), px, py);
+		mlx_put_image_to_window(game->mlx, game->win, p_image(game), px, py);
 	else if (tile == 'C')
-		mlx_put_image_to_window(game->mlx, game->win, game->img_collect, px, py);
+		mlx_put_image_to_window(game->mlx, game->win, game->img_c, px, py);
 	else if (tile == 'E')
 		mlx_put_image_to_window(game->mlx, game->win, game->img_exit, px, py);
-	write(1, &tile, 1);//debug
 }
 
 void	render_map(t_game *game)
@@ -86,12 +85,5 @@ void	render_map(t_game *game)
 			x++;
 		}
 		y++;
-		write(1, "\n", 1);//debug
 	}
-}
-
-int	render_map_return_int(t_game *game)
-{
-	render_map(game);
-	return (0);
 }

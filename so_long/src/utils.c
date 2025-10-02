@@ -6,12 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 16:12:43 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 15:50:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 18:38:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
 
 void	ft_error(t_game *game, const char *msg)
 {
@@ -28,7 +27,7 @@ void	free_map(char **map)
 
 	i = 0;
 	if (!map)
-	return ;
+		return ;
 	while (map[i])
 	{
 		free(map[i]);
@@ -45,8 +44,8 @@ void	ft_cleanup_resources(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_floor);
 	if (game->img_exit)
 		mlx_destroy_image(game->mlx, game->img_exit);
-	if (game->img_collect)
-		mlx_destroy_image(game->mlx, game->img_collect);
+	if (game->img_c)
+		mlx_destroy_image(game->mlx, game->img_c);
 	if (game->img_player_up)
 		mlx_destroy_image(game->mlx, game->img_player_up);
 	if (game->img_player_down)
@@ -62,4 +61,10 @@ void	ft_cleanup_resources(t_game *game)
 	if (game->map)
 		free_map(game->map);
 	free(game->mlx);
+}
+
+int	render_map_return_int(t_game *game)
+{
+	render_map(game);
+	return (0);
 }

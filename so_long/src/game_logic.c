@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/01 16:52:48 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 17:18:30 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 18:33:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void	update_player_position(t_game *game, int new_x, int new_y, int keycode)
+static void	update_player_position(t_game *game, int new_x, int new_y, int k)
 {
 	char	next_tile;
 
@@ -31,7 +31,7 @@ static void	update_player_position(t_game *game, int new_x, int new_y, int keyco
 	}
 	game->player_x = new_x;
 	game->player_y = new_y;
-	game->player_direction = keycode;
+	game->player_direction = k;
 	if (game->map[new_y][new_x] != 'E')
 		game->map[new_y][new_x] = 'P';
 	render_map(game);
@@ -56,6 +56,6 @@ void	move_player(t_game *game, int keycode)
 	{
 		update_player_position(game, next_x, next_y, keycode);
 		game->moves++;
-		ft_printf("Moves: %d\n", game->moves); // 디버깅용
+		ft_printf("Moves: %d\n", game->moves);
 	}
 }

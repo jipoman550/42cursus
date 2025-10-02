@@ -6,11 +6,30 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 17:06:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 18:44:53 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	mlx_part(t_game game)
+{
+	game.mlx = mlx_init();
+	if (!game.mlx)
+		ft_error(&game, "MiniLibX initialization failed.");
+	game.win_width = get_map_width(game.map) * TILE_SIZE;
+	game.win_height = get_map_height(game.map) * TILE_SIZE;
+	game.win = mlx_new_window(game.mlx, game.win_width, game.win_height, "win");
+	if (!game.win)
+		ft_error(&game, "MiniLibX new window generation failed.");
+	load_images(&game);
+	render_map(&game);
+	find_player_position(&game);
+	mlx_key_hook(game.win, handle_keypress, &game);
+	mlx_hook(game.win, 17, 0, handle_exit, &game);
+	mlx_hook(game.win, 9, 0, render_map_return_int, &game);
+	mlx_loop(game.mlx);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -18,7 +37,6 @@ int	main(int argc, char *argv[])
 	char	*file_name;
 
 	ft_bzero(&game, sizeof(t_game));
-
 	if (argc != 2)
 		ft_error(&game, "more than 2 argument.");
 	file_name = argv[1];
@@ -30,31 +48,6 @@ int	main(int argc, char *argv[])
 		ft_error(&game, "failed parsing map.");
 	if (!map_validation(&game))
 		ft_error(&game, "invalid map.");
-// ------------------------------------------
-	game.mlx = mlx_init();
-	if (!game.mlx)
-		ft_error(&game, "MiniLibX initialization failed.");
-
-	game.win_width = get_map_width(game.map) * TILE_SIZE;
-	game.win_height = get_map_height(game.map) * TILE_SIZE;
-
-	game.win = mlx_new_window(game.mlx, game.win_width, game.win_height, "so_long");
-	if (!game.win)
-		ft_error(&game, "MiniLibX new window generation failed.");
-
-	load_images(&game);
-
-	render_map(&game);
-
-	find_player_position(&game);
-
-	mlx_key_hook(game.win, handle_keypress, &game);
-
-	mlx_hook(game.win, 17, 0, handle_exit, &game);
-
-	mlx_hook(game.win, 9, 0, render_map_return_int, &game);
-
-	mlx_loop(game.mlx);
-
+	mlx_part(game);
 	return (0);
 }

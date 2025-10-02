@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:11:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 17:30:51 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/02 18:38:10 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct	s_game
 	void	*img_wall;
 	void	*img_floor;
 	void	*img_exit;
-	void	*img_collect;
+	void	*img_c;
 	void	*img_player_up;
 	void	*img_player_down;
 	void	*img_player_left;
@@ -100,10 +100,10 @@ bool	free_map_and_dequeue_and_return_false(char **m_c, t_qlist *q);
 
 void	load_images(t_game *game);
 void	render_map(t_game *game);
-int		render_map_return_int(t_game *game);
 
 void	ft_error(t_game *game, const char *msg);
 void	free_map(char **map);
 void	ft_cleanup_resources(t_game *game);
+int		render_map_return_int(t_game *game);
 
 #endif
