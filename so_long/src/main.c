@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 14:10:51 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/02 18:44:53 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/03 13:49:56 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	main(int argc, char *argv[])
 
 	ft_bzero(&game, sizeof(t_game));
 	if (argc != 2)
-		ft_error(&game, "more than 2 argument.");
+		ft_error(&game, "not 2 argument.");
 	file_name = argv[1];
 	if (ft_strlen(file_name) < 4
 		|| ft_strncmp(file_name + ft_strlen(file_name) - 4, ".ber", 4) != 0)
