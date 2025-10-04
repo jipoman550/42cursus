@@ -70,22 +70,198 @@
 
 ```
 so_long/
-│
+.
 ├── Makefile
 ├── README.md
-├── includes/
-│   └── so_long.h
-├── src/
-│   ├── main.c
-│   ├── map_parser.c
-│   ├── game_logic.c
-│   └── ...
-├── maps/
-│   └── map1.ber
-└── textures/
-    ├── wall.xpm
-    ├── player.xpm
-    └── ...
+├── en.subject_so_long.pdf
+├── include
+│   └── so_long.h
+├── libft
+│   ├── Makefile
+│   ├── ft_atoi.c
+│   ├── ft_bzero.c
+│   ├── ft_calloc.c
+│   ├── ft_isalnum.c
+│   ├── ft_isalpha.c
+│   ├── ft_isascii.c
+│   ├── ft_isdigit.c
+│   ├── ft_isprint.c
+│   ├── ft_itoa.c
+│   ├── ft_lstadd_back_bonus.c
+│   ├── ft_lstadd_front_bonus.c
+│   ├── ft_lstclear_bonus.c
+│   ├── ft_lstdelone_bonus.c
+│   ├── ft_lstiter_bonus.c
+│   ├── ft_lstlast_bonus.c
+│   ├── ft_lstmap_bonus.c
+│   ├── ft_lstnew_bonus.c
+│   ├── ft_lstsize_bonus.c
+│   ├── ft_memchr.c
+│   ├── ft_memcmp.c
+│   ├── ft_memcpy.c
+│   ├── ft_memmove.c
+│   ├── ft_memset.c
+│   ├── ft_putchar_fd.c
+│   ├── ft_putendl_fd.c
+│   ├── ft_putnbr_fd.c
+│   ├── ft_putstr_fd.c
+│   ├── ft_split.c
+│   ├── ft_strchr.c
+│   ├── ft_strdup.c
+│   ├── ft_striteri.c
+│   ├── ft_strjoin.c
+│   ├── ft_strlcat.c
+│   ├── ft_strlcpy.c
+│   ├── ft_strlen.c
+│   ├── ft_strmapi.c
+│   ├── ft_strncmp.c
+│   ├── ft_strnstr.c
+│   ├── ft_strrchr.c
+│   ├── ft_strtrim.c
+│   ├── ft_substr.c
+│   ├── ft_tolower.c
+│   ├── ft_toupper.c
+│   ├── ftp
+│   │   ├── Makefile
+│   │   ├── ft_conversions.c
+│   │   ├── ft_convert_char.c
+│   │   ├── ft_convert_decimal.c
+│   │   ├── ft_convert_hex.c
+│   │   ├── ft_convert_percent.c
+│   │   ├── ft_convert_pointer.c
+│   │   ├── ft_convert_string.c
+│   │   ├── ft_convert_unsigned.c
+│   │   ├── ft_printf.c
+│   │   ├── ft_printf.h
+│   │   ├── ft_utils.c
+│   │   └── libft
+│   │       ├── ftp_putchar_fd.c
+│   │       ├── ftp_putnbr_fd.c
+│   │       ├── ftp_putstr_fd.c
+│   │       ├── ftp_strlen.c
+│   │       └── libft.h
+│   ├── gnl
+│   │   ├── get_next_line.c
+│   │   ├── get_next_line.h
+│   │   └── get_next_line_utils.c
+│   ├── include
+│   │   ├── ft_printf.h
+│   │   ├── get_next_line.h
+│   │   └── libft.h
+│   └── libft2.h
+├── memo.txt
+├── minilibx-linux
+│   ├── LICENSE
+│   ├── Makefile
+│   ├── Makefile.gen
+│   ├── Makefile.mk
+│   ├── README.md
+│   ├── configure
+│   ├── man
+│   │   ├── man1
+│   │   │   ├── mlx.1
+│   │   │   ├── mlx_loop.1
+│   │   │   ├── mlx_new_image.1
+│   │   │   ├── mlx_new_window.1
+│   │   │   └── mlx_pixel_put.1
+│   │   └── man3
+│   │       ├── mlx.3
+│   │       ├── mlx_loop.3
+│   │       ├── mlx_new_image.3
+│   │       ├── mlx_new_window.3
+│   │       └── mlx_pixel_put.3
+│   ├── mlx.h
+│   ├── mlx_clear_window.c
+│   ├── mlx_destroy_display.c
+│   ├── mlx_destroy_image.c
+│   ├── mlx_destroy_window.c
+│   ├── mlx_expose_hook.c
+│   ├── mlx_ext_randr.c
+│   ├── mlx_flush_event.c
+│   ├── mlx_get_color_value.c
+│   ├── mlx_get_data_addr.c
+│   ├── mlx_hook.c
+│   ├── mlx_init.c
+│   ├── mlx_int.h
+│   ├── mlx_int_anti_resize_win.c
+│   ├── mlx_int_do_nothing.c
+│   ├── mlx_int_get_visual.c
+│   ├── mlx_int_param_event.c
+│   ├── mlx_int_set_win_event_mask.c
+│   ├── mlx_int_str_to_wordtab.c
+│   ├── mlx_int_wait_first_expose.c
+│   ├── mlx_key_hook.c
+│   ├── mlx_lib_xpm.c
+│   ├── mlx_loop.c
+│   ├── mlx_loop_hook.c
+│   ├── mlx_mouse.c
+│   ├── mlx_mouse_hook.c
+│   ├── mlx_new_image.c
+│   ├── mlx_new_window.c
+│   ├── mlx_pixel_put.c
+│   ├── mlx_put_image_to_window.c
+│   ├── mlx_rgb.c
+│   ├── mlx_screen_size.c
+│   ├── mlx_set_font.c
+│   ├── mlx_string_put.c
+│   ├── mlx_xpm.c
+│   ├── mlx_xpm.c.ok
+│   ├── rgb2c.pl
+│   └── test
+│       ├── Makefile.gen
+│       ├── Makefile.mk
+│       ├── main.c
+│       ├── new_win.c
+│       ├── open.xpm
+│       ├── open24.xpm
+│       ├── open30.xpm
+│       └── run_tests.sh
+├── src
+│   ├── event_handler.c
+│   ├── game_logic.c
+│   ├── main.c
+│   ├── map_parsing.c
+│   ├── map_utils.c
+│   ├── map_validation.c
+│   ├── path_validation.c
+│   ├── path_validation_utils.c
+│   ├── rendering.c
+│   └── utils.c
+├── tests
+│   ├── initial_fail
+│   │   ├── empty_file.ber
+│   │   ├── invalid_ber.txt
+│   │   ├── invalid_map_C_cnt_0.ber
+│   │   ├── invalid_map_E_cnt_0.ber
+│   │   ├── invalid_map_E_cnt_2.ber
+│   │   ├── invalid_map_P_cnt_0.ber
+│   │   ├── invalid_map_P_cnt_2.ber
+│   │   ├── invalid_map_include_other_char.ber
+│   │   ├── invalid_map_shape.ber
+│   │   ├── invalid_map_small.ber
+│   │   ├── invalid_map_small_ver2.ber
+│   │   └── invalid_map_surrounding_by_1.ber
+│   ├── path_fail
+│   │   ├── unreachable_collectible.ber
+│   │   └── unreachable_exit.ber
+│   └── success_cases
+│       ├── edge_cases.ber
+│       ├── large_map.ber
+│       ├── valid_path.ber
+│       └── valid_path_complex.ber
+├── textures
+│   ├── c.xpm
+│   ├── d.xpm
+│   ├── enemy.xpm
+│   ├── error.xpm
+│   ├── es.xpm
+│   ├── exit.xpm
+│   ├── l.xpm
+│   ├── r.xpm
+│   ├── u.xpm
+│   └── w.xpm
+└── valgrind_log.txt
+
 ```
 
 -----
