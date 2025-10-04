@@ -325,6 +325,22 @@ valgrind --leak-check=full ./so_long maps/map1.ber
 norminette src includes
 ```
 
+#### **6. 통합 테스트 (Exit Code 및 메모리 누수 검사)**
+
+제공된 테스트 맵 파일들을 기반으로 **Exit Code(종료 코드)**의 정상 여부와 Valgrind를 이용한 메모리 누수 검사를 한 번에 실행합니다.`norminette`를 사용하여 모든 `.c` 및 `.h` 파일이 42 Norm을 준수하는지 확인합니다.
+
+```bash
+make test
+```
+
+**테스트 결과 확인**
+
+Valgrind 검사 결과는 실행 완료 후 valgrind_log.txt 파일에 전체 내용이 기록됩니다. 메모리 누수 발생 시 해당 파일을 열어 상세 내용을 확인하십시오.
+
+```bash
+cat valgrinde_log.txt
+```
+
 -----
 
 ## ✅ 최종 제출 점검표
