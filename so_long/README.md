@@ -327,8 +327,7 @@ norminette src includes
 
 #### **6. 통합 테스트 (Exit Code 및 메모리 누수 검사)**
 
-제공된 테스트 맵 파일들을 기반으로 **Exit Code(종료 코드)**의 정상 여부와 Valgrind를 이용한 메모리 누수 검사를 한 번에 실행합니다.`norminette`를 사용하여 모든 `.c` 및 `.h` 파일이 42 Norm을 준수하는지 확인합니다.
-
+제공된 테스트 맵 파일들을 기반으로 **Exit Code(종료 코드)**의 정상 여부와 Valgrind를 이용한 메모리 누수 검사를 한 번에 실행합니다.
 ```bash
 make test
 ```
