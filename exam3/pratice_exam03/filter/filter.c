@@ -5,7 +5,7 @@
 #include <errno.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 2
 
 int perror_and_free(char *stash, char *stars)
 {
@@ -36,7 +36,9 @@ int main(int argc, char **argv)
 		perror("Error");
 		return 1;
 	}
-	memset(stars, '*', pat_len);
+	// memset(stars, '*', pat_len);
+	for (size_t i = 0; i < pat_len; i++)
+        stars[i] = '*';
 
     /*
 	 * 2) read 루프
@@ -55,7 +57,8 @@ int main(int argc, char **argv)
 		}
 
 		stash = tmp;
-		memcpy(stash + stash_len, buf, r);
+		// memcpy(stash + stash_len, buf, r);
+		memmove(stash + stash_len, buf, r);
 		stash_len += r;
 
     	/* 이제 stash 안에서 패턴을 찾아 처리한다. offset은 처리 진행 위치 */
