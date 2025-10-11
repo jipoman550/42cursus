@@ -4,13 +4,14 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 2
 
 int perror_and_free(char *stash, char *stars)
 {
     perror("Error");
     free(stash);
     free(stars);
+    return 1;
 }
 
 int main(int argc, char *argv[])
@@ -61,11 +62,37 @@ int main(int argc, char *argv[])
                 perror_and_free(stash, stars);
             offset += prefix_len + pat_len;
         }
-        // 5. pattern 찾은거 남은거 stash의 offset 이후 거 정리하기
-
+        // 5. stash에서 offset 뒤에 남아 있는 데이터 중 출력해도 괜찮은(pat_len - 1 기준) 부분은 출력, 다음 read에서 이어질 수 있는 부분 남겨두기.
+        size_t keep = (pat_len > 0) ? pat_len - 1 : 0;
+        if (stash_len > offset)
+        {
+            if (stash_len - offset > keep)
+            {
+                size_t write_len = stash_len - offset - keep;
+                if (write(STDOUT_FILENO, stash + offset, write_len) == -1)
+                    perror_and_free(stash, stars);
+                memmove(stash, stash + offset + write_len, keep);
+                stash_len = keep;
+            }
+            else
+            {
+                memmove(stash, stash + offset, stash_len - offset);
+                stash_len -= offset;
+            }
+        }
+        else
+            stash_len = 0;
     }
     if (r < 0)
         perror_and_free(stash, stars);
     // 6. read 반복문 외에 남은 stash 정리하기
+    if (stash_len > 0)
+    {
+        if (write(STDOUT_FILENO, stash, stash_len) == -1)
+            perror_and_free(stash, stars);
+    }
+    free(stash);
+    free(stars);
+    return 0;
 
 }
