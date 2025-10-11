@@ -113,7 +113,8 @@ char    *gnl(int fd)
             return ret;
         }
         b[readbyte] = '\0';
-        if (str_join_and_free(&ret, b, readbyte)) return NULL;
+        if (str_join_and_free(&ret, b, readbyte))
+            return NULL;
     }
 
 	// 여기부터 아랫부분은 어떤 기능을 하지는 잘 모르겠음. 자세한설명필요

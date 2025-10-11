@@ -139,6 +139,4 @@ int main(int argc, char **argv)
 	free(stash);
 	free(stars);
 	return 0;
-
-    // 6. 에러 처리 및 종료
 }
