@@ -27,13 +27,13 @@ void run_test(const char *filename)
 int main(void)
 {
     const char *files[] = {
-        "case1.txt", // aaaaa
-        "case2.txt", // bbbbb
-        "case3.txt", // x 개많음
-        "case4.txt", // 빈 파일
-        "case5.txt", // \n
-        "case6.txt", // foo\n\nbar\n
-        "case7.txt", // \n\n\n\n\n
+        "test3.txt", // x 개많음
+        "test1.txt", // aaaaa
+        "test2.txt", // bbbbb
+        "test4.txt", // 빈 파일
+        "test5.txt", // \n
+        "test6.txt", // foo\n\nbar\n
+        "test7.txt", // \n\n\n\n\n
         "test_with_nl.txt", // hello\n
         "test_without_nl.txt", // hello
         NULL
