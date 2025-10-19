@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/14 13:20:38 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/19 16:19:39 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
+# include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
+# include <limits.h> // LLONG_MAX를 사용하기 위해 필요
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -58,5 +60,9 @@ typedef struct s_philo
 	struct s_data	*data;			// t_data 구조체를 가리키는 포인터 (핵심)
 
 }	t_philo;
+
+t_data *init_data(char **argv, int argc);
+
+long long ft_parse_long(char *str);
 
 #endif
