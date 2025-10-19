@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/19 16:19:39 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/19 23:25:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdbool.h>
 # include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
 # include <limits.h> // LLONG_MAX를 사용하기 위해 필요
+# include <stdio.h>
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
