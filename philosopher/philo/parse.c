@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:58:57 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/20 09:18:33 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/21 10:24:11 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static bool is_valid_digit(char *str)
 	return (true);
 }
 
-static long long	ft_atoll_safe(const char *str, bool *is_overflow)
+static long long	ft_atol_safe(const char *str, bool *is_overflow)
 {
 	long long	result;
 
