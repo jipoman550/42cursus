@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/19 23:25:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/22 09:06:57 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
 # include <limits.h> // LLONG_MAX를 사용하기 위해 필요
 # include <stdio.h>
+# include <pthread.h> // pthread_mutex_init 사용
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -65,5 +66,7 @@ typedef struct s_philo
 t_data *init_data(char **argv, int argc);
 
 long long ft_parse_long(char *str);
+
+void	free_data(t_data *data);
 
 #endif

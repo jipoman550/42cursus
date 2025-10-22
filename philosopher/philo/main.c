@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/20 09:18:36 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/22 07:54:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 int main(int argc, char **argv)
 {
-    if (argc != 5 && argc != 6)
-    {
-        printf("Error: Invalid number of arguments.\n");
-        return (1);
-    }
+	if (argc != 5 && argc != 6)
+	{
+		printf("Error: Invalid number of arguments.\n");
+		return (1);
+	}
 
-    t_data *data;
+	t_data *data;
 
-    data = init_data(argv, argc);
-    if (data == NULL)
-        return (1);
+	data = init_data(argv, argc);
+	if (data == NULL)
+		return (1);
 
-    // 3. 시뮬레이션 시작 (다음 단계)
-    // start_simulation(data);
+	// 3. 시뮬레이션 시작 (다음 단계)
+	// start_simulation(data);
 
-    // 4. 자원 해제 (다음 단계)
-    // cleanup_and_free(data);
+	// 4. 자원 해제 (다음 단계)
+	// cleanup_and_free(data);
 
-    return (0);
+	return (0);
 }

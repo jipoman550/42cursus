@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
+#    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/10/19 23:22:40 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/22 09:07:22 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ INC_DIR    = philo
 SRC_FILES  = main.c \
 			 parse.c \
 			 init.c \
-			 time.c
+			 time.c \
+			 utils.c
 
 SRCS       = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
