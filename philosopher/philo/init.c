@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 09:16:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 08:06:29 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,6 @@ static int  parse_and_save_args(t_data *data, char **argv, int argc)
 t_data *	init_data(char **argv, int argc)
 {
 	t_data *    data;
-	long long	val;
-	size_t		i;
 
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)

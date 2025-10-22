@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 21:15:32 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 07:35:39 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 int main(int argc, char **argv)
 {
+	t_data *data;
+
 	if (argc != 5 && argc != 6)
 	{
 		printf("Error: Invalid number of arguments.\n");
 		return (1);
 	}
 
-	t_data *data;
-
 	data = init_data(argv, argc);
-	if (data == NULL)
+	if (!data)
 		return (1);
 
-	// 3. 시뮬레이션 시작 (다음 단계)
+	// 3. 시뮬레이션 시작
 	// start_simulation(data);
 
-	// 4. 자원 해제 (다음 단계)
+	// 4. 자원 해제
 	destroy_and_free(data);
 
 	return (0);

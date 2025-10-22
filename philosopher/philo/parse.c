@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:58:57 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 07:53:41 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 08:06:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ long long ft_parse_long(char *str)
 		printf("Error: Argument contains non-digit characters.\n");
 		return (-1);
 	}
-	num = ft_atoll_safe(str, &is_overflow);
+	num = ft_atol_safe(str, &is_overflow);
 	if (is_overflow)
 	{
 		printf("Error: Argument value exceeds maximum limit.\n");

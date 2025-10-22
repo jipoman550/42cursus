@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 21:15:07 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 07:35:49 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	destroy_and_free(t_data *data)
 		pthread_mutex_destroy(&data->forks[i]);
 		i++;
 	}
+
 	// 2. 공유 뮤텍스 파괴 (성공적으로 init이 완료된 상태이므로 안전하게 destroy)
 	pthread_mutex_destroy(&data->print_mutex);
 	pthread_mutex_destroy(&data->data_mutex);
