@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 07:54:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/22 21:15:32 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	// start_simulation(data);
 
 	// 4. 자원 해제 (다음 단계)
-	// cleanup_and_free(data);
+	destroy_and_free(data);
 
 	return (0);
 }

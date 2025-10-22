@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 10:26:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/22 21:15:07 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,27 @@ void	free_data(t_data *data)
 
 	// 최종적으로 t_data 구조체 자체 해제
 	free(data);
+}
+
+void	destroy_and_free(t_data *data)
+{
+	size_t i;
+
+	// 1. 포크 뮤텍스 배열 파괴
+	i = 0;
+	while (i < data->num_of_philos)
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		i++;
+	}
+	// 2. 공유 뮤텍스 파괴 (성공적으로 init이 완료된 상태이므로 안전하게 destroy)
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->data_mutex);
+
+	// 3. 메모리 해제 (포크 배열, 철학자 배열, data 구조체 자체)
+	if (data->forks)
+		free(data->forks);
+	if (data->philos)
+		free(data->philos);
+	free(data); // t_data 구조체 자체 해제
 }
