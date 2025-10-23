@@ -6,11 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 07:35:39 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 10:21:32 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h" // philo.h에는 <stdlib.h>, <stdbool.h> 등이 포함되어 있음
+#include "philo.h"
 
 int main(int argc, char **argv)
 {

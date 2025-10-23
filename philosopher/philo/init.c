@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 08:06:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 10:24:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ t_data *	init_data(char **argv, int argc)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-
+	// memset 추가 -> 해결.
+	memset(data, 0, sizeof(t_data));
 	if (parse_and_save_args(data, argv, argc) != 0)
 	{
 		free(data);

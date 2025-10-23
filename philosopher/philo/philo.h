@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/22 21:15:11 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/23 10:21:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <limits.h> // LLONG_MAX를 사용하기 위해 필요
 # include <stdio.h>
 # include <pthread.h> // pthread_mutex_init 사용
+# include <string.h> // memset 사용
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data

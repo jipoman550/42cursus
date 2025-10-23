@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/10/23 09:34:07 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/23 09:37:35 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -121,7 +121,6 @@ test_leak_fail: $(NAME)
 # 2-B. 초기화 성공 후, 즉시 자원 정리 테스트 (Cleanup on Success)
 # 목적: init_data가 성공했을 때, destroy_all()이 모든 메모리와 뮤텍스를 해제하는지 확인
 # 전제: main 함수가 init_data 성공 직후 destroy_all(data)를 호출해야 함.
-# valgrind 에서 오류
 test_leak_success: $(NAME)
 	@echo "\n--- [TEST] Memory Leak on SUCCESS Path (Immediate Cleanup) ---"
 	@echo " (init_forks, init_shared_mutexes, destroy_all()의 정리 로직을 검증합니다.)"
