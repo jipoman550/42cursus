@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/10/23 08:06:44 by sisung           ###   ########.fr        #
+#    Updated: 2025/10/23 09:10:00 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,7 +97,8 @@ test_leak: test_leak_fail test_leak_success
 leak: $(NAME)
 	@echo "\n--- [VALGRIND] Testing Args: $(ARGS) ---"
 # --trace-children=yes는 스레드(pthread_create)를 검사할 때 필수입니다.
-	valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME) $(ARGS)
+# valgrind 앞에 - 를 붙임.
+	-valgrind --leak-check=full --show-leak-kinds=all --trace-children=yes ./$(NAME) $(ARGS)
 	@echo "----------------------------------------"
 
 # 2-A. 초기화 실패 경로에서 메모리 누수 테스트
