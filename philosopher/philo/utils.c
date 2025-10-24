@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 07:35:49 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/24 19:20:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	free_data(t_data *data)
+t_data *	free_data(t_data *data, char *msg)
 {
 	size_t	i;
 
@@ -28,12 +28,17 @@ void	free_data(t_data *data)
 		free(data->forks);
 	}
 
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->data_mutex);
+
 	// 철학자 배열 해제
 	if (data->philos)
 		free(data->philos);
 
 	// 최종적으로 t_data 구조체 자체 해제
 	free(data);
+	printf("%s", msg);
+	return (NULL);
 }
 
 void	destroy_and_free(t_data *data)
@@ -58,4 +63,10 @@ void	destroy_and_free(t_data *data)
 	if (data->philos)
 		free(data->philos);
 	free(data); // t_data 구조체 자체 해제
+}
+
+int	error_and_return(char *msg, int exit_code)
+{
+	printf("%s", msg);
+	return (exit_code);
 }

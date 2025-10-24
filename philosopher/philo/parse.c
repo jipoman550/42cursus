@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:58:57 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 08:06:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/24 19:50:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,16 @@ long long ft_parse_long(char *str)
 	bool		is_overflow;
 
 	if (!is_valid_digit(str))
-	{
-		printf("Error: Argument contains non-digit characters.\n");
-		return (-1);
-	}
+		return error_and_return(NON_DIGIT_CHAR, -1);
 	num = ft_atol_safe(str, &is_overflow);
 	if (is_overflow)
-	{
-		printf("Error: Argument value exceeds maximum limit.\n");
-		return (-1);
-	}
+		return error_and_return(EXCEED_MAX_LIMIT, -1);
 	if (num <= 0)
 	{
 		if (*str == '0')
-			 printf("Error: Argument cannot be zero.\n");
+			return error_and_return(CANT_BE_ZERO, -1);
 		else
-			 printf("Error: Argument must be a positive integer.\n");
-		return (-1);
+			return error_and_return(NOT_POSITIVE_INT, -1);
 	}
 	return (num);
 }

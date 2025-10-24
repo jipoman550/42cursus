@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 10:24:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/24 19:52:30 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,7 @@ static int  parse_and_save_args(t_data *data, char **argv, int argc)
 	{
 		val = ft_parse_long(argv[5]);
 		if (val == -1)
-		{
-			printf("Error: Invalid argument value for must_eat_count.\n");
-			return (-1);
-		}
+			error_and_return(INVALID_EAT_CNT, -1);
 		data->must_eat_count = (size_t)val;
 	}
 	else
@@ -96,24 +93,13 @@ t_data *	init_data(char **argv, int argc)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (!data)
 		return (NULL);
-	// memset 추가 -> 해결.
 	memset(data, 0, sizeof(t_data));
 	if (parse_and_save_args(data, argv, argc) != 0)
-	{
-		free(data);
-		printf("Error: Invalid argument value.\n");
-		return (NULL);
-	}
+		return free_data(data, INVALID_ARG_VAL);
 	if (init_forks(data) != 0)
-	{
-		free(data);
-		return (NULL);
-	}
+		return free_data(data, ERR_FORK_INIT);
 	if (init_shared_mutexes(data) != 0)
-	{
-		free_data(data);
-		return (NULL);
-	}
+		return free_data(data, ERR_SHARED_MUTEX_INIT);
 
 	// t_philo 구조체 배열 초기화
 

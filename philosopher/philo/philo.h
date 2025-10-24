@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/23 10:21:24 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/24 19:25:45 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,19 @@
 # include <stdio.h>
 # include <pthread.h> // pthread_mutex_init 사용
 # include <string.h> // memset 사용
+
+# define INVALID_ARGS "Error: Invalid number of arguments.\n"
+
+# define INVALID_EAT_CNT "Error: Invalid argument value for must_eat_count.\n"
+# define INVALID_ARG_VAL "Error: Invalid argument value.\n"
+# define ERR_FORK_INIT "Failed to initialize a mutex (fork).\n"
+# define ERR_SHARED_MUTEX_INIT "Failed to initialize a shared mutex (e.g., print/log lock).\n"
+
+# define NON_DIGIT_CHAR "Error: Argument contains non-digit characters.\n"
+# define EXCEED_MAX_LIMIT "Error: Argument value exceeds maximum limit.\n"
+# define CANT_BE_ZERO "Error: Argument cannot be zero.\n"
+# define NOT_POSITIVE_INT "Error: Argument must be a positive integer.\n"
+
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -64,11 +77,12 @@ typedef struct s_philo
 
 }	t_philo;
 
-t_data *init_data(char **argv, int argc);
+t_data *	init_data(char **argv, int argc);
 
-long long ft_parse_long(char *str);
+long long 	ft_parse_long(char *str);
 
-void	free_data(t_data *data);
-void	destroy_and_free(t_data *data);
+t_data *	free_data(t_data *data, char *msg);
+void		destroy_and_free(t_data *data);
+int			error_and_return(char *msg, int exit_code);
 
 #endif
