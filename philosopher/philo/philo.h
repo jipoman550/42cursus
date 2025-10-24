@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/24 19:25:45 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/25 00:07:13 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ t_data *	init_data(char **argv, int argc);
 
 long long 	ft_parse_long(char *str);
 
-t_data *	free_data(t_data *data, char *msg);
-void		destroy_and_free(t_data *data);
+t_data *	clean_data_and_return(t_data *data, char *msg);
+void		finalize_data(t_data *data);
 int			error_and_return(char *msg, int exit_code);
 
 #endif
