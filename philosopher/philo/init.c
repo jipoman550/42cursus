@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/24 19:52:30 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:57:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,11 @@ t_data *	init_data(char **argv, int argc)
 		return (NULL);
 	memset(data, 0, sizeof(t_data));
 	if (parse_and_save_args(data, argv, argc) != 0)
-		return free_data(data, INVALID_ARG_VAL);
+		return clean_data_and_return(data, INVALID_ARG_VAL);
 	if (init_forks(data) != 0)
-		return free_data(data, ERR_FORK_INIT);
+		return clean_data_and_return(data, ERR_FORK_INIT);
 	if (init_shared_mutexes(data) != 0)
-		return free_data(data, ERR_SHARED_MUTEX_INIT);
+		return clean_data_and_return(data, ERR_SHARED_MUTEX_INIT);
 
 	// t_philo 구조체 배열 초기화
 

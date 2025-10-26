@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/25 00:07:13 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/27 08:40:25 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@
 # include <stdbool.h>
 # include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
 # include <limits.h> // LLONG_MAX를 사용하기 위해 필요
-# include <stdio.h>
+# include <stdio.h>`
 # include <pthread.h> // pthread_mutex_init 사용
 # include <string.h> // memset 사용
+# include <unistd.h> // write 함수 사용
 
 # define INVALID_ARGS "Error: Invalid number of arguments.\n"
 

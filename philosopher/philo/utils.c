@@ -6,11 +6,23 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/25 00:08:03 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/26 23:55:18 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static size_t	ft_strlen(char *s)
+{
+	size_t	len;
+
+	if (!s)
+		return (0);
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
 
 t_data *	clean_data_and_return(t_data *data, char *msg)
 {
@@ -33,7 +45,10 @@ t_data *	clean_data_and_return(t_data *data, char *msg)
 	if (data->philos)
 		free(data->philos);
 	free(data);
-	printf("%s", msg);
+	// 에러 출력하는 것은 printf가 아니라 write 써서 fd 값 맞춰서 해야할듯?
+	//printf("%s", msg);
+	if (msg)
+		write(2, msg, ft_strlen(msg));
 	return (NULL);
 }
 
@@ -58,6 +73,9 @@ void	finalize_data(t_data *data)
 
 int	error_and_return(char *msg, int exit_code)
 {
-	printf("%s", msg);
+	// 여기도 에러 출력 printf말고 다른거 써야할듯?
+	//printf("%s", msg);
+	if (msg)
+		write(2, msg, ft_strlen(msg));
 	return (exit_code);
 }
