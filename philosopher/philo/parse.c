@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:58:57 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/24 19:50:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/27 10:46:49 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool is_valid_digit(char *str)
+static bool	is_valid_digit(char *str)
 {
 	size_t	i;
 
@@ -48,22 +48,22 @@ static long long	ft_atol_safe(const char *str, bool *is_overflow)
 	return (result);
 }
 
-long long ft_parse_long(char *str)
+long long	ft_parse_long(char *str)
 {
 	long long	num;
 	bool		is_overflow;
 
 	if (!is_valid_digit(str))
-		return error_and_return(NON_DIGIT_CHAR, -1);
+		return (error_and_return(NON_DIGIT_CHAR, -1));
 	num = ft_atol_safe(str, &is_overflow);
 	if (is_overflow)
-		return error_and_return(EXCEED_MAX_LIMIT, -1);
+		return (error_and_return(EXCEED_MAX_LIMIT, -1));
 	if (num <= 0)
 	{
 		if (*str == '0')
-			return error_and_return(CANT_BE_ZERO, -1);
+			return (error_and_return(CANT_BE_ZERO, -1));
 		else
-			return error_and_return(NOT_POSITIVE_INT, -1);
+			return (error_and_return(NOT_POSITIVE_INT, -1));
 	}
 	return (num);
 }

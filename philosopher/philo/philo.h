@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/27 08:40:25 by sisung           ###   ########.fr       */
+/*   Updated: 2025/10/27 14:52:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdbool.h>
 # include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
 # include <limits.h> // LLONG_MAX를 사용하기 위해 필요
-# include <stdio.h>`
+# include <stdio.h>
 # include <pthread.h> // pthread_mutex_init 사용
 # include <string.h> // memset 사용
 # include <unistd.h> // write 함수 사용
@@ -27,13 +27,15 @@
 # define INVALID_EAT_CNT "Error: Invalid argument value for must_eat_count.\n"
 # define INVALID_ARG_VAL "Error: Invalid argument value.\n"
 # define ERR_FORK_INIT "Failed to initialize a mutex (fork).\n"
-# define ERR_SHARED_MUTEX_INIT "Failed to initialize a shared mutex (e.g., print/log lock).\n"
+# define ERR_SHARED_MUTEX_INIT "Failed to initialize a shared mutex\
+ (e.g., print/log lock).\n"
+# define ERR_PHILOS_INIT "Failed to initialize a philos array(e.g.,\
+ print/log lock).\n"
 
 # define NON_DIGIT_CHAR "Error: Argument contains non-digit characters.\n"
 # define EXCEED_MAX_LIMIT "Error: Argument value exceeds maximum limit.\n"
 # define CANT_BE_ZERO "Error: Argument cannot be zero.\n"
 # define NOT_POSITIVE_INT "Error: Argument must be a positive integer.\n"
-
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -65,10 +67,11 @@ typedef struct s_philo
 	size_t			id;				// 철학자 번호 (1부터 시작)
 	size_t			eat_count;		// 현재까지 식사 횟수
 	long long		last_eat_time;	// 마지막으로 식사를 시작한 시간
+	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
 
 	// [포크 정보]
-	size_t			l_fork_id;		// 왼쪽 포크 인덱스
-	size_t			r_fork_id;		// 오른쪽 포크 인덱스
+	pthread_mutex_t	*l_fork_id;		// 왼쪽 포크 인덱스
+	pthread_mutex_t	*r_fork_id;		// 오른쪽 포크 인덱스
 
 	// [스레드 정보]
 	pthread_t		thread;			// 철학자 스레드 핸들
@@ -78,12 +81,13 @@ typedef struct s_philo
 
 }	t_philo;
 
-t_data *	init_data(char **argv, int argc);
+t_data		*init_data(char **argv, int argc);
 
-long long 	ft_parse_long(char *str);
+long long	ft_parse_long(char *str);
 
-t_data *	clean_data_and_return(t_data *data, char *msg);
+t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);
 int			error_and_return(char *msg, int exit_code);
+int			parse_required_args(t_data *data, char **argv);
 
 #endif
