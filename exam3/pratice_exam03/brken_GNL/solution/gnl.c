@@ -81,7 +81,7 @@ int str_join_and_free(char **s1, const char *s2, size_t size2)
     tmp[size1 + size2] = '\0';
     free(*s1);
     *s1 = tmp;
-    return 0;    
+    return 0;
 }
 
 //int str_add_mem(char **s1, const char *s2, size_t size2)
@@ -97,30 +97,54 @@ int str_join_and_free(char **s1, const char *s2, size_t size2)
 //    return 0;
 //}
 
-//int str_add_str(char **s1, const char *s2, size_t size2)
-{
-    return str_add_mem(s1, s2, size2);
-}
+////int str_add_str(char **s1, const char *s2, size_t size2)
+//{
+//    return str_add_mem(s1, s2, size2);
+//}
 
 char    *gnl(int fd)
 {
     static char b[BUFFER_SIZE + 1] = "";
-    int     readbyte;
+    ssize_t     readbyte;
     char    *ret = NULL;
     char    *tmp;
 
-    tmp = ft_strchr(b, '\n');
-    while (!tmp)
+    if (fd < 0 || BUFFER_SIZE <= 0)
+        return (NULL);
+    if (str_join_and_free(&ret, b, ft_strlen(b)))
+        return (NULL);
+    while (!(tmp = ft_strchr(ret, '\n')))
     {
-        if (str_add_str(&ret, b, ft_strlen(b)))
-            return NULL;
         readbyte = read(fd, b, BUFFER_SIZE);
-        if (readbyte == -1)
+        if (readbyte <= 0)
+        {
+            b[0] = '\0';
+            if (readbyte == -1 || !ret || ret[0] == '\0')
+            {
+                free(ret);
+                return NULL;
+            }
+            return ret;
+        }
+        b[readbyte] = '\0';
+        if (str_join_and_free(&ret, b, readbyte))
             return NULL;
-        b[readbyte] = 0;
-        tmp = ft_strchr(b, '\n');
     }
-    if (str_add_mem(&ret, b, tmp - b + 1)) // ⚠️ 괄호 오류 가능
+
+    size_t line_len = (tmp - ret) + 1;
+    size_t remainder_len = ft_strlen(tmp + 1);
+
+    ft_memmove(b, tmp + 1, remainder_len + 1);
+
+    char *final_line = malloc(line_len + 1);
+    if (!final_line)
+    {
+        free(ret);
         return NULL;
-    return ret;
+    }
+    ft_memcpy(final_line, ret, line_len);
+    final_line[line_len] = '\0';
+
+    free(ret);
+    return final_line;
 }
