@@ -3,56 +3,101 @@
 size_t  ft_strlen(const char *s)
 {
     size_t i = 0;
-    while (*s)
-    {
-        s++;
+    if (!s)
+        return 0;
+    while (s[i])
         i++;
-    }
     return i;
 }
 
 char    *ft_strchr(char *s, const char c)
 {
-    while (*s && *s != c)
+    if (!s)
+        return NULL;
+    while (*s)
+    {
+        if (*s == (char)c)
+            return ((char *)s);
         s++;
-    if (*s == c)
-        return s + 1;
+    }
+    if (*s == (char)c)
+        return (char *)s;
     return NULL;
 }
 
 void    *ft_memcpy(void *dest, const void *src, size_t n)
 {
-    while (--n > 0) // ⚠️ off-by-one 버그
-        ((char *)dest)[n] = ((char *)src)[n];
+    size_t i = 0;
+    if (!dest && !src)
+        return NULL;
+    while (i < n) // ⚠️ off-by-one 버그
+    {
+        ((char *)dest)[i] = ((char *)src)[i];
+        i++;
+    }
     return dest;
 }
 
-void    *ft_memmove(void *dest, const void *src, size_t size2)
+void    *ft_memmove(void *dest, const void *src, size_t len)
 {
-    if (dest > src)
-        return ft_memcpy(dest, src, size2);
-    if (dest == src)
+    char *d = (char *)dest;
+    const char *s = (const char *)src;
+    size_t i;
+    if (d == s)
         return dest;
-    size_t n = ft_strlen(src) - 1; // ⚠️ strlen 사용은 잘못됨
-    while (--n > 0)
-        ((char *)dest)[n - 1] = ((char *)src)[n - 1];
+    if (d < s)
+    {
+        i = 0;
+        while (i < len)
+        {
+            d[i] = s[i];
+            i++;
+        }
+    }
+    else
+    {
+        i = len;
+        while (i > 0)
+        {
+            i--;
+            d[i] = s[i];
+        }
+    }
     return dest;
 }
-
-int str_add_mem(char **s1, const char *s2, size_t size2)
+int str_join_and_free(char **s1, const char *s2, size_t size2)
 {
-    size_t size1 = ft_strlen(*s1); // ⚠️ *s1 이 NULL일 때 문제
+    size_t size1 = ft_strlen(*s1);
     char *tmp = malloc(size1 + size2 + 1);
     if (!tmp)
+    {
+        free(*s1);
+        *s1 = NULL;
         return 1;
-    ft_memcpy(tmp, *s1, size1);
+    }
+    if (*s1)
+        ft_memcpy(tmp, *s1, size1);
     ft_memcpy(tmp + size1, s2, size2);
+    tmp[size1 + size2] = '\0';
     free(*s1);
     *s1 = tmp;
-    return 0;
+    return 0;    
 }
 
-int str_add_str(char **s1, const char *s2, size_t size2)
+//int str_add_mem(char **s1, const char *s2, size_t size2)
+//{
+//    size_t size1 = ft_strlen(*s1); // ⚠️ *s1 이 NULL일 때 문제
+//    char *tmp = malloc(size1 + size2 + 1);
+//    if (!tmp)
+//        return 1;
+//    ft_memcpy(tmp, *s1, size1);
+//    ft_memcpy(tmp + size1, s2, size2);
+//    free(*s1);
+//    *s1 = tmp;
+//    return 0;
+//}
+
+//int str_add_str(char **s1, const char *s2, size_t size2)
 {
     return str_add_mem(s1, s2, size2);
 }
