@@ -1,98 +1,118 @@
 #define _GNU_SOURCE
-#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 
 #define BUFFER_SIZE 2
 
 int perror_and_free(char *stash, char *stars)
 {
-    perror("Error");
-    free(stash);
-    free(stars);
-    return 1;
+	perror("Error");
+	free(stash);
+	free(stars);
+	return 1;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char **argv)
 {
-    // 1. 인자 검수(argc가 2개 아니면, argv[1][0] == '\0' 면 cut).
-    if (argc != 2 || argv[1][0] == '\0')
-        return 1;
-    char buf[BUFFER_SIZE];
-    char *stash = NULL;
-    size_t stash_len = 0;
-    char *pattern = argv[1];
-    size_t pat_len = strlen(pattern);
-    ssize_t r;
+	// 1. 인자 검사: 인자가 1개만 와야함. 빈 문자열이면 안됨.
+	if (argc != 2 || argv[1][0] == '\0')
+		return 1;
 
-    // 2. pattern stars로 만들어서 반복 줄임
-    char *stars = malloc(pat_len);
-    if (!stars)
-    {
-        perror("Error");
-        return 1;
-    }
-    for (size_t i = 0; i < pat_len; ++i)
-        stars[i] = '*';
+	char buf[BUFFER_SIZE];
+	char *stash = NULL;
+	size_t stash_len = 0;
+	char *pattern = argv[1];
+	size_t pat_len = strlen(pattern);
+	ssize_t r;
 
-    // 3. read 돌려서 읽기는 것 stash에 붙이기
-    while ((r = read(STDIN_FILENO, buf, BUFFER_SIZE)) > 0)
-    {
-        char *tmp = realloc(stash, stash_len + r);
-        if (!tmp)
-            perror_and_free(stash, stars);
+	// 2. 패턴 길이만큼의 '*'  문자열(stars)을 미리 준비
+	char *stars = malloc(pat_len);
+	if (!stars)
+	{
+		perror("Error");
+		return 1;
+	}
+	for (size_t i = 0; i < pat_len; ++i)
+		stars[i] = '*';
 
-        stash = tmp;
-        memmove(stash + stash_len, buf, r);
-        stash_len += r;
+	// 3. read를 반복하며 데이터를 stash를 누적하고 처리
+	while ((r = read(STDIN_FILENO, buf, BUFFER_SIZE)) > 0)
+	{
+		// a. stash 확장(realloc)
+		char *tmp = realloc(stash, stash_len + r);
+		if (!tmp)
+			return (perror_and_free(stash, stars));
+		stash = tmp;
 
-        // 4. read 반복문 안에서 memmem 돌려서 pattern 찾기
-        size_t offset = 0;
-        char *pos;
-        while ((pos = memmem(stash + offset, stash_len - offset, pattern, pat_len)))
-        {
-            size_t prefix_len = pos - (stash + offset);
-            if (prefix_len > 0)
-            {
-                if (write(STDOUT_FILENO, stash + offset, prefix_len) == -1)
-                    perror_and_free(stash, stars);
-            }
-            if (write(STDOUT_FILENO, stars, pat_len) == -1)
-                perror_and_free(stash, stars);
-            offset += prefix_len + pat_len;
-        }
-        // 5. stash에서 offset 뒤에 남아 있는 데이터 중 출력해도 괜찮은(pat_len - 1 기준) 부분은 출력, 다음 read에서 이어질 수 있는 부분 남겨두기.
-        size_t keep = (pat_len > 0) ? pat_len - 1 : 0;
-        if (stash_len > offset)
-        {
-            if (stash_len - offset > keep)
-            {
-                size_t write_len = stash_len - offset - keep;
-                if (write(STDOUT_FILENO, stash + offset, write_len) == -1)
-                    perror_and_free(stash, stars);
-                memmove(stash, stash + offset + write_len, keep);
-                stash_len = keep;
-            }
-            else
-            {
-                memmove(stash, stash + offset, stash_len - offset);
-                stash_len -= offset;
-            }
-        }
-        else
-            stash_len = 0;
-    }
-    if (r < 0)
-        perror_and_free(stash, stars);
-    // 6. read 반복문 외에 남은 stash 정리하기
-    if (stash_len > 0)
-    {
-        if (write(STDOUT_FILENO, stash, stash_len) == -1)
-            perror_and_free(stash, stars);
-    }
-    free(stash);
-    free(stars);
-    return 0;
+		// b. 새 데이터 추가 (memmove)
+		memmove(stash + stash_len, buf, r);
+		stash_len += r;
 
+		// c. 패턴 찾기 및 출력 (memmem 반복)
+		size_t offset = 0;
+		char *pos;
+		while ((pos = memmem(stash + offset, stash_len - offset, pattern, pat_len)))
+		{
+			// 1) 패턴 직전까지의 접두사 길이
+			size_t prefix_len = pos - (stash + offset);
+			// 2) 접두사 출력
+			if (prefix_len > 0)
+			{
+				if (write(STDOUT_FILENO, stash + offset, prefix_len) == -1)
+					return perror_and_free(stash, stars);
+			}
+			// 3) '*' 출력
+			if (write(STDOUT_FILENO, stars, pat_len) == -1)
+				return perror_and_free(stash, stars);
+			// 4) offset 업데이트 : 다음 검색은 패턴이 끝난 지점 부터 시작
+			offset += prefix_len + pat_len;
+
+		}
+
+		// d. stash cleanup (다음 read에 걸쳐 패턴이 완성 될 수 있는 부분만 남기기)
+		size_t keep = (pat_len > 0) ? pat_len - 1 : 0;
+		// 1) 처리되지 않은 잔여 데이터가 있을 때
+		if (stash_len > offset)
+		{
+			size_t remaining = stash_len - offset;
+			// 남은 데이터가 keep 보다 길다면 (안전하게 출력 가능한 부분이 있음)
+			if (remaining > keep)
+			{
+				size_t write_len = remaining - keep;
+				if (write(STDOUT_FILENO, stash + offset, write_len) == -1)
+					return perror_and_free(stash, stars);
+				memmove(stash, stash + offset + write_len, keep);
+				stash_len = keep;
+			}
+			// 남은 데이터가 kepp 보다 짧거나 같다면 (모두 남겨둬야 됨)
+			else
+			{
+				memmove(stash, stash + offset, remaining);
+				stash_len = remaining;
+			}
+		}
+		// stash_len == offset, 모두 처리되었으므로 stash를 비움
+		else
+		{
+			stash_len = 0;
+		}
+	}
+	// 4. read 루프 후 잔여 에러 및 데이터 처리
+	if (r < 0)
+		return perror_and_free(stash, stars);
+
+	// 5. stash에 남아있는 최종 잔여 데이터 출력 (마지막까지 패턴이 발견되지 않은 부분)
+	if (stash_len > 0)
+	{
+		if (write(STDOUT_FILENO, stash, stash_len) == -1)
+			return perror_and_free(stash, stars);
+	}
+
+	// 6. 메모리 해제 및 정상 종료
+	free(stash);
+	free(stars);
+	return 0;
 }
