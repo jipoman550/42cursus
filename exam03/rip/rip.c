@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rip.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Jaeholee <makest@naver.com>                +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 11:35:21 by Jaeholee          #+#    #+#             */
-/*   Updated: 2025/08/05 11:35:23 by Jaeholee         ###   ########.fr       */
+/*   Updated: 2025/11/01 10:57:10 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ int rip_state(char *pset, int *check)
 		{
 			if (check[0] > 0)
 				check[0] -= 1;
-			else		
+			else
 				check[1] += 1;
 		}
 		i++;
 	}
 	check[2] = check[0] + check[1];
-	return (0); 
+	return (0);
 }
 
 int pset_check(char *pset)

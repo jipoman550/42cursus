@@ -65,6 +65,7 @@ void    *ft_memmove(void *dest, const void *src, size_t len)
     }
     return dest;
 }
+
 int str_join_and_free(char **s1, const char *s2, size_t size2)
 {
     size_t size1 = ft_strlen(*s1);
