@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/27 14:52:34 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/10 09:54:56 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define EXCEED_MAX_LIMIT "Error: Argument value exceeds maximum limit.\n"
 # define CANT_BE_ZERO "Error: Argument cannot be zero.\n"
 # define NOT_POSITIVE_INT "Error: Argument must be a positive integer.\n"
+
+# define ERR_THREAD_FAIL "Error: Failed to create thread."
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -70,8 +72,8 @@ typedef struct s_philo
 	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
 
 	// [포크 정보]
-	pthread_mutex_t	*l_fork_id;		// 왼쪽 포크 인덱스
-	pthread_mutex_t	*r_fork_id;		// 오른쪽 포크 인덱스
+	pthread_mutex_t	*l_fork_id;		// 왼쪽 포크
+	pthread_mutex_t	*r_fork_id;		// 오른쪽 포크
 
 	// [스레드 정보]
 	pthread_t		thread;			// 철학자 스레드 핸들
@@ -84,6 +86,8 @@ typedef struct s_philo
 t_data		*init_data(char **argv, int argc);
 
 long long	ft_parse_long(char *str);
+
+int			start_simulation(t_data *data);
 
 t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);

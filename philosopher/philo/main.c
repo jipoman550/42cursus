@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/27 10:49:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/10 09:55:25 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	main(int argc, char **argv)
 		return (1);
 
 	// 3. 시뮬레이션 시작
-	// start_simulation(data);
+	if (start_simulation(data))
+		return (clean_data_and_return(data, ERR_THREAD_FAIL));
 
 	// 4. 자원 해제
 	finalize_data(data);
