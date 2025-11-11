@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/10 09:54:56 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/11 13:04:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,14 @@ t_data		*init_data(char **argv, int argc);
 
 long long	ft_parse_long(char *str);
 
+void		philo_eat(t_philo *philo);
+void		philo_sleep(t_philo *philo);
+void		philo_think(t_philo *philo);
+
 int			start_simulation(t_data *data);
+
+long long	get_time_ms(void);
+void		usleep_ms(long long time_to_wait);
 
 t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);

@@ -6,13 +6,12 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/10 09:13:26 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/11 12:49:05 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-// this func. will merge error_and_return func.
 static size_t	ft_strlen(char *s)
 {
 	size_t	len;
