@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/10/27 15:04:29 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/13 10:12:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ t_data	*init_data(char **argv, int argc)
 
 	// 시뮬레이션 시작 시간 초기화
 	// gettimeofday 사용해서 현재시간을 ms 로 변환하는 함수 필요 (time.c)
-	// data->start_time = get_time_ms();
+	data->start_time = get_time_ms();
+	if (data->start_time == -1)
+		return (clean_data_and_return(data, ERR_TIME_INIT));
 
 	return (data);
 }

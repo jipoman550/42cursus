@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/11 09:40:07 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 07:58:48 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	*philo_routine(void *philo_ptr)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_ptr;
-	if (philo->id % 2 == 0)
-		usleep_ms(philo->data->time_to_die / 2);
+	// Initial start delay (auxiliary safety device)
+	//if (philo->id % 2 == 0)
+	//	usleep_ms(philo->data->time_to_die / 2);
 	while (1)
 	{
 		philo_eat(philo);

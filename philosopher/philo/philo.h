@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/11 13:04:23 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/13 10:43:31 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <pthread.h> // pthread_mutex_init 사용
 # include <string.h> // memset 사용
 # include <unistd.h> // write 함수 사용
+# include <sys/time.h> // gettimeofday
 
 # define INVALID_ARGS "Error: Invalid number of arguments.\n"
 
@@ -37,7 +38,9 @@
 # define CANT_BE_ZERO "Error: Argument cannot be zero.\n"
 # define NOT_POSITIVE_INT "Error: Argument must be a positive integer.\n"
 
-# define ERR_THREAD_FAIL "Error: Failed to create thread."
+# define ERR_THREAD_FAIL "Error: Failed to create thread.\n"
+
+# define ERR_TIME_INIT "Error: Failed to init time.\n"
 
 // 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
@@ -94,6 +97,7 @@ void		philo_think(t_philo *philo);
 int			start_simulation(t_data *data);
 
 long long	get_time_ms(void);
+long long	get_timestamp_ms(t_data *data);
 void		usleep_ms(long long time_to_wait);
 
 t_data		*clean_data_and_return(t_data *data, char *msg);
