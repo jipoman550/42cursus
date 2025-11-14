@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/10/23 09:37:35 by sisung           ###   ########.fr        #
+#    Updated: 2025/11/14 10:38:21 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,11 @@ INC_DIR    = philo
 
 # 소스 파일 목록 (현재 분리된 파일 기준)
 SRC_FILES  = main.c \
-			 parse.c \
 			 init.c \
+			 monitor.c \
+			 parse.c \
+			 routine.c \
+			 simulation.c \
 			 time.c \
 			 utils.c
 

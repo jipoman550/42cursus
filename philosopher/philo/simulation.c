@@ -6,11 +6,24 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 07:58:48 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 10:14:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	join_philosophers(t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < data->num_of_philos)
+	{
+		// pthread_join 호출: 해당 스레드가 종료될 때까지 메인 스레드를 블록시킵니다.
+		pthread_join(data->philos[i].thread, NULL);
+		i++;
+	}
+}
 
 static int	handle_thread_creation_error(t_data *data, size_t threads_created)
 {
@@ -36,8 +49,14 @@ void	*philo_routine(void *philo_ptr)
 	//	usleep_ms(philo->data->time_to_die / 2);
 	while (1)
 	{
+		if (check_termination(philo) == true)
+			break ;
 		philo_eat(philo);
+		if (check_termination(philo) == true)
+			break ;
 		philo_sleep(philo);
+		if (check_termination(philo) == true)
+			break ;
 		philo_think(philo);
 	}
 	return (NULL);
@@ -65,6 +84,11 @@ int	start_simulation(t_data *data)
 
 	// 3. Monitoring start and thread join
 	// call monitoring func.
+	// Start monitoring
+	monitor_simulation(data);
+
+	// Wait for all philo threads to terminate and reclaim resources
+	join_philosophers(data);
 
 	return (0);
 }

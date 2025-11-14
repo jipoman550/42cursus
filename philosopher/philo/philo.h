@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/13 10:43:31 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 10:42:14 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,12 @@ typedef struct s_philo
 
 t_data		*init_data(char **argv, int argc);
 
+bool		check_termination(t_philo *philo);
+void		monitor_simulation(t_data *data);
+
 long long	ft_parse_long(char *str);
 
+void		print_log(t_philo *philo, const char *status);
 void		philo_eat(t_philo *philo);
 void		philo_sleep(t_philo *philo);
 void		philo_think(t_philo *philo);
