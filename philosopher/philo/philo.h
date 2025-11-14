@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:42:14 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 10:47:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ typedef struct s_philo
 	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
 
 	// [포크 정보]
-	pthread_mutex_t	*l_fork_id;		// 왼쪽 포크
-	pthread_mutex_t	*r_fork_id;		// 오른쪽 포크
+	pthread_mutex_t	*l_fork;		// 왼쪽 포크
+	pthread_mutex_t	*r_fork;		// 오른쪽 포크
 
 	// [스레드 정보]
 	pthread_t		thread;			// 철학자 스레드 핸들

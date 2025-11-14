@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:39:47 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 10:47:21 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	philo_eat(t_philo *philo)
 
 	if (philo->id % 2 != 0)
 	{
-		first_fork = philo->l_fork_id;
-		second_fork = philo->r_fork_id;
+		first_fork = philo->l_fork;
+		second_fork = philo->r_fork;
 	}
 	else
 	{
-		first_fork = philo->r_fork_id;
-		second_fork = philo->l_fork_id;
+		first_fork = philo->r_fork;
+		second_fork = philo->l_fork;
 	}
 
 	// 1. get first fork

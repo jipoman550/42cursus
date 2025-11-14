@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/13 10:12:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/14 10:47:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ static int	init_philos(t_data *data)
 		data->philos[i].last_eat_time = 0;
 
 		// 왼쪽 포크: 항상 현재 인덱스의 포크
-		data->philos[i].l_fork_id = &data->forks[i];
+		data->philos[i].l_fork = &data->forks[i];
 
 		// 오른쪽 포크: 다음 인덱스의 포크 (마지막 철학자는 첫 번쨰 포크를 잡음)
 		if (i == data->num_of_philos - 1)
-			data->philos[i].r_fork_id = &data->forks[0];
+			data->philos[i].r_fork = &data->forks[0];
 		else
-			data->philos[i].r_fork_id = &data->forks[i + 1];
+			data->philos[i].r_fork = &data->forks[i + 1];
 		i++;
 	}
 	return (0);
