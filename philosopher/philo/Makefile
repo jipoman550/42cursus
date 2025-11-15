@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/11/15 10:58:29 by sisung           ###   ########.fr        #
+#    Updated: 2025/11/15 11:21:59 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ test_parse: $(NAME)
 	@./$(NAME) 0 800 200 200 > /dev/null 2>&1 || echo "    - ✅ Test: Num_philo is zero (Exit $$?) PASSED" || echo "    - ❌ Test: Num_philo is zero FAILED"
 	@./$(NAME) hello 800 200 200 > /dev/null 2>&1 || echo "    - ✅ Test: Non-numeric arg (Exit $$?) PASSED" || echo "    - ❌ Test: Non-numeric arg FAILED"
 
+# error 발생
 # 3. 성공 케이스: 유효한 인자 (Exit Code 0 기대)
 	@echo "\n  - [SUCCESS] Valid Argument Tests:"
 	@./$(NAME) 5 800 200 200 --parse-only > /dev/null 2>&1; if [ $$? -eq 0 ]; then echo "    - ✅ Test: 4 args PASSED"; else echo "    - ❌ Test: 4 args FAILED (Exit $$?)"; fi
@@ -94,6 +95,7 @@ test_parse: $(NAME)
 test_functional: $(NAME)
 	@echo "\n--- [TEST] Functional & Termination Tests ---"
 
+# error 발생
 # 1. 성공 케이스: 식사 횟수 충족으로 종료 (5 800 200 200 7 반영)
 	@echo "\n  - [SUCCESS] Meal Count Termination (5 800 200 200 7):"
 	@./$(NAME) 5 800 200 200 7 | grep -c "is thinking" > /dev/null 2>&1; if [ $$? -eq 0 ]; then echo "    - ✅ Test: 5 phil 7 meals PASSED (Exit 0)"; else echo "    - ❌ Test: 5 phil 7 meals FAILED (Exit $$?)"; fi
