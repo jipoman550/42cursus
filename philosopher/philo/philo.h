@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:47:16 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/16 15:56:22 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,18 @@ typedef struct s_data
 	size_t			must_eat_count;	// [선택 인자] must_eat_count (0이면 무한)
 
 	// [시뮬레이션 상태] 공유 자원
-	long long		start_time;		// 시뮬레이션 시작 시간 (gettimeofday)
-	bool			is_dead;		// 철학자 사망 여부 (플래그)
+	long long		start_time;				// 시뮬레이션 시작 시간 (gettimeofday)
+	bool			is_dead;				// 철학자 사망 여부 (플래그)
 
 	// [동기화] 공유 자원 보호
-	pthread_mutex_t	*forks;			// 포크 배열 (각 포크마다 뮤텍스)
-	pthread_mutex_t	print_mutex;	// 로그 출력을 위한 뮤텍스
-	pthread_mutex_t	data_mutex;		// is_dead, eat_count 등 공유 변수 보호
+	pthread_mutex_t	*forks;					// 포크 배열 (각 포크마다 뮤텍스)
+	pthread_mutex_t	print_mutex;			// 로그 출력을 위한 뮤텍스
+	pthread_mutex_t	dead_mutex;				// is_dead를 위한 뮤텍스
+	pthread_mutex_t	must_eat_count_mutex;	// must_eat_count 를 위한 뮤텍스
+	pthread_mutex_t	data_mutex;				// is_dead, must_eat_count 등 공유 변수 보호. 얘는 없어도 될듯.
 
 	// [철학자 배열]
-	struct s_philo	*philos;		// t_philo 구조체 배열 포인터 (나중에 할당)
+	struct s_philo	*philos;		// t_philo 구조체 배열 포인터
 
 }	t_data;
 
@@ -70,9 +72,10 @@ typedef struct s_data
 typedef struct s_philo
 {
 	size_t			id;				// 철학자 번호 (1부터 시작)
-	size_t			eat_count;		// 현재까지 식사 횟수
+	//size_t			eat_count;	// 현재까지 식사 횟수. 이 멤버는 사용하지 않는 것 같음.
 	long long		last_eat_time;	// 마지막으로 식사를 시작한 시간
 	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
+	pthread_mutex_t	meal_mutex;		// last_eat_time 과 meals_eaten 을 위한 뮤텍스
 
 	// [포크 정보]
 	pthread_mutex_t	*l_fork;		// 왼쪽 포크

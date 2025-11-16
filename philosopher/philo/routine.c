@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:47:21 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/16 13:38:25 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	print_log(t_philo *philo, const char *status)
 		pthread_mutex_unlock(&philo->data->data_mutex);
 		return ;
 	}
+	// 이걸 안해줬음.
+	pthread_mutex_unlock(&philo->data->data_mutex);
 
 	// 2. start print_mutex lock
 	pthread_mutex_lock(&philo->data->print_mutex);
@@ -36,7 +38,7 @@ void	print_log(t_philo *philo, const char *status)
 	}
 
 	// 4. print log to fit shape
-	printf("[%lld] %zu %s\n", timestamp, philo->id, status);
+	printf("%lld %zu %s\n", timestamp, philo->id, status);
 
 	// 5. stop print_mutex lock
 	pthread_mutex_unlock(&philo->data->print_mutex);

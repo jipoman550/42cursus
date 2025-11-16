@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/11 12:49:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/16 17:13:32 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,18 @@ t_data	*clean_data_and_return(t_data *data, char *msg)
 		}
 		free(data->forks);
 	}
+	if (data->philos)
+	{
+		i = 0;
+		while (i < data->num_of_philos)
+		{
+			pthread_mutex_destroy(&data->philos[i].meal_mutex);
+			i++;
+		}
+	}
 	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->data_mutex);
+	pthread_mutex_destroy(&data->dead_mutex);
+	pthread_mutex_destroy(&data->must_eat_count_mutex);
 	if (data->philos)
 		free(data->philos);
 	free(data);

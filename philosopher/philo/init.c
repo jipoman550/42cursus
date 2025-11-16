@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:47:26 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/16 17:16:42 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,17 @@ static int	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].data = data;
 		data->philos[i].meals_eaten = 0;
-
 		// 철학자가 생성되는 순간을 '마지막 식사 시간' 으로 설정 (사망 판정의 기준점)
 		data->philos[i].last_eat_time = 0;
+
+		// 여기 고치는 중
+		if (pthread_mutex_init(&(data->philos[i].meal_mutex), NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			free(data->forks);
+			return (-1);
+		}
 
 		// 왼쪽 포크: 항상 현재 인덱스의 포크
 		data->philos[i].l_fork = &data->forks[i];
@@ -46,11 +54,10 @@ static int	init_shared_mutexes(t_data *data)
 {
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
 		return (-1);
-	if (pthread_mutex_init(&data->data_mutex, NULL) != 0)
-	{
-		pthread_mutex_destroy(&data->print_mutex);
+	if (pthread_mutex_init(&data->dead_mutex, NULL) != 0)
 		return (-1);
-	}
+	if (pthread_mutex_init(&data->must_eat_count_mutex, NULL) != 0)
+		return (-1);
 	data->is_dead = false;
 	return (0);
 }
@@ -68,7 +75,7 @@ static int	init_forks(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
-			while (--i > 0)
+			while (--i >= 0)
 				pthread_mutex_destroy(&data->forks[i]);
 			free(data->forks);
 			return (-1);
