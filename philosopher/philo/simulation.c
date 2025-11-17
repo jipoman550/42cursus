@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 08:53:19 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 11:38:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	start_simulation(t_data *data)
 	while (i < data->num_of_philos)
 	{
 		// 1. Creation thread
+		// 각 생성되는 thread 마다
 		if (pthread_create(&data->philos[i].thread, NULL, philo_routine, &data->philos[i]) != 0)
 		{
 			return (handle_thread_creation_error(data, i));

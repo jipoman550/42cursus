@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 08:43:15 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 11:30:44 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	philo_eat(t_philo *philo)
 	}
 
 	// 1. get first fork
+	// mutex_trylcok 를 구현하기
+	// 철학자가 포크 1개만 쥐고 끝까지 가는 경우를 처리해야할 것 같음.
 	pthread_mutex_lock(first_fork);
 	print_log(philo, "has taken a fork");
 
