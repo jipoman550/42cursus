@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:14:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 08:53:19 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ static int	handle_thread_creation_error(t_data *data, size_t threads_created)
 {
 	size_t	i;
 
+	pthread_mutex_lock(&data->dead_mutex);
 	data->is_dead = true;
+	pthread_mutex_unlock(&data->dead_mutex);
 	i = 0;
 	while (i < threads_created)
 	{

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/16 17:24:05 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 09:57:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static bool	check_if_all_eaten(t_data *data)
 	count_eaten = 0;
 	while (i < data->num_of_philos)
 	{
-		pthread_mutex_lock(&data->must_eat_count_mutex);
+		pthread_mutex_lock(&data->philos[i].meal_mutex);
 		if (data->philos[i].meals_eaten >= data->must_eat_count)
 			count_eaten++;
-		pthread_mutex_unlock(&data->must_eat_count_mutex);
+		pthread_mutex_unlock(&data->philos[i].meal_mutex);
 		i++;
 	}
 	if (count_eaten == data->num_of_philos)
@@ -51,7 +51,7 @@ static bool	check_if_dead(t_data *data, size_t i)
 {
 	long long time_since_last_meal;
 
-	pthread_mutex_lock(&data->philos[i].last_eat_time);
+	pthread_mutex_lock(&data->philos[i].meal_mutex);
 
 	// 1. Calculate the time elapsed since the last meal
 	time_since_last_meal = get_time_ms() - data->philos[i].last_eat_time;
@@ -60,14 +60,16 @@ static bool	check_if_dead(t_data *data, size_t i)
 	if (time_since_last_meal > data->time_to_die)
 	{
 		// 3. Death detection: setting the is_dead flag
+		pthread_mutex_lock(&data->dead_mutex);
 		data->is_dead = true;
+		pthread_mutex_unlock(&data->dead_mutex);
 		// 4. Release data_mutex
-		pthread_mutex_unlock(&data->philos[i].last_eat_time);
+		pthread_mutex_unlock(&data->philos[i].meal_mutex);
 		// 5. Death log output
 		print_log(&data->philos[i], "died");
 		return (true); // detection death
 	}
-	pthread_mutex_unlock(&data->philos[i].last_eat_time);
+	pthread_mutex_unlock(&data->philos[i].meal_mutex);
 	return (false); // surviving
 }
 

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/16 15:56:22 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 09:49:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct s_data
 	pthread_mutex_t	*forks;					// 포크 배열 (각 포크마다 뮤텍스)
 	pthread_mutex_t	print_mutex;			// 로그 출력을 위한 뮤텍스
 	pthread_mutex_t	dead_mutex;				// is_dead를 위한 뮤텍스
-	pthread_mutex_t	must_eat_count_mutex;	// must_eat_count 를 위한 뮤텍스
-	pthread_mutex_t	data_mutex;				// is_dead, must_eat_count 등 공유 변수 보호. 얘는 없어도 될듯.
+	// pthread_mutex_t	must_eat_count_mutex;	// must_eat_count 를 위한 뮤텍스인데 필요없음. 왜냐? 그 인자는 상수임. 읽기-읽기는 경쟁상태가 아님.
+	//pthread_mutex_t	data_mutex;				// is_dead, must_eat_count 등 공유 변수 보호. 얘는 없어도 될듯.
 
 	// [철학자 배열]
 	struct s_philo	*philos;		// t_philo 구조체 배열 포인터
@@ -75,7 +75,7 @@ typedef struct s_philo
 	//size_t			eat_count;	// 현재까지 식사 횟수. 이 멤버는 사용하지 않는 것 같음.
 	long long		last_eat_time;	// 마지막으로 식사를 시작한 시간
 	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
-	pthread_mutex_t	meal_mutex;		// last_eat_time 과 meals_eaten 을 위한 뮤텍스
+	pthread_mutex_t	meal_mutex;		// last_eat_time 과 meals_eaten 을 위한 뮤텍스. 근데 생각이 든게, meal_mutex에 대한 멤버들은 어차피 각각 쓰레드가 생성되니까 동시에 읽거나 쓰는 동작이 아예없지 않음? 하나의 개별 철학자 스레드에서만 접근하고 있는 것 아닌지 생각이 든다. 아 모니터링에서 각각의 철학자 스레드에서 접근해서 그런건가?
 
 	// [포크 정보]
 	pthread_mutex_t	*l_fork;		// 왼쪽 포크

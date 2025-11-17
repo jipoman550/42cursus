@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/16 17:16:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/17 09:48:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,6 @@ static int	init_shared_mutexes(t_data *data)
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
 		return (-1);
 	if (pthread_mutex_init(&data->dead_mutex, NULL) != 0)
-		return (-1);
-	if (pthread_mutex_init(&data->must_eat_count_mutex, NULL) != 0)
 		return (-1);
 	data->is_dead = false;
 	return (0);
