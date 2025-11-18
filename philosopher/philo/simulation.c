@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 11:38:41 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/18 09:05:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	join_philosophers(t_data *data)
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		// pthread_join 호출: 해당 스레드가 종료될 때까지 메인 스레드를 블록시킵니다.
+		// pthread_join 호출: 해당 스레드가 종료될 때까지 메인 스레드를 블록.
 		pthread_join(data->philos[i].thread, NULL);
 		i++;
 	}
@@ -86,8 +86,6 @@ int	start_simulation(t_data *data)
 	}
 
 	// 3. Monitoring start and thread join
-	// call monitoring func.
-	// Start monitoring
 	monitor_simulation(data);
 
 	// Wait for all philo threads to terminate and reclaim resources
