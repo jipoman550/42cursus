@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 09:48:23 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/18 08:50:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static int	init_philos(t_data *data)
 		data->philos[i].data = data;
 		data->philos[i].meals_eaten = 0;
 		// 철학자가 생성되는 순간을 '마지막 식사 시간' 으로 설정 (사망 판정의 기준점)
-		data->philos[i].last_eat_time = 0;
+		// 여기 수정 중
+		data->philos[i].last_eat_time = data->start_time;
 
-		// 여기 고치는 중
 		if (pthread_mutex_init(&(data->philos[i].meal_mutex), NULL) != 0)
 		{
 			while (--i >= 0)
@@ -116,15 +116,15 @@ t_data	*init_data(char **argv, int argc)
 	if (init_shared_mutexes(data) != 0)
 		return (clean_data_and_return(data, ERR_SHARED_MUTEX_INIT));
 
-	// t_philo 구조체 배열 초기화
-	if (init_philos(data) != 0)
-		return (clean_data_and_return(data, ERR_PHILOS_INIT));
-
 	// 시뮬레이션 시작 시간 초기화
 	// gettimeofday 사용해서 현재시간을 ms 로 변환하는 함수 필요 (time.c)
 	data->start_time = get_time_ms();
 	if (data->start_time == -1)
 		return (clean_data_and_return(data, ERR_TIME_INIT));
+
+	// t_philo 구조체 배열 초기화
+	if (init_philos(data) != 0)
+		return (clean_data_and_return(data, ERR_PHILOS_INIT));
 
 	return (data);
 }

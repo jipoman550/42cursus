@@ -52,27 +52,18 @@ static bool	check_if_dead(t_data *data, size_t i)
 	long long time_since_last_meal;
 
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
-
-	// 1. Calculate the time elapsed since the last meal
-	long long test = get_time_ms();
-	time_since_last_meal = test - data->philos[i].last_eat_time; // 이상하다? routine.c에서는 업데이트해주는데, 왜 여기서는 0이 찍힐까?
-	printf(" mmss %lld,,,, philo %lld\n", test, data->philos[i].last_eat_time);
-	printf("\n%lld\n", time_since_last_meal);
-	// 2. Death condition examination
+	time_since_last_meal = get_time_ms() - data->philos[i].last_eat_time;
 	if (time_since_last_meal > data->time_to_die)
 	{
-		// 3. Death detection: setting the is_dead flag
 		pthread_mutex_lock(&data->dead_mutex);
 		data->is_dead = true;
 		pthread_mutex_unlock(&data->dead_mutex);
-		// 4. Release data_mutex
 		pthread_mutex_unlock(&data->philos[i].meal_mutex);
-		// 5. Death log output
 		print_log(&data->philos[i], "died");
-		return (true); // detection death
+		return (true);
 	}
 	pthread_mutex_unlock(&data->philos[i].meal_mutex);
-	return (false); // surviving
+	return (false);
 }
 
 void	monitor_simulation(t_data *data)
@@ -84,19 +75,15 @@ void	monitor_simulation(t_data *data)
 		i = 0;
 		while (i < data->num_of_philos)
 		{
-			// Death verdict
 			if (check_if_dead(data, i))
 				return ;
-
-			// Determination of num of meals met
-			if (data->must_eat_count > 0)
-			{
-				if (check_if_all_eaten(data))
-					return ;
-			}
+			i++;
 		}
-		i++;
+		if (data->must_eat_count > 0)
+		{
+			if (check_if_all_eaten(data))
+				return ;
+		}
+		usleep(1000);
 	}
-	// Wait a moment to reduce CPU usage
-	usleep(1000);
 }
