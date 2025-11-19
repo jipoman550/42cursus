@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/18 09:05:46 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/19 09:01:40 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ int	start_simulation(t_data *data)
 		{
 			return (handle_thread_creation_error(data, i));
 		}
-		// 2. Start delay to prevent deadlock
-		//if (data->num_of_philos % 2 != 0 && (i + 1) % 2 == 0)
-		//	usleep(100);
-		//else if (data->num_of_philos % 2 == 0 && (i + 1) % 2 != 0)
-		//	usleep(100);
 		i++;
 	}
 

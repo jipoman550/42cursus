@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/18 10:29:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/19 09:25:48 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,11 @@ void	philo_eat(t_philo *philo)
 		first_fork = philo->r_fork;
 		second_fork = philo->l_fork;
 	}
+	// Start delay to prevent deadlock
+	if (philo->data->num_of_philos % 2 != 0 && (philo->id) % 2 != 0)
+		usleep_ms(100);
+	else if (philo->data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
+		usleep_ms(100);
 
 	// 1. get first fork
 	// mutex_trylcok 를 구현하기
