@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/11/25 10:17:27 by sisung           ###   ########.fr        #
+#    Updated: 2025/11/25 14:42:43 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INC_DIR    = .
 
 # 소스 파일 목록 (현재 분리된 파일 기준)
 SRC_FILES  = main.c \
+			 cleanup.c \
 			 init.c \
 			 monitor.c \
 			 parse.c \

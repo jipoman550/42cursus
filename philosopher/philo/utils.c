@@ -6,13 +6,23 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 09:48:37 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:28:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static size_t	ft_strlen(char *s)
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s1[i] == s2[i])
+		i++;
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+size_t	ft_strlen(char *s)
 {
 	size_t	len;
 
@@ -24,63 +34,6 @@ static size_t	ft_strlen(char *s)
 	return (len);
 }
 
-int	error_and_return(char *msg, int exit_code)
-{
-	if (msg)
-		write(2, msg, ft_strlen(msg));
-	return (exit_code);
-}
-
-t_data	*clean_data_and_return(t_data *data, char *msg)
-{
-	size_t	i;
-
-	if (!data)
-		return (NULL);
-	if (data->forks)
-	{
-		i = 0;
-		while (i < data->num_of_philos)
-			pthread_mutex_destroy(&data->forks[i++]);
-		free(data->forks);
-	}
-	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->dead_mutex);
-	if (data->philos)
-		free(data->philos);
-	free(data);
-	if (msg)
-		write(2, msg, ft_strlen(msg));
-	return (NULL);
-}
-
-void	finalize_data(t_data *data)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < data->num_of_philos)
-	{
-		pthread_mutex_destroy(&data->forks[i]);
-		i++;
-	}
-	i = 0;
-	while (i < data->num_of_philos)
-	{
-		pthread_mutex_destroy(&data->philos[i].meal_mutex);
-		i++;
-	}
-	pthread_mutex_destroy(&data->print_mutex);
-	pthread_mutex_destroy(&data->dead_mutex);
-	if (data->forks)
-		free(data->forks);
-	if (data->philos)
-		free(data->philos);
-	free(data);
-}
-
-// How about detach this func. another .c file?
-// Ex) init_utils.c
 int	parse_required_args(t_data *data, char **argv)
 {
 	long long	val;

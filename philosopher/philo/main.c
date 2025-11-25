@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:18 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/14 10:33:56 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 13:49:49 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@ int	main(int argc, char **argv)
 	data = init_data(argv, argc);
 	if (!data)
 		return (1);
-
-	// 3. 시뮬레이션 시작
 	if (start_simulation(data))
 	{
 		finalize_data(data);
 		return (1);
 	}
-
-	// 4. 자원 해제
 	finalize_data(data);
 	return (0);
 }

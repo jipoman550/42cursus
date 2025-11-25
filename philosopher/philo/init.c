@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/18 08:50:01 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 11:19:54 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,10 @@ static int	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].data = data;
 		data->philos[i].meals_eaten = 0;
-		// 철학자가 생성되는 순간을 '마지막 식사 시간' 으로 설정 (사망 판정의 기준점)
-		// 여기 수정 중
 		data->philos[i].last_eat_time = data->start_time;
-
 		if (pthread_mutex_init(&(data->philos[i].meal_mutex), NULL) != 0)
-		{
-			while (--i >= 0)
-				pthread_mutex_destroy(&data->forks[i]);
-			free(data->forks);
-			return (-1);
-		}
-
-		// 왼쪽 포크: 항상 현재 인덱스의 포크
+			return (clean_philos_on_fail(i, data));
 		data->philos[i].l_fork = &data->forks[i];
-
-		// 오른쪽 포크: 다음 인덱스의 포크 (마지막 철학자는 첫 번쨰 포크를 잡음)
 		if (i == data->num_of_philos - 1)
 			data->philos[i].r_fork = &data->forks[0];
 		else
@@ -64,8 +52,8 @@ static int	init_forks(t_data *data)
 {
 	size_t	i;
 
-	data->forks = (pthread_mutex_t *)malloc\
-(sizeof(pthread_mutex_t) * data->num_of_philos);
+	data->forks = (pthread_mutex_t *)malloc(\
+		sizeof(pthread_mutex_t) * data->num_of_philos);
 	if (!data->forks)
 		return (-1);
 	i = 0;
@@ -115,16 +103,10 @@ t_data	*init_data(char **argv, int argc)
 		return (clean_data_and_return(data, ERR_FORK_INIT));
 	if (init_shared_mutexes(data) != 0)
 		return (clean_data_and_return(data, ERR_SHARED_MUTEX_INIT));
-
-	// 시뮬레이션 시작 시간 초기화
-	// gettimeofday 사용해서 현재시간을 ms 로 변환하는 함수 필요 (time.c)
 	data->start_time = get_time_ms();
 	if (data->start_time == -1)
 		return (clean_data_and_return(data, ERR_TIME_INIT));
-
-	// t_philo 구조체 배열 초기화
 	if (init_philos(data) != 0)
 		return (clean_data_and_return(data, ERR_PHILOS_INIT));
-
 	return (data);
 }

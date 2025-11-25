@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 11:41:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 13:53:04 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static bool	check_if_all_eaten(t_data *data)
 
 static bool	check_if_dead(t_data *data, size_t i)
 {
-	long long time_since_last_meal;
+	long long	time_since_last_meal;
 
 	pthread_mutex_lock(&data->philos[i].meal_mutex);
 	time_since_last_meal = get_time_ms() - data->philos[i].last_eat_time;

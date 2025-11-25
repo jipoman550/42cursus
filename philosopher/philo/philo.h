@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/17 09:49:08 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:41:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include <stdlib.h>
 # include <stdbool.h>
-# include <bits/pthreadtypes.h> // ?? 42 pc에서는 괜찮았는데 왜이럼?
-# include <limits.h> // LLONG_MAX를 사용하기 위해 필요
+# include <bits/pthreadtypes.h>
+# include <limits.h>
 # include <stdio.h>
-# include <pthread.h> // pthread_mutex_init 사용
-# include <string.h> // memset 사용
-# include <unistd.h> // write 함수 사용
-# include <sys/time.h> // gettimeofday
+# include <pthread.h>
+# include <string.h>
+# include <unistd.h>
+# include <sys/time.h>
 
 # define INVALID_ARGS "Error: Invalid number of arguments.\n"
 
@@ -42,52 +42,48 @@
 
 # define ERR_TIME_INIT "Error: Failed to init time.\n"
 
-// 시뮬레이션 전체 데이터 및 공유자원 (t_data)
 typedef struct s_data
 {
-	// [인자] 시뮬레이션 설정 값
-	size_t			num_of_philos;	// number_of_philosophers
-	long long		time_to_die;	// time_to_die (ms)
-	long long		time_to_eat;	// time_to_eat (ms)
-	long long		time_to_sleep;	// time_to_sleep (ms)
-	size_t			must_eat_count;	// [선택 인자] must_eat_count (0이면 무한)
+	size_t			num_of_philos;
+	long long		time_to_die;
+	long long		time_to_eat;
+	long long		time_to_sleep;
+	size_t			must_eat_count;
 
-	// [시뮬레이션 상태] 공유 자원
-	long long		start_time;				// 시뮬레이션 시작 시간 (gettimeofday)
-	bool			is_dead;				// 철학자 사망 여부 (플래그)
+	long long		start_time;
+	bool			is_dead;
 
-	// [동기화] 공유 자원 보호
-	pthread_mutex_t	*forks;					// 포크 배열 (각 포크마다 뮤텍스)
-	pthread_mutex_t	print_mutex;			// 로그 출력을 위한 뮤텍스
-	pthread_mutex_t	dead_mutex;				// is_dead를 위한 뮤텍스
-	// pthread_mutex_t	must_eat_count_mutex;	// must_eat_count 를 위한 뮤텍스인데 필요없음. 왜냐? 그 인자는 상수임. 읽기-읽기는 경쟁상태가 아님.
-	//pthread_mutex_t	data_mutex;				// is_dead, must_eat_count 등 공유 변수 보호. 얘는 없어도 될듯.
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	dead_mutex;
 
-	// [철학자 배열]
-	struct s_philo	*philos;		// t_philo 구조체 배열 포인터
+	struct s_philo	*philos;
 
 }	t_data;
 
-// 개별 철학자 데이터 (t_philo)
 typedef struct s_philo
 {
-	size_t			id;				// 철학자 번호 (1부터 시작)
-	//size_t			eat_count;	// 현재까지 식사 횟수. 이 멤버는 사용하지 않는 것 같음.
-	long long		last_eat_time;	// 마지막으로 식사를 시작한 시간
-	size_t			meals_eaten;	// must_eat_count 의 수를 세기 위함
-	pthread_mutex_t	meal_mutex;		// last_eat_time 과 meals_eaten 을 위한 뮤텍스. 근데 생각이 든게, meal_mutex에 대한 멤버들은 어차피 각각 쓰레드가 생성되니까 동시에 읽거나 쓰는 동작이 아예없지 않음? 하나의 개별 철학자 스레드에서만 접근하고 있는 것 아닌지 생각이 든다. 아 모니터링에서 각각의 철학자 스레드에서 접근해서 그런건가?
+	size_t			id;
 
-	// [포크 정보]
-	pthread_mutex_t	*l_fork;		// 왼쪽 포크
-	pthread_mutex_t	*r_fork;		// 오른쪽 포크
+	long long		last_eat_time;
+	size_t			meals_eaten;
+	pthread_mutex_t	meal_mutex;
 
-	// [스레드 정보]
-	pthread_t		thread;			// 철학자 스레드 핸들
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
 
-	// [전역 데이터 연결]
-	struct s_data	*data;			// t_data 구조체를 가리키는 포인터 (핵심)
+	pthread_t		thread;
+
+	struct s_data	*data;
 
 }	t_philo;
+
+void		handle_eat_data_error(t_philo *philo, \
+	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
+int			clean_philos_on_fail(size_t i, t_data *data);
+t_data		*clean_data_and_return(t_data *data, char *msg);
+void		finalize_data(t_data *data);
+int			error_and_return(char *msg, int exit_code);
 
 t_data		*init_data(char **argv, int argc);
 
@@ -107,9 +103,8 @@ long long	get_time_ms(void);
 long long	get_timestamp_ms(t_data *data);
 void		usleep_ms(long long time_to_wait);
 
-t_data		*clean_data_and_return(t_data *data, char *msg);
-void		finalize_data(t_data *data);
-int			error_and_return(char *msg, int exit_code);
+int			ft_strcmp(const char *s1, const char *s2);
+size_t		ft_strlen(char *s);
 int			parse_required_args(t_data *data, char **argv);
 
 #endif

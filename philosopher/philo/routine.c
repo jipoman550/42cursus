@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/20 09:00:14 by sisung           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:37:23 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_log(t_philo *philo, const char *status)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	is_dead_check = philo->data->is_dead;
 	pthread_mutex_unlock(&philo->data->dead_mutex);
-	if (is_dead_check && strcmp(status, "died") != 0)
+	if (is_dead_check && ft_strcmp(status, "died") != 0)
 	{
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		return ;
@@ -36,33 +36,31 @@ void	print_log(t_philo *philo, const char *status)
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
+static void	set_fork_and_delay(t_philo *philo, pthread_mutex_t **first_fork, \
+	pthread_mutex_t **second_fork)
+{
+	if (philo->id % 2 != 0)
+	{
+		*first_fork = philo->l_fork;
+		*second_fork = philo->r_fork;
+	}
+	else
+	{
+		*first_fork = philo->r_fork;
+		*second_fork = philo->l_fork;
+	}
+	if (philo->data->num_of_philos % 2 != 0 && (philo->id) % 2 != 0)
+		usleep_ms(5);
+	else if (philo->data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
+		usleep_ms(5);
+}
+
 void	philo_eat(t_philo *philo)
 {
 	pthread_mutex_t	*first_fork;
 	pthread_mutex_t	*second_fork;
 
-	if (philo->id % 2 != 0)
-	{
-		first_fork = philo->l_fork;
-		second_fork = philo->r_fork;
-	}
-	else
-	{
-		first_fork = philo->r_fork;
-		second_fork = philo->l_fork;
-	}
-	// Start delay to prevent deadlock
-	if (philo->data->num_of_philos % 2 != 0 && (philo->id) % 2 != 0)
-		usleep_ms(5);
-	else if (philo->data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
-		usleep_ms(5);
-
-	// 1. get first fork
-	// mutex_trylcok 를 구현하기
-	// 철학자가 포크 1개만 쥐고 끝까지 가는 경우를 처리해야할 것 같음.
-	// 철학자 수가 홀수 일 때 누구를 먼저 먹이느냐
-	// ./philo 3 700 200 200 일 때 1 -> 3 -> 2 이렇게 가는게 좋은데
-	// 1 -> 3 -> 1 -> 2 이렇게 간다. 이걸 보완해줘야됨.
+	set_fork_and_delay(philo, &first_fork, &second_fork);
 	pthread_mutex_lock(first_fork);
 	print_log(philo, "has taken a fork");
 	if (first_fork == second_fork)
@@ -73,30 +71,14 @@ void	philo_eat(t_philo *philo)
 	}
 	pthread_mutex_lock(second_fork);
 	print_log(philo, "has taken a fork");
-
-	// 3. start eating (critical section)
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eat_time = get_time_ms();
 	if (philo->last_eat_time == -1)
-	{
-		// 시뮬레이션 종료 로직 or data->is_dead를 true로 설정해서 모니터 스레드가 종료하도록 유도. 지금 생각으로는 후자가 더 맞는 생각인것 같다.
-		pthread_mutex_lock(&philo->data->dead_mutex);
-		philo->data->is_dead = true;
-		pthread_mutex_unlock(&philo->data->dead_mutex);
-		pthread_mutex_unlock(&philo->meal_mutex);
-		pthread_mutex_unlock(first_fork);
-		pthread_mutex_unlock(second_fork);
-		return ;
-	}
+		return (handle_eat_data_error(philo, &first_fork, &second_fork));
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
-
 	print_log(philo, "is eating");
-
-	// 4. time_to_eat time wait
 	usleep_ms(philo->data->time_to_eat);
-
-	// return fork
 	pthread_mutex_unlock(first_fork);
 	pthread_mutex_unlock(second_fork);
 }
@@ -111,4 +93,3 @@ void	philo_think(t_philo *philo)
 {
 	print_log(philo, "is thinking");
 }
-
