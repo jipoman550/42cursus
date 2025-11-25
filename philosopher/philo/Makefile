@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/11/20 09:51:47 by sisung           ###   ########.fr        #
+#    Updated: 2025/11/25 10:17:27 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,15 +116,22 @@ VALGRIND_FLAGS = --leak-check=full --show-leak-kinds=all --trace-children=yes
 test_leak: $(NAME)
 	@echo "\n--- [TEST] Memory Leak & Race Condition Tests ---"
 	@echo " (All Valgrind/Helgrind tests should show no errors or leaks)"
+
 	@echo "\n  - [LEAK] Normal execution (4 410 200 200 5):"
-	@valgrind $(VALGRIND_FLAGS) ./$(NAME) 4 410 200 200 5 > valgrind.log 2>&1; \
-	if [ $$? -eq 0 ]; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check valgrind.log)"; fi
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME) 4 410 200 200 5 > valgrind.log 2>&1 || true; \
+	cat valgrind.log; \
+	if grep -q "ERROR SUMMARY: 0 errors" valgrind.log; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check output)"; fi
+
 	@echo "\n  - [LEAK] Guaranteed death (4 310 200 100):"
-	@valgrind $(VALGRIND_FLAGS) ./$(NAME) 4 310 200 100 > valgrind.log 2>&1; \
-	if [ $$? -eq 0 ]; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check valgrind.log)"; fi
+	@valgrind $(VALGRIND_FLAGS) ./$(NAME) 4 310 200 100 > valgrind.log 2>&1 || true; \
+	cat valgrind.log; \
+	if grep -q "ERROR SUMMARY: 0 errors" valgrind.log; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check output)"; fi
+
 	@echo "\n  - [HELGRIND] Race condition check (5 800 200 200 7):"
-	@valgrind --tool=helgrind $(VALGRIND_FLAGS) ./$(NAME) 5 800 200 200 7 > helgrind.log 2>&1; \
-	if [ $$? -eq 0 ]; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check helgrind.log)"; fi
+	@valgrind --tool=helgrind ./$(NAME) 5 800 200 200 7 > helgrind.log 2>&1 || true; \
+	cat helgrind.log; \
+	if grep -q "ERROR SUMMARY: 0 errors" helgrind.log; then echo "    - ✅ PASSED"; else echo "    - ❌ FAILED (Check output)"; fi
+
 	@rm -f valgrind.log helgrind.log
 	@echo "\n========================================"
 	@echo " ✅ MEMORY & RACE CONDITION TESTS COMPLETED!"
