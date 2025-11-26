@@ -2,12 +2,12 @@
 # define GNL_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 2
 # endif
 
 # include <unistd.h>
 # include <stdlib.h>
 
-char    *gnl(int fd);
+char    *get_next_line(int fd);
 
 #endif

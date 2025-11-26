@@ -184,11 +184,10 @@ int scan_int(FILE *f, va_list ap)
 int scan_string(FILE *f, va_list ap)
 {
 	// You may insert code here
-    int c;
     char *dst = va_arg(ap, char *);
 
     /* 첫 문자 읽기 (공백을 건너뛴 상태이므로 첫 문자가 곧 시작이어야 함) */
-    c = fgetc(f);
+    int c = fgetc(f);
     if (c == EOF)
         return -1;
 

@@ -4,18 +4,17 @@
 
 int match_space(FILE *f)
 {
-	// You may insert code here
+		// You may insert code here
 	int c;
-
 	while (1)
 	{
 		c = fgetc(f);
 		if (c == EOF)
-			return -1;
+			return (-1);
 		if (!isspace(c))
 		{
 			ungetc(c, f);
-			break;
+			break ;
 		}
 	}
 	return (0);
@@ -23,25 +22,22 @@ int match_space(FILE *f)
 
 int match_char(FILE *f, char c)
 {
-	// You may insert code here
+		// You may insert code here
 	int ch = fgetc(f);
-
 	if (ch == EOF)
-		return -1;
+		return (-1);
 	if (ch == (unsigned char)c)
-		return 1;
+		return (1);
 	ungetc(ch, f);
 	return (0);
 }
 
 int scan_char(FILE *f, va_list ap)
 {
-	// You may insert code here
-	int ch = fgetc(f);
-
+		// You may insert code here
+	char ch = fgetc(f);
 	if (ch == EOF)
-		return -1;
-
+		return (-1);
 	char *dst = va_arg(ap, char *);
 	*dst = (char)ch;
 	return (1);
@@ -49,7 +45,7 @@ int scan_char(FILE *f, va_list ap)
 
 int scan_int(FILE *f, va_list ap)
 {
-	// You may insert code here
+		// You may insert code here
 	int c;
 	long val = 0;
 	int sign = 1;
@@ -57,26 +53,25 @@ int scan_int(FILE *f, va_list ap)
 
 	c = fgetc(f);
 	if (c == EOF)
-		return -1;
+		return (-1);
 
-	if (c == '+' || c == '-')
+	if (c == '-' || c == '+')
 	{
 		sign = (c == '-') ? -1 : 1;
 		int next = fgetc(f);
 		if (next == EOF)
 		{
-			ungetc(c, f);
-			return -1;
+			ungetc(next, f);
+			return (-1);
 		}
 		if (!isdigit(next))
 		{
 			ungetc(next, f);
 			ungetc(c, f);
-			return 0;
+			return (0);
 		}
 		val = next - '0';
 		any = 1;
-
 	}
 	else if (isdigit(c))
 	{
@@ -86,46 +81,46 @@ int scan_int(FILE *f, va_list ap)
 	else
 	{
 		ungetc(c, f);
-		return 0;
+		return (0);
 	}
 
 	while (1)
 	{
 		int d = fgetc(f);
 		if (d == EOF)
-			break;
+		break ;
 		if (!isdigit(d))
 		{
 			ungetc(d, f);
-			break;
+			break ;
 		}
-		val = val * 10 + (d - '0');
+		val = val * 10 + d - '0';
 	}
 
 	if (!any)
 	{
-		return 0;
+		return (0);
 	}
 
 	int *dst = va_arg(ap, int *);
 	*dst = (int)(val * sign);
+
 	return (1);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-	// You may insert code here
-	int c;
+		// You may insert code here
 	char *dst = va_arg(ap, char *);
 
-	c = fgetc(f);
+	int c = fgetc(f);
 	if (c == EOF)
-		return -1;
+		return (-1);
 
 	if (isspace(c))
 	{
 		ungetc(c, f);
-		return 0;
+		return (0);
 	}
 
 	char *p = dst;
@@ -135,15 +130,14 @@ int scan_string(FILE *f, va_list ap)
 	{
 		int d = fgetc(f);
 		if (d == EOF)
-			break;
+			break ;
 		if (isspace(d))
 		{
 			ungetc(d, f);
-			break;
+			break ;
 		}
 		*p++ = (char)d;
 	}
-
 	*p = '\0';
 	return (1);
 }
@@ -202,13 +196,14 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 	return nconv;
 }
 
+
 int ft_scanf(const char *format, ...)
 {
 	// ...
 	va_list ap;
 	va_start(ap, format);
 	int ret = ft_vfscanf(stdin, format, ap);
-	// ...
 	va_end(ap);
+	// ...
 	return ret;
 }

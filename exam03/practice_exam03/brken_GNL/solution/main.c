@@ -15,7 +15,7 @@ void run_test(const char *filename)
     printf("---[ Output for %s ]---\n", filename);
     char *line;
     int line_num = 1;
-    while ((line = gnl(fd)) != NULL)
+    while ((line = get_next_line(fd)) != NULL)
     {
         printf("[%d]: %s", line_num++, line);
         free(line);
@@ -46,7 +46,7 @@ int main(void)
 
     // Test with invalid fd
     printf("---[ Testing invalid fd (-1) ]---\n");
-    char *line = gnl(-1);
+    char *line = get_next_line(-1);
     if (line == NULL)
     {
         printf("Result: gnl correctly returned NULL.\n");
