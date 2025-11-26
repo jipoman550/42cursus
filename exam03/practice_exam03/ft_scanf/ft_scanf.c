@@ -12,11 +12,11 @@
  */
 int match_space(FILE *f)
 {
-    // You may insert code here
+	// You may insert code here
 	int c;
 
 	/* 읽어들여서 공백이면 계속 소비, 비공백이면 다시 되돌리고 끝냄.
-       만약 첫 읽기에서 EOF가 나오면 -1 반환. */
+	   만약 첫 읽기에서 EOF가 나오면 -1 반환. */
 	while (1)
 	{
 		c = fgetc(f);
@@ -30,7 +30,7 @@ int match_space(FILE *f)
 		}
 		/* 공백이면 계속 루프해서 더 소비 */
 	}
-    return (0);
+	return (0);
 }
 
 /*
@@ -43,7 +43,7 @@ int match_space(FILE *f)
  */
 int match_char(FILE *f, char c)
 {
-    // You may insert code here
+	// You may insert code here
 	int ch = fgetc(f);
 	if (ch == EOF)
 		return -1;
@@ -51,7 +51,7 @@ int match_char(FILE *f, char c)
 		return 1;
 	/* 불일치인 경우 읽은 문자를 되돌리고 실패를 알림 */
 	ungetc(ch, f);
-    return (0);
+	return (0);
 }
 
 /*
@@ -63,16 +63,16 @@ int match_char(FILE *f, char c)
  */
 int scan_char(FILE *f, va_list ap)
 {
-    // You may insert code here
+	// You may insert code here
 	int ch = fgetc(f);
 	if (ch == EOF)
 		return -1;
 
 	/* %c는 공백을 무시하지 않으므로 어떤 문자든 하나 받아서 저장 */
 	char *dst = va_arg(ap, char *);
-    *dst = (char)ch;
+	*dst = (char)ch;
 
-    return (1);
+	return (1);
 }
 
 /*
@@ -91,81 +91,81 @@ int scan_char(FILE *f, va_list ap)
  */
 int scan_int(FILE *f, va_list ap)
 {
-    // You may insert code here
-    int c;
-    long val = 0;
-    int sign = 1;
-    int any = 0; /* 숫자를 하나 이상 읽었는지 표시 */
+	// You may insert code here
+	int c;
+	long val = 0;
+	int sign = 1;
+	int any = 0; /* 숫자를 하나 이상 읽었는지 표시 */
 
-    /* 첫 문자 읽기 (부호 또는 숫자 기대) */
-    c = fgetc(f);
-    if (c == EOF)
-        return -1;
+	/* 첫 문자 읽기 (부호 또는 숫자 기대) */
+	c = fgetc(f);
+	if (c == EOF)
+		return -1;
 
-    /* 부호 처리: + 또는 -인 경우 다음 문자를 확인해야 함 */
-    if (c == '+' || c == '-')
-    {
-        sign = (c == '-') ? -1 : 1;
-        int next = fgetc(f);
-        if (next == EOF)
-        {
-            /* 부호만 있는데 EOF면 되돌림하고 실패(EOF)로 처리 */
-            ungetc(c, f);
-            return -1;
-        }
-        if (!isdigit(next))
-        {
-            /* 부호 다음이 숫자가 아니면 변환 매칭 실패:
-               읽은 문자를 원상복구: next와 c 순서대로 되돌림 */
-            ungetc(next, f);
-            ungetc(c, f);
-            return 0;
-        }
-        /* next는 숫자이므로 처리 시작 */
-        val = next - '0';
-        any = 1;
-    }
-    else if (isdigit(c))
-    {
-        /* 첫 문자가 숫자 */
-        val = c - '0';
-        any = 1;
-    }
-    else
-    {
-        /* 첫 문자가 부호도 숫자도 아니면 매칭 실패: 읽은 문자를 되돌림 */
-        ungetc(c, f);
-        return 0;
-    }
+	/* 부호 처리: + 또는 -인 경우 다음 문자를 확인해야 함 */
+	if (c == '+' || c == '-')
+	{
+		sign = (c == '-') ? -1 : 1;
+		int next = fgetc(f);
+		if (next == EOF)
+		{
+			/* 부호만 있는데 EOF면 되돌림하고 실패(EOF)로 처리 */
+			ungetc(c, f);
+			return -1;
+		}
+		if (!isdigit(next))
+		{
+			/* 부호 다음이 숫자가 아니면 변환 매칭 실패:
+			   읽은 문자를 원상복구: next와 c 순서대로 되돌림 */
+			ungetc(next, f);
+			ungetc(c, f);
+			return 0;
+		}
+		/* next는 숫자이므로 처리 시작 */
+		val = next - '0';
+		any = 1;
+	}
+	else if (isdigit(c))
+	{
+		/* 첫 문자가 숫자 */
+		val = c - '0';
+		any = 1;
+	}
+	else
+	{
+		/* 첫 문자가 부호도 숫자도 아니면 매칭 실패: 읽은 문자를 되돌림 */
+		ungetc(c, f);
+		return 0;
+	}
 
-    /* 나머지 숫자들을 연속으로 읽기 */
-    while (1)
-    {
-        int d = fgetc(f);
-        if (d == EOF)
-            break; /* EOF면 루프 탈출(읽은 숫자는 유효함) */
-        if (!isdigit(d))
-        {
-            /* 숫자 끝, 이 문자는 변환 이후 처리를 위해 되돌림 */
-            ungetc(d, f);
-            break;
-        }
-        val = val * 10 + (d - '0');
-        /* 주의: overflow 체크는 과제에서 요구하지 않음(생략) */
-    }
+	/* 나머지 숫자들을 연속으로 읽기 */
+	while (1)
+	{
+		int d = fgetc(f);
+		if (d == EOF)
+			break; /* EOF면 루프 탈출(읽은 숫자는 유효함) */
+		if (!isdigit(d))
+		{
+			/* 숫자 끝, 이 문자는 변환 이후 처리를 위해 되돌림 */
+			ungetc(d, f);
+			break;
+		}
+		val = val * 10 + (d - '0');
+		/* 주의: overflow 체크는 과제에서 요구하지 않음(생략) */
+	}
 
-    if (!any)
-    {
-        /* 숫자를 하나도 읽지 못한 경우 매칭 실패 */
-        return 0;
-    }
+	if (!any)
+	{
+		/* 숫자를 하나도 읽지 못한 경우 매칭 실패 */
+		return 0;
+	}
 
-    /* 최종 저장: va_arg로 넘어온 포인터에 int로 저장 */
-    {
-        int *dst = va_arg(ap, int *);
-        *dst = (int)(val * sign);
-    }
-    return (1);
+	/* 최종 저장: va_arg로 넘어온 포인터에 int로 저장 */
+	{
+		int *dst = va_arg(ap, int *);
+		*dst = (int)(val * sign);
+	}
+	return (1);
 }
 
 /*
@@ -184,42 +184,42 @@ int scan_int(FILE *f, va_list ap)
 int scan_string(FILE *f, va_list ap)
 {
 	// You may insert code here
-    char *dst = va_arg(ap, char *);
+	char *dst = va_arg(ap, char *);
 
-    /* 첫 문자 읽기 (공백을 건너뛴 상태이므로 첫 문자가 곧 시작이어야 함) */
-    int c = fgetc(f);
-    if (c == EOF)
-        return -1;
+	/* 첫 문자 읽기 (공백을 건너뛴 상태이므로 첫 문자가 곧 시작이어야 함) */
+	int c = fgetc(f);
+	if (c == EOF)
+		return -1;
 
-    if (isspace(c))
-    {
-        /* 공백이면 매칭 실패: 읽은 문자는 되돌림 */
-        ungetc(c, f);
-        return 0;
-    }
+	if (isspace(c))
+	{
+		/* 공백이면 매칭 실패: 읽은 문자는 되돌림 */
+		ungetc(c, f);
+		return 0;
+	}
 
-    /* 첫 문자부터 저장 */
-    char *p = dst;
-    *p++ = (char)c;
+	/* 첫 문자부터 저장 */
+	char *p = dst;
+	*p++ = (char)c;
 
-    /* 계속해서 공백이 나오기 전까지 저장 */
-    while (1)
-    {
-        int d = fgetc(f);
-        if (d == EOF)
-            break;
-        if (isspace(d))
-        {
-            /* 공백이 나오면 이 문자를 되돌리고 루프 종료 */
-            ungetc(d, f);
-            break;
-        }
-        *p++ = (char)d;
-    }
+	/* 계속해서 공백이 나오기 전까지 저장 */
+	while (1)
+	{
+		int d = fgetc(f);
+		if (d == EOF)
+			break;
+		if (isspace(d))
+		{
+			/* 공백이 나오면 이 문자를 되돌리고 루프 종료 */
+			ungetc(d, f);
+			break;
+		}
+		*p++ = (char)d;
+	}
 
-    /* 널 종단 */
-    *p = '\0';
-    return (1);
+	/* 널 종단 */
+	*p = '\0';
+	return (1);
 }
 
 /* match_conv는 포맷의 변환 문자에 따라 적절한 scan_* 호출 */
@@ -288,10 +288,10 @@ int ft_vfscanf(FILE *f, const char *format, va_list ap)
 int ft_scanf(const char *format, ...)
 {
 	// ...
-    va_list ap;
-    va_start(ap, format);
+	va_list ap;
+	va_start(ap, format);
 	int ret = ft_vfscanf(stdin, format, ap);
 	// ...
-    va_end(ap);
+	va_end(ap);
 	return ret;
 }

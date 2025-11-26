@@ -4,48 +4,48 @@
 
 int match_space(FILE *f)
 {
-		// You may insert code here
+        // You may insert code here
 	int c;
 	while (1)
 	{
 		c = fgetc(f);
 		if (c == EOF)
-			return (-1);
+			break ;
 		if (!isspace(c))
 		{
 			ungetc(c, f);
 			break ;
 		}
 	}
-	return (0);
+    return (0);
 }
 
 int match_char(FILE *f, char c)
 {
-		// You may insert code here
+        // You may insert code here
 	int ch = fgetc(f);
 	if (ch == EOF)
 		return (-1);
 	if (ch == (unsigned char)c)
 		return (1);
-	ungetc(ch, f);
-	return (0);
+	ungetc(c, f);
+    return (0);
 }
 
 int scan_char(FILE *f, va_list ap)
 {
-		// You may insert code here
-	char ch = fgetc(f);
+        // You may insert code here
+	int ch = fgetc(f);
 	if (ch == EOF)
 		return (-1);
 	char *dst = va_arg(ap, char *);
 	*dst = (char)ch;
-	return (1);
+    return (1);
 }
 
 int scan_int(FILE *f, va_list ap)
 {
-		// You may insert code here
+        // You may insert code here
 	int c;
 	long val = 0;
 	int sign = 1;
@@ -88,7 +88,7 @@ int scan_int(FILE *f, va_list ap)
 	{
 		int d = fgetc(f);
 		if (d == EOF)
-		break ;
+			break ;
 		if (!isdigit(d))
 		{
 			ungetc(d, f);
@@ -97,20 +97,17 @@ int scan_int(FILE *f, va_list ap)
 		val = val * 10 + d - '0';
 	}
 
-	if (!any)
-	{
+	if (any == 0)
 		return (0);
-	}
 
 	int *dst = va_arg(ap, int *);
 	*dst = (int)(val * sign);
-
-	return (1);
+    return (1);
 }
 
 int scan_string(FILE *f, va_list ap)
 {
-		// You may insert code here
+        // You may insert code here
 	char *dst = va_arg(ap, char *);
 
 	int c = fgetc(f);
@@ -139,9 +136,8 @@ int scan_string(FILE *f, va_list ap)
 		*p++ = (char)d;
 	}
 	*p = '\0';
-	return (1);
+    return (1);
 }
-
 
 int	match_conv(FILE *f, const char **format, va_list ap)
 {
