@@ -5,12 +5,11 @@
 int match_space(FILE *f)
 {
         // You may insert code here
-	int c;
 	while (1)
 	{
-		c = fgetc(f);
+		int c = fgetc(f);
 		if (c == EOF)
-			break ;
+			return (-1);
 		if (!isspace(c))
 		{
 			ungetc(c, f);
@@ -28,7 +27,7 @@ int match_char(FILE *f, char c)
 		return (-1);
 	if (ch == (unsigned char)c)
 		return (1);
-	ungetc(c, f);
+	ungetc(ch, f);
     return (0);
 }
 
@@ -61,7 +60,7 @@ int scan_int(FILE *f, va_list ap)
 		int next = fgetc(f);
 		if (next == EOF)
 		{
-			ungetc(next, f);
+			ungetc(c, f);
 			return (-1);
 		}
 		if (!isdigit(next))
@@ -138,6 +137,7 @@ int scan_string(FILE *f, va_list ap)
 	*p = '\0';
     return (1);
 }
+
 
 int	match_conv(FILE *f, const char **format, va_list ap)
 {

@@ -61,7 +61,6 @@ int str_join_and_free(char **s1, char *s2, size_t size2)
 	*s1 = tmp;
 	return (0);
 }
-
 //int str_append_mem(char **s1, char *s2, size_t size2)
 //{
 //	size_t size1 = ft_strlen(*s1);
@@ -126,6 +125,7 @@ char *get_next_line(int fd)
 	while(!(tmp = ft_strchr(ret, '\n')))
 	{
 		readbyte = read(fd, b, BUFFER_SIZE);
+
 		if (readbyte <= 0)
 		{
 			b[0] = '\0';
@@ -145,6 +145,7 @@ char *get_next_line(int fd)
 	size_t remainder_len = ft_strlen(tmp + 1);
 
 	ft_memmove(b, tmp + 1, remainder_len + 1);
+
 	char *final_line = malloc(line_len + 1);
 	if (!final_line)
 	{
