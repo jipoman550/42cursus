@@ -1,48 +1,45 @@
 #include "rip.h"
 
-int	rip_is_valid(char *pset)
+void get_min_removals(char *s, int *l_rem, int *r_rem)
 {
-	int balance = 0;
-
-	for (int i = 0; pset[i]; i++)
-	{
-		if (pset[i] == '(')
-			balance++;
-		else if (pset[i] == ')')
-			balance--;
-
-		if (balance < 0)
-			return 0;
-	}
-	return (balance == 0);
-}
-
-void	get_min_removals(char *s, int *l_rem, int *r_rem)
-{
-	int balance = 0;
+	int bal = 0;
 	*l_rem = 0;
 	*r_rem = 0;
 
 	for (int i = 0; s[i]; i++)
 	{
 		if (s[i] == '(')
-		{
-			balance++;
-		}
+			bal++;
 		else if (s[i] == ')')
 		{
-			if (balance > 0)
-				balance--;
+			if (bal > 0)
+				bal--;
 			else
 				(*r_rem)++;
 		}
 	}
-	*l_rem = balance;
+	*l_rem = bal;
 }
 
-void	rip_recursive(char *pset, int start_index, int l_rem, int r_rem)
+int rip_is_valid(char *pset)
 {
-	// 재귀 종료 조건: 제거해야 할 괄호가 더 이상 없으면
+	int bal = 0;
+
+	for (int i = 0; pset[i]; i++)
+	{
+		if (pset[i] == '(')
+			bal++;
+		else if (pset[i] == ')')
+			bal--;
+
+		if (bal < 0)
+			return (0);
+	}
+	return (bal == 0);
+}
+
+void rip_recursive(char *pset, int start_idx, int l_rem, int r_rem)
+{
 	if (l_rem == 0 && r_rem == 0)
 	{
 		if (rip_is_valid(pset))
@@ -50,10 +47,8 @@ void	rip_recursive(char *pset, int start_index, int l_rem, int r_rem)
 		return ;
 	}
 
-	// DFS 탐색: start_index 부터 문자열 끝까지 순회하며 제거할 괄호를 찾음.
-	for (int i = start_index; pset[i]; i++)
+	for (int i = start_idx; pset[i]; i++)
 	{
-		// 현재 문자가 괄호가 아니면 건너뜀
 		if (pset[i] != '(' && pset[i] != ')')
 			continue ;
 
@@ -73,19 +68,17 @@ void	rip_recursive(char *pset, int start_index, int l_rem, int r_rem)
 	}
 }
 
-int	main(int ac, char **av)
+int main(int ac, char **av)
 {
 	if (ac != 2 || !av[1])
-		return 0;
+		return (0);
 
 	int l_rem = 0;
 	int r_rem = 0;
 
-	// 제거해야 할 최소 괄호 수 계산
 	get_min_removals(av[1], &l_rem, &r_rem);
 
-	// 재귀 함수를 호출하여 모든 가능한 유효한 문자열을 찾아 출력
 	rip_recursive(av[1], 0, l_rem, r_rem);
 
-	return 0;
+	return (0);
 }

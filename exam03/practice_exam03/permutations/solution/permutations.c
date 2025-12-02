@@ -10,9 +10,9 @@ int ft_strlen(char *str)
 
 char *ft_strdup(char *src)
 {
-	int len = ft_strlen(src);
 	if (!src)
 		return (NULL);
+	int len = ft_strlen(src);
 	char *dst = (char *)malloc(sizeof(char) * (len + 1));
 	if (!dst)
 		return (NULL);
@@ -33,12 +33,11 @@ void swap(char *a, char *b)
 	*b = tmp;
 }
 
-void sort_string(char *str)
+void sort_str(char *str, int len)
 {
-	int len = ft_strlen(str);
-	for (int i = 0; i < len - 1; i++)
+	for (int i = 0; i < len - 1; ++i)
 	{
-		for (int j = 0; j < len - 1 - i; j++)
+		for (int j = 0; j < len - 1 - i; ++j)
 		{
 			if (str[j] > str[j + 1])
 				swap(&str[j], &str[j + 1]);
@@ -85,7 +84,7 @@ int next_permutation(char *str, int len)
 int main(int argc, char **argv)
 {
 	if (argc != 2)
-		return(0);
+		return (0);
 
 	char *str = ft_strdup(argv[1]);
 	if (!str)
@@ -99,11 +98,11 @@ int main(int argc, char **argv)
 		return (0);
 	}
 
-	sort_string(str);
+	sort_str(str, len);
 
 	print_str(str);
 
-	while(next_permutation(str, len))
+	while (next_permutation(str, len))
 		print_str(str);
 
 	free(str);

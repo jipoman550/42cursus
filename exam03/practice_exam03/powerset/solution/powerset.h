@@ -1,8 +1,7 @@
-#ifndef POWERSET_H
-#define POWERSET_H
+#ifndef POWWERSET_H
+#define POWWERSET_H
 
-//#include <stdio.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #endif

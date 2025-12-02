@@ -1,109 +1,56 @@
 #include "powerset.h"
 
-int g_target;
-int *g_set;
-int g_total_count;
-
-void safe_write(const char *buf, size_t len)
+void print_solution(int *tab, int len)
 {
-	write(1, buf, len);
+	int i = 0;
+	while (i < len)
+	{
+		printf("%d", tab[i]);
+		if (i < len - 1)
+			printf(" ");
+		i++;
+	}
+	printf("\n");
 }
 
-void print_subset(int *selected, int count)
+void solve(int cnt, int *nums, int target, int idx, int current_sum, int *buffer, int buf_idx)
 {
-	char buffer[20];
-	int len;
-
-	if (count == 0)
+	if (idx == cnt)
 	{
-		safe_write("\n", 1);
+		if (current_sum == target)
+			print_solution(buffer, buf_idx);
 		return ;
 	}
 
-	for (int i = 0 ; i < count; i++)
-	{
-		int num = selected[i];
-		int is_negative = 0;
-		char *ptr = buffer + sizeof(buffer) - 1;
-		*ptr = '\0';
-
-		if (num == 0)
-		{
-			*(--ptr) = '0';
-		}
-		else
-		{
-			if (num < 0)
-			{
-				is_negative =  1;
-				num = -num;
-			}
-
-			while (num > 0)
-			{
-				*(--ptr) = (num % 10) + '0';
-				num /= 10;
-			}
-
-			if (is_negative)
-			{
-				*(--ptr) = '-';
-			}
-		}
-
-		len = buffer + sizeof(buffer) - 1 - ptr;
-
-		safe_write(ptr, len);
-
-		if (i < count - 1)
-			safe_write(" ", 1);
-	}
-	safe_write("\n", 1);
-}
-
-void find_subsets(int index, long long current_sum, int *selected, int sel_count)
-{
-	if (index >= g_total_count)
-	{
-		if (current_sum == g_target)
-		{
-			print_subset(selected, sel_count);
-		}
-		return ;
-	}
-
-	find_subsets(index + 1, current_sum, selected, sel_count);
-
-	selected[sel_count] = g_set[index];
-	find_subsets(index + 1, current_sum + g_set[index], selected, sel_count + 1);
+	buffer[buf_idx] = nums[idx];
+	solve(cnt, nums, target, idx + 1, current_sum + nums[idx], buffer, buf_idx + 1);
+	solve(cnt, nums, target, idx + 1, current_sum, buffer, buf_idx);
 }
 
 int main(int argc, char **argv)
 {
 	if (argc < 2)
-		return 0;
+		return (0);
 
-	g_target = atoi(argv[1]);
-	g_total_count = argc - 2;
+	int target = atoi(argv[1]);
+	int cnt = argc - 2;
 
-	g_set = (int *)malloc(sizeof(int) * g_total_count);
-	if (!g_set)
-		return 1;
+	int *nums = malloc(sizeof(int) * cnt);
+	int *buffer = malloc(sizeof(int) * cnt);
 
-	for (int i = 0; i < g_total_count; i++)
-		g_set[i] = atoi(argv[i + 2]);
+	if (!nums || !buffer)
+		return (1);
 
-	int *selected = (int *)malloc(sizeof(int) * g_total_count);
-	if (!selected)
+	int i = 0;
+	while (i < cnt)
 	{
-		free(g_set);
-		return 1;
+		nums[i] = atoi(argv[i + 2]);
+		i++;
 	}
 
-	find_subsets(0, 0, selected, 0);
+	solve(cnt, nums, target, 0, 0, buffer, 0);
 
-	free(selected);
-	free(g_set);
-
-	return 0;
+	free(nums);
+	free(buffer);
+	return (0);
 }

@@ -1,7 +1,6 @@
 Assignment name  : powerset
 Expected files   : *.c *.h
-Allowed functions: atoi, printf, fprintf, malloc, calloc, realloc, free, stdout,
-write
+Allowed functions: atoi, printf, fprintf, malloc, calloc, realloc, free, stdout, write
 --------------------------------------------------------------------------------
 
 Write a program that will take as argument an integer n followed by a set s of
