@@ -8,8 +8,7 @@
  */
 int is_safe(const int *pos, int col, int row)
 {
-    int i;
-    for (i = 0; i < col; ++i)
+    for (int i = 0; i < col; ++i)
     {
         /* 같은 행 체크 */
         if (pos[i] == row)
@@ -33,8 +32,7 @@ int is_safe(const int *pos, int col, int row)
  */
 void print_solution(const int *pos, int n)
 {
-    int i;
-    for (i = 0; i < n; ++i)
+    for (int i = 0; i < n; ++i)
     {
         if (i > 0)
             /* 숫자 사이에 공백 하나 삽입 */
@@ -54,8 +52,6 @@ void print_solution(const int *pos, int n)
  */
 void place_queens(int *pos, int n, int col)
 {
-    int row;
-
     /* 모든 열에 배치가 끝나면 한 해를 출력 */
     if (col == n)
     {
@@ -64,7 +60,7 @@ void place_queens(int *pos, int n, int col)
     }
 
     /* 이번 열(col)에 가능한 모든 행(row)을 시도 */
-    for (row = 0; row < n; ++row)
+    for (int row = 0; row < n; ++row)
     {
         if (is_safe(pos, col, row))
         {
@@ -81,20 +77,17 @@ void place_queens(int *pos, int n, int col)
  *   - 인자 개수 != 2 또는 n <= 0 인 경우 간단히 에러 코드(1)로 종료.
  *   (문제 설명에서 음수는 테스트하지 않는다고 했으므로 간단 처리)
  */
-int main(int argc, char **argv)
+int main(int ac, char **av)
 {
-    int n;
-    int *pos;
-
-    if (argc != 2)
+    if (ac != 2)
         return 1;
 
-    n = atoi(argv[1]); /* atoi 사용 허용됨 */
+    int n = atoi(av[1]); /* atoi 사용 허용됨 */
     if (n <= 0)
         return 1;
 
     /* pos 배열 할당: 각 열에 어떤 행을 선택했는지 기록 */
-    pos = (int *)calloc(n, sizeof(int));
+    int *pos = (int *)calloc(n, sizeof(int));
     if (pos == NULL)
         return 1;
 
