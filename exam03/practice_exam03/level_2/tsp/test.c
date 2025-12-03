@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <float.h> // FLT_MAX를 사용하기 위해 필요
+#include "tsp.h"
 
 // 최대 도시 개수는 문제에서 11개로 제한됨
 #define MAX_CITIES 11
