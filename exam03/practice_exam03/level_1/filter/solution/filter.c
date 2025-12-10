@@ -1,38 +1,39 @@
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
 
 #define BUFFER_SIZE 2
 
 int perror_and_free(char *stash, char *stars)
 {
-	perror("Error");
+	perror("Error\n");
 	free(stash);
 	free(stars);
 	return (1);
 }
 
-int main(int argc, char *argv[])
+int main(int ac, char **av)
 {
-	if (argc != 2 || argv[1][0] == '\0')
+	if (ac != 2 || av[1][0] == '\0')
 		return (1);
 
 	char buf[BUFFER_SIZE];
 	char *stash = NULL;
 	size_t stash_len = 0;
-	char *pattern = argv[1];
+	char *pattern = av[1];
 	size_t pat_len = strlen(pattern);
 	ssize_t r;
 
 	char *stars = malloc(pat_len);
 	if (!stars)
 	{
-		perror("Error");
+		free(stash);
 		return (1);
 	}
-	for (size_t i = 0; i < pat_len; ++i)
+	for (size_t i = 0; i < pat_len; i++)
 		stars[i] = '*';
 
 	while ((r = read(STDIN_FILENO, buf, BUFFER_SIZE)) > 0)
@@ -57,21 +58,21 @@ int main(int argc, char *argv[])
 			}
 			if (write(STDOUT_FILENO, stars, pat_len) == -1)
 				return (perror_and_free(stash, stars));
+
 			offset += prefix_len + pat_len;
 		}
 
 		size_t keep = (pat_len > 0) ? pat_len - 1 : 0;
 
-		if (stash_len > offset)
+		if (stash_len > keep)
 		{
-			size_t remaining = stash_len - offset;
-
+			size_t remaining = stash_len - keep;
 			if (remaining > keep)
 			{
 				size_t write_len = remaining - keep;
-
 				if (write(STDOUT_FILENO, stash + offset, write_len) == -1)
 					return (perror_and_free(stash, stars));
+
 				memmove(stash, stash + offset + write_len, keep);
 				stash_len = keep;
 			}

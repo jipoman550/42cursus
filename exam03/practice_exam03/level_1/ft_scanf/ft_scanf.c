@@ -13,13 +13,12 @@
 int match_space(FILE *f)
 {
 	// You may insert code here
-	int c;
 
 	/* 읽어들여서 공백이면 계속 소비, 비공백이면 다시 되돌리고 끝냄.
 	   만약 첫 읽기에서 EOF가 나오면 -1 반환. */
 	while (1)
 	{
-		c = fgetc(f);
+		int c = fgetc(f);
 		if (c == EOF)
 			return -1; /* 더 이상 읽을 수 없음 */
 		if (!isspace(c))
@@ -92,13 +91,12 @@ int scan_char(FILE *f, va_list ap)
 int scan_int(FILE *f, va_list ap)
 {
 	// You may insert code here
-	int c;
 	long val = 0;
 	int sign = 1;
 	int any = 0; /* 숫자를 하나 이상 읽었는지 표시 */
 
 	/* 첫 문자 읽기 (부호 또는 숫자 기대) */
-	c = fgetc(f);
+	int c = fgetc(f);
 	if (c == EOF)
 		return -1;
 

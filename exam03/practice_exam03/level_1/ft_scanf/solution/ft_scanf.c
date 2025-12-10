@@ -45,12 +45,12 @@ int scan_char(FILE *f, va_list ap)
 int scan_int(FILE *f, va_list ap)
 {
         // You may insert code here
-	int c;
+
 	long val = 0;
 	int sign = 1;
 	int any = 0;
 
-	c = fgetc(f);
+	int c = fgetc(f);
 	if (c == EOF)
 		return (-1);
 
@@ -93,7 +93,7 @@ int scan_int(FILE *f, va_list ap)
 			ungetc(d, f);
 			break ;
 		}
-		val = val * 10 + d - '0';
+		val = val * 10 + (d - '0');
 	}
 
 	if (any == 0)
