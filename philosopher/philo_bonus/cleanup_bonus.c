@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cleanup.c                                          :+:      :+:    :+:   */
+/*   cleanup_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 15:39:32 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/29 16:20:27 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "philo_bonus.h"
 
 void	handle_eat_data_error(t_philo *philo, \
 	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
