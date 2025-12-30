@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 12:54:45 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/30 16:29:52 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,15 +93,14 @@ typedef struct s_philo
 
 void		handle_eat_data_error(t_philo *philo, \
 	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
-int			clean_philos_on_fail(size_t i, t_data *data);
 t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);
 int			error_and_return(char *msg, int exit_code);
 
 t_data		*init_data(char **argv, int argc);
 
-bool		check_termination(t_philo *philo);
-void		monitor_simulation(t_data *data);
+void		*full_monitor_routine(void *data_ptr);
+void		*monitor_routine(void *philo_ptr);
 
 long long	ft_parse_long(char *str);
 

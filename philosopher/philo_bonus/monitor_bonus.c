@@ -6,84 +6,53 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/29 16:17:10 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/30 16:29:36 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-bool	check_termination(t_philo *philo)
+void	*full_monitor_routine(void *data_ptr)
 {
-	bool	is_dead;
-
-	pthread_mutex_lock(&philo->data->dead_mutex);
-	is_dead = philo->data->is_dead;
-	pthread_mutex_unlock(&philo->data->dead_mutex);
-	return (is_dead);
-}
-
-static bool	check_if_all_eaten(t_data *data)
-{
+	t_data	*data;
 	size_t	i;
-	size_t	count_eaten;
 
+	data = (t_data *)data_ptr;
 	i = 0;
-	count_eaten = 0;
+	// 모든 철학자가 배부를 때까지 sem_wait를 반복
 	while (i < data->num_of_philos)
 	{
-		pthread_mutex_lock(&data->philos[i].meal_mutex);
-		if (data->philos[i].meals_eaten >= data->must_eat_count)
-			count_eaten++;
-		pthread_mutex_unlock(&data->philos[i].meal_mutex);
+		sem_wait(data->full_sem);
 		i++;
 	}
-	if (count_eaten == data->num_of_philos)
-	{
-		pthread_mutex_lock(&data->dead_mutex);
-		data->is_dead = true;
-		pthread_mutex_unlock(&data->dead_mutex);
-		return (true);
-	}
-	return (false);
+	// 모든 철학자가 다 먹었다면, 부모에게 알려 시뮬레이션 종료
+	sem_wait(data->print_sem); // 메시지 출력 방지용
+	exit(0); // 부모에게 '모두 식사 완료' 신호
 }
 
-static bool	check_if_dead(t_data *data, size_t i)
+void	*monitor_routine(void *philo_ptr)
 {
-	long long	time_since_last_meal;
+	t_philo	*philo;
+	t_data	*data;
 
-	pthread_mutex_lock(&data->philos[i].meal_mutex);
-	time_since_last_meal = get_time_ms() - data->philos[i].last_eat_time;
-	if (time_since_last_meal > data->time_to_die)
-	{
-		pthread_mutex_lock(&data->dead_mutex);
-		data->is_dead = true;
-		pthread_mutex_unlock(&data->dead_mutex);
-		pthread_mutex_unlock(&data->philos[i].meal_mutex);
-		print_log(&data->philos[i], "died");
-		return (true);
-	}
-	pthread_mutex_unlock(&data->philos[i].meal_mutex);
-	return (false);
-}
-
-void	monitor_simulation(t_data *data)
-{
-	size_t	i;
-
+	philo = (t_philo *)philo_ptr;
+	data = philo->data;
 	while (1)
 	{
-		i = 0;
-		while (i < data->num_of_philos)
+		// 식사 시간 보호를 위해 meal_sem 잠금
+		sem_wait(philo->meal_sem);
+		if (get_time_ms() - philo->last_eat_time > data->time_to_die)
 		{
-			if (check_if_dead(data, i))
-				return ;
-			i++;
+			// 1. 출력 권한 획득 (사망 메시지 출력 후 아무도 출력 못 하게 함)
+			sem_wait(data->print_sem);
+			printf("%lld %zu died\n", get_time_ms() - data->start_time, philo->id);
+
+			// 2. 부모에게 사망 알림 (exit(1)은 '사망'을 뜻하는 신호로 약속)
+			// 자식 프로세스가 exit() 해버리면 자식 프로세스에 할당된 메모리는 어떻게 할건데~
+			exit(1);
 		}
-		if (data->must_eat_count > 0)
-		{
-			if (check_if_all_eaten(data))
-				return ;
-		}
-		usleep(1000);
+		sem_post(philo->meal_sem);
+		usleep(1000); // CPU 과부하 방지 ?? 이게 뭔말임. 없으면 어떻게 되는건데~
 	}
+	return (NULL);
 }
