@@ -6,11 +6,65 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/22 09:06:02 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/29 16:17:10 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/30 10:47:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t	len1;
+	size_t	len2;
+	size_t	i;
+	char	*str;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len1 = ft_strlen(s1);
+	len2 = ft_strlen(s2);
+	str = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (i < len1)
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	while (i < len1 + len2)
+	{
+		str[i] = s2[i - len1];
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
+
+char	*ft_itoa(size_t n)
+{
+	size_t	len;
+	size_t	nbr;
+	char	*str;
+
+	nbr = n;
+	len = 0;
+	while (nbr > 0)
+	{
+		nbr /= 10;
+		len++;
+	}
+	str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
+	while (n > 0)
+	{
+		str[--len] = (n % 10) + '0';
+		n /= 10;
+	}
+	return (str);
+}
 
 int	ft_strcmp(const char *s1, const char *s2)
 {

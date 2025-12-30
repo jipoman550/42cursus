@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/29 14:41:39 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/30 10:34:08 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,10 @@
 
 # define INVALID_EAT_CNT "Error: Invalid argument value for must_eat_count.\n"
 # define INVALID_ARG_VAL "Error: Invalid argument value.\n"
-# define ERR_FORK_INIT "Failed to initialize a mutex (fork).\n"
-# define ERR_SHARED_MUTEX_INIT "Failed to initialize a shared mutex\
+# define ERR_MALLOC "Error: Malloc failed.\n"
+# define ERR_SEM_INIT "Error: Failed to initialize semaphores.\n"
+//# define ERR_FORK_INIT "Failed to initialize a mutex (fork).\n"
+//# define ERR_SHARED_MUTEX_INIT "Failed to initialize a shared mutex\
  (e.g., print/log lock).\n"
 # define ERR_PHILOS_INIT "Failed to initialize a philos array(e.g.,\
  print/log lock).\n"
@@ -114,6 +116,8 @@ long long	get_time_ms(void);
 long long	get_timestamp_ms(t_data *data);
 void		usleep_ms(long long time_to_wait);
 
+char		*ft_strjoin(char const *s1, char const *s2);
+char		*ft_itoa(int n);
 int			ft_strcmp(const char *s1, const char *s2);
 size_t		ft_strlen(char *s);
 int			parse_required_args(t_data *data, char **argv);
