@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 10:37:34 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/30 13:37:35 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,14 @@ static int	init_philos(t_data *data)
 
 		// 1. 각 철학자마다 고유한 이름 생성 (예: /meal_1, /meal_2 ...)
 		sem_name = get_sem_name("/philo_meal_", i + 1);
-		sem_unlink(sem_name);
+		sem_unlink(sem_name); // 혹시 남아있을지 모르는 이전 실행의 찌꺼기 제거
 
 		// 2. 세마포어 열기
 		data->philos[i].meal_sem = sem_open(sem_name, O_CREAT, 0644, 1);
+
+		// 3. 생성 성공 시 시스템 목록에서 이름 즉시 제거 (이게 핵심!)
+		if (data->philos[i].meal_sem != SEM_FAILED)
+			sem_unlink(sem_name);
 		free(sem_name);
 
 		if (data->philos[i].meal_sem == SEM_FAILED)
@@ -65,15 +69,18 @@ static int	init_semaphores(t_data *data)
 
 	// 2. 포크 세마포어: 초기값은 철학자의 수 (누구나 집어갈 수 있는 포크 더미)
 	data->forks_sem = sem_open("/philo_forks", O_CREAT, 0644, data->num_of_philos);
+	sem_unlink("/philo_forks");
 
 	// 3. 출력 보호 세마포어: 초기값 1 (뮤텍스처럼 동작)
 	data->print_sem = sem_open("/philo_print", O_CREAT, 0644, 1);
+	sem_unlink("/philo_print");
 
 	// 4. 종료 신호 세마포어: 초기값 0 (누군가 죽었을 때 신호를 기다리는 용도 등)
-	data->dead_sem = sem_open("/philo_stop", O_CREAT, 0644, 0);
+	data->stop_sem = sem_open("/philo_stop", O_CREAT, 0644, 0);
+	sem_unlink("/philo_stop");
 
 	if (data->forks_sem == SEM_FAILED || data->print_sem == SEM_FAILED
-		|| data->dead_sem == SEM_FAILED)
+		|| data->stop_sem == SEM_FAILED)
 		return (-1);
 	return (0);
 }
