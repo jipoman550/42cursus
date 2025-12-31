@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 16:29:52 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/31 15:59:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ typedef struct s_data
 	sem_t			*forks_sem;	// 탁자 중앙의 포크 더미
 	sem_t			*print_sem;	// 로그 출력 보호용
 	sem_t			*stop_sem;	// 시뮬레이션 종료 신호용 (선택 사항)
+	sem_t			*full_sem;	// 식사 횟수
 
 	/* --- 프로세스 관리 --- */
 	pid_t			*pids;		// 생성된 자식 프로세스(철학자) ID 저장 배열
+
+	pthread_t		full_monitor_thread; // 자식이 식사횟수를 다 채웠는지 확인하는 스레드
 
 	struct s_philo	*philos;	// 철학자들 데이터 배열
 
@@ -82,7 +85,6 @@ typedef struct s_philo
 
 	/* --- 철학자 개인 보호용 --- */
 	sem_t			*meal_sem;		// 자신의 식사 시간을 보호할 세마포어 (Named로 생성)
-	char			*sem_name;		// 각 개별 세마포어의 이름 (예: "/meal_1")
 
 	/* --- 감시용 스레드 --- */
 	pthread_t		monitor_thread;	// 각 프로세스 내부에서 사망을 체크할 스레드

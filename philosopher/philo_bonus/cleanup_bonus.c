@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 13:52:28 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/31 17:01:18 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ static void	cleanup_resources(t_data *data)
 		sem_close(data->print_sem);
 	if (data->stop_sem && data->stop_sem != SEM_FAILED)
 		sem_close(data->stop_sem);
+	if (data->full_sem && data->full_sem != SEM_FAILED)
+		sem_close(data->full_sem);
 
 	// 2. 철학자별 개별 세마포어 정리
 	if (data->philos)
@@ -88,32 +90,12 @@ void	finalize_data(t_data *data)
 	if (!data)
 		return ;
 
-	// 1. 글로벌 세마포어 닫기
-    // (이미 init에서 unlink 했으므로 close만 하면 시스템이 알아서 회수함)
-	if (data->forks_sem != SEM_FAILED)
-		sem_close(data->forks_sem);
-	if (data->print_sem != SEM_FAILED)
-		sem_close(data->print_sem);
-	if (data->stop_sem != SEM_FAILED)
-		sem_close(data->stop_sem);
-
-	// 2. 철학자별 개별 세마포어 닫기
-	if (data->philos)
-	{
-		i = 0;
-		while (i < data->num_of_philos)
-		{
-			if (data->philos[i].meal_sem != SEM_FAILED)
-				sem_close(data->philos[i].meal_sem);
-			i++;
-		}
-		free(data->philos);
-	}
-
-	// 3. PID 배열 해제 (보너스에서 추가된 부분)
+		// PID 배열 해제 (보너스에서 추가된 부분)
 	if (data->pids)
 		free(data->pids);
 
-	// 4. 메인 데이터 해제
+	cleanup_resources(data); // 헬퍼 함수 재사용 (중복 제거!)
+
+	// 메인 데이터 해제
 	free(data);
 }

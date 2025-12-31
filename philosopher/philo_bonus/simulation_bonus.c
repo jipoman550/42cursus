@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 17:30:42 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/31 16:56:22 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void	monitor_simulation(t_data *data)
 void	philo_routine(t_philo *philo)
 {
 	// 1. 자식 프로세스 내부에 본인 사망을 감시할 스레드 생성
+	// 이 부분은 등록되는 개념인가? 그래서 아래의 eat -> sleep -> think while(1)루프를 도는 동안 monitor_routine 을 계속 동시에? 도는건가?
+	// 그래서 만약 먹는 시간이 넘으면 died 를 터미널에 찍고 exit 해버려서 자식 프로세스를 끝내는건가?
 	if (pthread_create(&philo->monitor_thread, NULL, monitor_routine, philo) != 0)
 	{
 		// 생성 실패 시 자원 정리 후 종료
@@ -65,6 +67,9 @@ void	philo_routine(t_philo *philo)
 		philo_eat(philo); // 안에서 meals_eaten 증가
 
 		// 목표 식사 횟수 달성 여부 확인
+		// 여기서도 궁금한게 있다. 철학자 3명이 5회 식사하면 된다고 했을 때, 한명이 5회 다먹으면 그 프로세스는 거기서 끝나는거임?
+		// 그러면 다른 2명의 철학자는 돌면서 둘 다 5회를 충족하면 그재서야 부모 프로세스에서 끝나는 방식인가? -> 이렇게 해야맞지.
+		// 만약 3명 중 1명이 다 먹었다고 부모도 끝나는거는 좀 이상함. pdf에도 안맞을 듯?
 		if (philo->data->must_eat_count > 0 && \
 			philo->meals_eaten >= philo->data->must_eat_count)
 		{

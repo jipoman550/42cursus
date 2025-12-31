@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 13:37:35 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/31 15:38:27 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static int	init_semaphores(t_data *data)
 	sem_unlink("/philo_forks");
 	sem_unlink("/philo_print");
 	sem_unlink("/philo_stop");
+	sem_unlink("/philo_full");
 
 	// 2. 포크 세마포어: 초기값은 철학자의 수 (누구나 집어갈 수 있는 포크 더미)
 	data->forks_sem = sem_open("/philo_forks", O_CREAT, 0644, data->num_of_philos);
@@ -75,12 +76,16 @@ static int	init_semaphores(t_data *data)
 	data->print_sem = sem_open("/philo_print", O_CREAT, 0644, 1);
 	sem_unlink("/philo_print");
 
-	// 4. 종료 신호 세마포어: 초기값 0 (누군가 죽었을 때 신호를 기다리는 용도 등)
+	// 4. 종료 신호 세마포어: 초기값 0 (누군가 죽었을 때 신호를 기다리는 용도)
 	data->stop_sem = sem_open("/philo_stop", O_CREAT, 0644, 0);
 	sem_unlink("/philo_stop");
 
+	// 5. 종료 신호 세마포어: 초기값 ? (자식들모두 식사횟수를 충족했을 때 신호를 기다리는 용도)
+	data->full_sem = sem_open("/philo_full", O_CREAT, 0644, 0);
+	sem_unlink("/philo_full");
+
 	if (data->forks_sem == SEM_FAILED || data->print_sem == SEM_FAILED
-		|| data->stop_sem == SEM_FAILED)
+		|| data->stop_sem == SEM_FAILED || data->full_sem == SEM_FAILED)
 		return (-1);
 	return (0);
 }

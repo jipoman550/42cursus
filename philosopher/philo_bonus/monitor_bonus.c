@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/30 16:29:36 by sisung           ###   ########.fr       */
+/*   Updated: 2025/12/31 16:34:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	*monitor_routine(void *philo_ptr)
 	t_philo	*philo;
 	t_data	*data;
 
+	// void *philo_ptr 얘는 갑자기 왜 나타남?
+	// pthread_create함수의 파라미터 떄문인거 같은데 알아봐야할듯
 	philo = (t_philo *)philo_ptr;
 	data = philo->data;
 	while (1)
@@ -49,6 +51,7 @@ void	*monitor_routine(void *philo_ptr)
 
 			// 2. 부모에게 사망 알림 (exit(1)은 '사망'을 뜻하는 신호로 약속)
 			// 자식 프로세스가 exit() 해버리면 자식 프로세스에 할당된 메모리는 어떻게 할건데~
+			// 여기서도 finalize_data 같은거 해줘야 할거 같은데.
 			exit(1);
 		}
 		sem_post(philo->meal_sem);
