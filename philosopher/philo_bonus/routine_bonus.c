@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/29 16:17:10 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 16:23:22 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,72 +15,45 @@
 void	print_log(t_philo *philo, const char *status)
 {
 	long long	timestamp;
-	bool		is_dead_check;
 
-	pthread_mutex_lock(&philo->data->print_mutex);
-	pthread_mutex_lock(&philo->data->dead_mutex);
-	is_dead_check = philo->data->is_dead;
-	pthread_mutex_unlock(&philo->data->dead_mutex);
-	if (is_dead_check && ft_strcmp(status, "died") != 0)
-	{
-		pthread_mutex_unlock(&philo->data->print_mutex);
-		return ;
-	}
-	timestamp = get_timestamp_ms(philo->data);
-	if (timestamp < 0)
-	{
-		pthread_mutex_unlock(&philo->data->print_mutex);
-		return ;
-	}
-	printf("%lld %zu %s\n", timestamp, philo->id, status);
-	pthread_mutex_unlock(&philo->data->print_mutex);
-}
+	// 1. 출력 권한 세마포어 대기
+	sem_wait(philo->data->print_sem);
 
-static void	set_fork_and_delay(t_philo *philo, pthread_mutex_t **first_fork, \
-	pthread_mutex_t **second_fork)
-{
-	if (philo->id % 2 != 0)
-	{
-		*first_fork = philo->l_fork;
-		*second_fork = philo->r_fork;
-	}
-	else
-	{
-		*first_fork = philo->r_fork;
-		*second_fork = philo->l_fork;
-	}
-	if (philo->data->num_of_philos % 2 != 0 && (philo->id) % 2 != 0)
-		usleep_ms(5);
-	else if (philo->data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
-		usleep_ms(5);
+	// 2. 시간 계산
+	timestamp = get_time_ms();
+
+	// 3. 로그 출력
+	printf("%lld %zu %s\n", timestamp - philo->data->start_time,\
+		 philo->id, status);
+
+	// 4. 출력 권한 반납
+	sem_post(philo->data->print_sem);
 }
 
 void	philo_eat(t_philo *philo)
 {
-	pthread_mutex_t	*first_fork;
-	pthread_mutex_t	*second_fork;
+	t_data	*data;
 
-	set_fork_and_delay(philo, &first_fork, &second_fork);
-	pthread_mutex_lock(first_fork);
+	data = philo->data;
+	// 1. 포크 더미에서 2개를 집어옵니다 (순서 상관 없음)
+	sem_wait(data->forks_sem);
 	print_log(philo, "has taken a fork");
-	if (first_fork == second_fork)
-	{
-		usleep_ms(philo->data->time_to_die * 2);
-		pthread_mutex_unlock(first_fork);
-		return ;
-	}
-	pthread_mutex_lock(second_fork);
+	sem_wait(data->forks_sem);
 	print_log(philo, "has taken a fork");
-	pthread_mutex_lock(&philo->meal_mutex);
+
+	// 2. 식사 시간 기록 (자신만의 meal_sem으로 보호)
+	sem_wait(philo->meal_sem);
 	philo->last_eat_time = get_time_ms();
-	if (philo->last_eat_time == -1)
-		return (handle_eat_data_error(philo, &first_fork, &second_fork));
 	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->meal_mutex);
+	sem_post(philo->meal_sem);
+
+	// 3. 식사 수행
 	print_log(philo, "is eating");
-	usleep_ms(philo->data->time_to_eat);
-	pthread_mutex_unlock(first_fork);
-	pthread_mutex_unlock(second_fork);
+	usleep_ms(data->time_to_eat); // 여기서 정밀한 ms 함수 사용
+
+	// 4. 포크 반납 (더미에 다시 넣기)
+	sem_post(data->forks_sem);
+	sem_post(data->forks_sem);
 }
 
 void	philo_sleep(t_philo *philo)

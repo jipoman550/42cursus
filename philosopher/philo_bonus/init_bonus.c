@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/31 15:38:27 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 13:52:02 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,14 @@ static int	init_semaphores(t_data *data)
 	sem_unlink("/philo_print");
 
 	// 4. 종료 신호 세마포어: 초기값 0 (누군가 죽었을 때 신호를 기다리는 용도)
-	data->stop_sem = sem_open("/philo_stop", O_CREAT, 0644, 0);
-	sem_unlink("/philo_stop");
+	//data->stop_sem = sem_open("/philo_stop", O_CREAT, 0644, 0);
+	//sem_unlink("/philo_stop");
 
 	// 5. 종료 신호 세마포어: 초기값 ? (자식들모두 식사횟수를 충족했을 때 신호를 기다리는 용도)
 	data->full_sem = sem_open("/philo_full", O_CREAT, 0644, 0);
 	sem_unlink("/philo_full");
 
-	if (data->forks_sem == SEM_FAILED || data->print_sem == SEM_FAILED
-		|| data->stop_sem == SEM_FAILED || data->full_sem == SEM_FAILED)
+	if (data->forks_sem == SEM_FAILED || data->print_sem == SEM_FAILED || data->full_sem == SEM_FAILED) // || data->stop_sem == SEM_FAILED
 		return (-1);
 	return (0);
 }
@@ -129,8 +128,6 @@ t_data	*init_data(char **argv, int argc)
 		return (clean_data_and_return(data, ERR_SEM_INIT));
 
 	data->start_time = get_time_ms();
-	if (data->start_time == -1)
-		return (clean_data_and_return(data, ERR_TIME_INIT));
 
 	// 3. 철학자 구조체 및 개별 세마포어 초기화
 	if (init_philos(data) != 0)

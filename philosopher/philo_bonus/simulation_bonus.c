@@ -6,13 +6,13 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/31 16:56:22 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 15:06:07 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
-static int	handle_fork_error(t_data *data, size_t created)
+static int	kill_process(t_data *data, size_t created, char *msg)
 {
 	size_t	i;
 
@@ -22,7 +22,7 @@ static int	handle_fork_error(t_data *data, size_t created)
 		kill(data->pids[i], SIGKILL);
 		i++;
 	}
-	write(2, "Error: Fork failed\n", 19);
+	write(2, msg, ft_strlen(msg));
 	return (1);
 }
 
@@ -30,25 +30,38 @@ static void	monitor_simulation(t_data *data)
 {
 	int		status;
 	size_t	i;
+	pid_t	pid;
 
 	// waitpid가 자식 하나라도 종료될 때까지 기다립니다.
 	// 누군가 죽으면 exit(1)을 던지도록 구현할 것입니다.
-	waitpid(-1, &status, 0);
-
-	// 한 명이라도 죽었거나 문제가 생겼다면 모든 프로세스 강제 종료
-	i = 0;
-	while (i < data->num_of_philos)
+	while (1)
 	{
-		kill(data->pids[i], SIGKILL);
-		i++;
+		// 자식 중 누군가 종료될 때까지 대기
+		pid = waitpid(-1, &status, 0);
+		if (pid == -1) // 더 이상 기다릴 자식 프로세스가 없음
+			break ;
+
+		// 자식이 종료되었는데, 'exit(1)' (사망)로 종료된 경우에만 반응
+		if (WIFEXITED(status) && WEXITSTATUS(status) == 1)
+		{
+			// 누군가 죽었다! -> 나머지 모두 사살
+			i = 0;
+			while (i < data->num_of_philos)
+			{
+				kill(data->pids[i], SIGKILL);
+				i++;
+			}
+			break ; // 감시 종료
+		}
+		// 만약 자식이 식사를 마치고 'exit(0)'으로 죽었다면?
+		// 부모는 그냥 무시하고 계속 waitpid로 다른 자식(사망자)을 감시.
+		// 그러다 'full_monitor_thread'가 다 찼다고 판단하면 exit(0)을 호출해 프로그램을 끝내기.
 	}
 }
 
 void	philo_routine(t_philo *philo)
 {
 	// 1. 자식 프로세스 내부에 본인 사망을 감시할 스레드 생성
-	// 이 부분은 등록되는 개념인가? 그래서 아래의 eat -> sleep -> think while(1)루프를 도는 동안 monitor_routine 을 계속 동시에? 도는건가?
-	// 그래서 만약 먹는 시간이 넘으면 died 를 터미널에 찍고 exit 해버려서 자식 프로세스를 끝내는건가?
 	if (pthread_create(&philo->monitor_thread, NULL, monitor_routine, philo) != 0)
 	{
 		// 생성 실패 시 자원 정리 후 종료
@@ -67,9 +80,6 @@ void	philo_routine(t_philo *philo)
 		philo_eat(philo); // 안에서 meals_eaten 증가
 
 		// 목표 식사 횟수 달성 여부 확인
-		// 여기서도 궁금한게 있다. 철학자 3명이 5회 식사하면 된다고 했을 때, 한명이 5회 다먹으면 그 프로세스는 거기서 끝나는거임?
-		// 그러면 다른 2명의 철학자는 돌면서 둘 다 5회를 충족하면 그재서야 부모 프로세스에서 끝나는 방식인가? -> 이렇게 해야맞지.
-		// 만약 3명 중 1명이 다 먹었다고 부모도 끝나는거는 좀 이상함. pdf에도 안맞을 듯?
 		if (philo->data->must_eat_count > 0 && \
 			philo->meals_eaten >= philo->data->must_eat_count)
 		{
@@ -93,18 +103,18 @@ int	start_simulation(t_data *data)
 	{
 		data->pids[i] = fork();
 		if (data->pids[i] < 0)
-			return (handle_fork_error(data, i)); // 실패 시 기존 자식들 kill
+			return (kill_process(data, i, ERR_FORK_FAIL)); // 실패 시 기존 자식들 kill
 		if (data->pids[i] == 0) // 자식 프로세스라면
 			philo_routine(&data->philos[i]);
 		i++;
 	}
-    // 부모 프로세스에서 '식사 횟수 감시 스레드' 생성
-    if (data->must_eat_count > 0)
-    {
-        if (pthread_create(&data->full_monitor_thread, NULL, full_monitor_routine, data) != 0)
-            return (handle_fork_error(data, data->num_of_philos));
-        pthread_detach(data->full_monitor_thread); // 부모는 따로 join 안 하고 detach
-    }
+	// 부모 프로세스에서 '식사 횟수 감시 스레드' 생성
+	if (data->must_eat_count > 0)
+	{
+		if (pthread_create(&data->full_monitor_thread, NULL, full_monitor_routine, data) != 0)
+			return (kill_process(data, data->num_of_philos, ERR_THREAD_FAIL));
+		pthread_detach(data->full_monitor_thread); // 부모는 따로 join 안 하고 detach
+	}
 	// 부모 프로세스만 여기까지 도달합니다.
 	monitor_simulation(data);
 	return (0);

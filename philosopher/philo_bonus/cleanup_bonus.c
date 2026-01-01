@@ -6,22 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/31 17:01:18 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 14:05:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
-
-void	handle_eat_data_error(t_philo *philo, \
-	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
-{
-	pthread_mutex_lock(&philo->data->dead_mutex);
-	philo->data->is_dead = true;
-	pthread_mutex_unlock(&philo->data->dead_mutex);
-	pthread_mutex_unlock(&philo->meal_mutex);
-	pthread_mutex_unlock(*first_fork);
-	pthread_mutex_unlock(*second_fork);
-}
 
 int	error_and_return(char *msg, int exit_code)
 {
@@ -40,8 +29,8 @@ static void	cleanup_resources(t_data *data)
 		sem_close(data->forks_sem);
 	if (data->print_sem && data->print_sem != SEM_FAILED)
 		sem_close(data->print_sem);
-	if (data->stop_sem && data->stop_sem != SEM_FAILED)
-		sem_close(data->stop_sem);
+	//if (data->stop_sem && data->stop_sem != SEM_FAILED)
+	//	sem_close(data->stop_sem);
 	if (data->full_sem && data->full_sem != SEM_FAILED)
 		sem_close(data->full_sem);
 

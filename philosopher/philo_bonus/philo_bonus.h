@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/12/31 15:59:34 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 14:58:02 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@
 # define CANT_BE_ZERO "Error: Argument cannot be zero.\n"
 # define NOT_POSITIVE_INT "Error: Argument must be a positive integer.\n"
 
+
+# define ERR_FORK_FAIL "Error: Failed to create fork\n"
 # define ERR_THREAD_FAIL "Error: Failed to create thread.\n"
 
 # define ERR_TIME_INIT "Error: Failed to init time.\n"
@@ -65,7 +67,7 @@ typedef struct s_data
 	/* --- 세마포어 (기존 뮤텍스 대체) --- */
 	sem_t			*forks_sem;	// 탁자 중앙의 포크 더미
 	sem_t			*print_sem;	// 로그 출력 보호용
-	sem_t			*stop_sem;	// 시뮬레이션 종료 신호용 (선택 사항)
+	//sem_t			*stop_sem;	// 시뮬레이션 종료 신호용 (선택 사항)
 	sem_t			*full_sem;	// 식사 횟수
 
 	/* --- 프로세스 관리 --- */
@@ -93,8 +95,6 @@ typedef struct s_philo
 
 }	t_philo;
 
-void		handle_eat_data_error(t_philo *philo, \
-	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
 t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);
 int			error_and_return(char *msg, int exit_code);
@@ -114,7 +114,6 @@ void		philo_think(t_philo *philo);
 int			start_simulation(t_data *data);
 
 long long	get_time_ms(void);
-long long	get_timestamp_ms(t_data *data);
 void		usleep_ms(long long time_to_wait);
 
 char		*ft_strjoin(char const *s1, char const *s2);
