@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/01 16:23:22 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 16:50:55 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	philo_eat(t_philo *philo)
 	// 2. 식사 시간 기록 (자신만의 meal_sem으로 보호)
 	sem_wait(philo->meal_sem);
 	philo->last_eat_time = get_time_ms();
+	print_log(philo, "is eating");
 	philo->meals_eaten++;
 	sem_post(philo->meal_sem);
 
 	// 3. 식사 수행
-	print_log(philo, "is eating");
 	usleep_ms(data->time_to_eat); // 여기서 정밀한 ms 함수 사용
 
 	// 4. 포크 반납 (더미에 다시 넣기)

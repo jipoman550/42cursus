@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/01 14:05:43 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/01 17:22:33 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ t_data	*clean_data_and_return(t_data *data, char *msg)
 
 void	finalize_data(t_data *data)
 {
-	size_t	i;
-
 	if (!data)
 		return ;
 

@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/19 22:38:35 by sisung            #+#    #+#              #
-#    Updated: 2025/12/29 13:32:26 by sisung           ###   ########.fr        #
+#    Updated: 2026/01/01 17:10:40 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,25 +17,27 @@ NAME       = philo_bonus
 
 # 소스 및 헤더 디렉토리
 SRC_DIR    = .
-INC_DIR    = .
+OBJ_DIR	   = obj
 
 # 소스 파일 목록 (현재 분리된 파일 기준)
-SRC_FILES  = main.c \
-			 cleanup.c \
-			 init.c \
-			 monitor.c \
-			 parse.c \
-			 routine.c \
-			 simulation.c \
-			 time.c \
-			 utils.c
+SRC_FILES  = main_bonus.c \
+			 cleanup_bonus.c \
+			 init_bonus.c \
+			 monitor_bonus.c \
+			 parse_bonus.c \
+			 routine_bonus.c \
+			 simulation_bonus.c \
+			 time_bonus.c \
+			 utils_bonus.c
 
 SRCS       = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 # 오브젝트 파일 목록
-OBJS       = $(SRC_FILES:.c=.o)
+OBJS       = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
-%.o: $(SRC_DIR)/%.c philo.h
+# obj 디렉토리 생성 및 오브젝트 컴파일
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c philo_bonus.h
+	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
