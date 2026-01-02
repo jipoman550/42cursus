@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/01 15:53:23 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/02 16:47:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	*monitor_routine(void *philo_ptr)
 			// 2. 부모에게 사망 알림 (exit(1)은 '사망'을 뜻하는 신호로 약속)
 			finalize_data(data);
 			exit(1); // 부모에게 사망 보고
+			//kill(getpid(), SIGKILL);
 		}
 		sem_post(philo->meal_sem);
 		usleep(1000); // CPU 과부하 방지
