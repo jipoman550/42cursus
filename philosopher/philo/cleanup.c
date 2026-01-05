@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/05 13:36:39 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 15:31:31 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int	clean_philos_on_fail(size_t i, t_data *data)
 {
-	while (--i >= 0)
-		pthread_mutex_destroy(&data->forks[i]);
+	while (i > 0)
+	{
+		i--;
+		pthread_mutex_destroy(&data->philos[i].meal_mutex);
+	}
 	free(data->forks);
 	return (-1);
 }

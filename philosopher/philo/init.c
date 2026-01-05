@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/05 14:06:43 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 15:32:25 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,11 @@ static int	init_forks(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
-			while (--i >= 0)
+			while (i > 0)
+			{
+				i--;
 				pthread_mutex_destroy(&data->forks[i]);
+			}
 			free(data->forks);
 			return (-1);
 		}
