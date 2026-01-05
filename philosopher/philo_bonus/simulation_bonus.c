@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/02 18:05:03 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 11:14:35 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	philo_routine(t_philo *philo)
 	if (pthread_create(&philo->monitor_thread, NULL, monitor_routine, philo) != 0)
 	{
 		// 생성 실패 시 자원 정리 후 종료
-		finalize_data(philo->data);
+		//finalize_data(philo->data);
 		exit(1);
 	}
 
@@ -86,7 +86,7 @@ void	philo_routine(t_philo *philo)
 		{
 			// 부모에게 '한 명 다 먹었음' 알림
 			sem_post(philo->data->full_sem);
-			finalize_data(philo->data); // 자식 프로세스가 가진 메모리 복사본 해제
+			//finalize_data(philo->data); // 자식 프로세스가 가진 메모리 복사본 해제
 			exit(0); // 정상 종료(식사 완료)
 			//kill(getpid(), SIGKILL);
 		}

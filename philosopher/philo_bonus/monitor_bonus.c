@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/02 16:47:06 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 11:15:17 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	*monitor_routine(void *philo_ptr)
 			printf("%lld %zu died\n", get_time_ms() - data->start_time, philo->id);
 
 			// 2. 부모에게 사망 알림 (exit(1)은 '사망'을 뜻하는 신호로 약속)
-			finalize_data(data);
+			//finalize_data(data);
 			exit(1); // 부모에게 사망 보고
 			//kill(getpid(), SIGKILL);
 		}
