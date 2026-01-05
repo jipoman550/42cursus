@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 10:21:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 15:37:23 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 14:07:34 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 void	print_log(t_philo *philo, const char *status)
 {
-	long long	timestamp;
+	t_data		*pdata;
 	bool		is_dead_check;
+	long long	now;
 
+	pdata = philo->data;
 	pthread_mutex_lock(&philo->data->print_mutex);
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	is_dead_check = philo->data->is_dead;
@@ -26,17 +28,14 @@ void	print_log(t_philo *philo, const char *status)
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		return ;
 	}
-	timestamp = get_timestamp_ms(philo->data);
-	if (timestamp < 0)
-	{
-		pthread_mutex_unlock(&philo->data->print_mutex);
-		return ;
-	}
-	printf("%lld %zu %s\n", timestamp, philo->id, status);
+	// printf를 호출할 때 시스템 함수를 2번 호출해서 이렇게 now를 변수로 사용해서 최적화
+	now = get_time_ms();
+	printf("%lld %zu %s\n", now - pdata->start_time, philo->id,
+		status);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
-static void	set_fork_and_delay(t_philo *philo, pthread_mutex_t **first_fork, \
+static void	set_fork_and_delay(t_philo *philo, pthread_mutex_t **first_fork,
 	pthread_mutex_t **second_fork)
 {
 	if (philo->id % 2 != 0)
@@ -73,8 +72,6 @@ void	philo_eat(t_philo *philo)
 	print_log(philo, "has taken a fork");
 	pthread_mutex_lock(&philo->meal_mutex);
 	philo->last_eat_time = get_time_ms();
-	if (philo->last_eat_time == -1)
-		return (handle_eat_data_error(philo, &first_fork, &second_fork));
 	philo->meals_eaten++;
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_log(philo, "is eating");

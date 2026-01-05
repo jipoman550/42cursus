@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/18 12:59:08 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 11:19:54 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 14:06:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static int	init_forks(t_data *data)
 {
 	size_t	i;
 
-	data->forks = (pthread_mutex_t *)malloc(\
-		sizeof(pthread_mutex_t) * data->num_of_philos);
+	data->forks = (pthread_mutex_t *)malloc(sizeof(
+				pthread_mutex_t) * data->num_of_philos);
 	if (!data->forks)
 		return (-1);
 	i = 0;

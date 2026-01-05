@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/25 11:07:22 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 15:39:32 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 13:36:39 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-void	handle_eat_data_error(t_philo *philo, \
-	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork)
-{
-	pthread_mutex_lock(&philo->data->dead_mutex);
-	philo->data->is_dead = true;
-	pthread_mutex_unlock(&philo->data->dead_mutex);
-	pthread_mutex_unlock(&philo->meal_mutex);
-	pthread_mutex_unlock(*first_fork);
-	pthread_mutex_unlock(*second_fork);
-}
 
 int	clean_philos_on_fail(size_t i, t_data *data)
 {

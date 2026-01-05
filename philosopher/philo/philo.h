@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 12:07:32 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 15:41:41 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 13:36:46 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ typedef struct s_philo
 
 }	t_philo;
 
-void		handle_eat_data_error(t_philo *philo, \
-	pthread_mutex_t **first_fork, pthread_mutex_t **second_fork);
 int			clean_philos_on_fail(size_t i, t_data *data);
 t_data		*clean_data_and_return(t_data *data, char *msg);
 void		finalize_data(t_data *data);
@@ -100,7 +98,6 @@ void		philo_think(t_philo *philo);
 int			start_simulation(t_data *data);
 
 long long	get_time_ms(void);
-long long	get_timestamp_ms(t_data *data);
 void		usleep_ms(long long time_to_wait);
 
 int			ft_strcmp(const char *s1, const char *s2);

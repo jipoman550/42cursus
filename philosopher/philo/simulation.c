@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 13:52:17 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 14:05:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_of_philos)
 	{
-		if (pthread_create(&data->philos[i].thread, NULL, \
-			philo_routine, &data->philos[i]) != 0)
+		if (pthread_create(&data->philos[i].thread, NULL, philo_routine,
+				&data->philos[i]) != 0)
 		{
 			return (handle_thread_creation_error(data, i));
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 13:02:46 by sisung            #+#    #+#             */
-/*   Updated: 2025/11/25 13:50:21 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/05 13:37:12 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,15 @@ long long	get_time_ms(void)
 	return (ms);
 }
 
-long long	get_timestamp_ms(t_data *data)
-{
-	long long	current_time;
-
-	current_time = get_time_ms();
-	if (current_time == -1)
-		return (-1);
-	return (current_time - data->start_time);
-}
-
 void	usleep_ms(long long time_to_wait)
 {
 	long long	start_time;
 	long long	current_time;
 
 	start_time = get_time_ms();
-	if (start_time == -1)
-		return ;
 	while (1)
 	{
 		current_time = get_time_ms();
-		if (current_time == -1)
-			return ;
 		if (current_time >= start_time + time_to_wait)
 			break ;
 		usleep(100);
