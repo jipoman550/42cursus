@@ -73,11 +73,71 @@
 
 ## 🛠️ 디버깅 및 문제 해결 히스토리
 
-| 날짜 | 파트 | 문제/버그 | 해결 방법 |
-| :--- | :--- | :--- | :--- |
-| YYYY-MM-DD | 필수 | **데드락 발생**: 모든 철학자가 왼쪽 포크만 집고 대기. | 비대칭 포크 집기 로직 적용 |
-| YYYY-MM-DD | 필수 | **경쟁 상태**: 로그 메시지가 겹침. | 로깅 전용 뮤텍스/세마포어 사용 |
-| YYYY-MM-DD | 필수 | **시간 오차**: 사망 메시지 지연 출력. | 더 빈번한 체크 또는 모니터 스레드 사용 |
+### Mandatory Part
+
+#### 1. [Memory] size_t 언더플로우로 인한 메모리 오염
+- Issue: 초기화 실패 시 실행되는 clean_philos_on_fail 함수에서 세그멘테이션 폴트(Segfault) 발생.
+- Cause: 역순 루프 while (--i >= 0)에서 i가 부호 없는 정수(size_t) 타입이라 0 아래로 내려가는 순간 최대값으로 점프(Underflow)하여 잘못된 메모리에 접근함.
+- Solution: while (i > 0) 조건을 사용하고 루프 내부에서 i--를 수행하도록 변경하여 안전한 하향 카운트 보장.
+- Insight: 시스템 프로그래밍에서 자료형의 선택(signed vs unsigned)이 루프 조건과 메모리 안전성에 미치는 치명적인 영향을 학습함.
+
+#### 2. [Concurrency] 예외 처리 로직이 유발한 "철학자의 불면증"
+- Issue: 시간 측정 실패 시 즉시 리턴하도록 설계하자, 철학자들이 정해진 시간만큼 자지 않고 즉시 깨어나는 현상 발생.
+- Cause: void 함수인 ft_usleep에서 에러 발생 시 return하면 대기 루프를 건너뛰게 되어 식사 후 대기 시간이 0ms가 됨.
+- Solution: 시스템 콜 실패라는 극희박한 확률보다 시뮬레이션의 흐름 유지를 우선순위로 설정. 에러 시 즉시 종료가 아닌, 시스템 usleep을 호출하는 폴백(Fallback) 로직 적용.
+
+#### 3. [Synchronization] last_eat_time 데이터 레이스 해결
+- Issue: 모니터 스레드가 사망을 판단하는 기준인 last_eat_time 읽기/쓰기 시 오차 및 부정확한 사망 판정 발생.
+- Cause: 식사 종료 시점에 업데이트 시 time_to_eat만큼 생존 보너스를 얻는 논리 오류.
+공유 자원에 대한 뮤텍스 보호 부재로 인한 데이터 레이스(Data Race).
+- Solution: 업데이트 기준을 식사 시작 시점으로 고정하고, 전용 뮤텍스(meal_mutex)를 추가하여 원자적(Atomic) 연산 보장.
+
+#### 4. [Performance] 시스템 콜 오버헤드 최적화
+- Issue: 철학자 수가 늘어날수록 로그 출력 속도가 실제 시간보다 밀리는 현상(Log Lag).
+- Cause: print_log 내부에서 예외 처리와 출력을 위해 gettimeofday를 중복 호출함. 시스템 콜은 컨텍스트 스위칭 비용이 커서 빈번한 호출 시 성능 저하 유발.
+- Solution: 현재 시간을 지역 변수(now)에 저장하여 재사용하는 방식으로 리팩토링하여 시스템 자원 소모 최소화.
+
+#### 5. [Fairness] 자원 점유 불균형 및 스케줄링 최적화
+- Issue: 철학자가 홀수 명(5명)일 때, 낮은 ID(1, 2번) 철학자가 자원을 독점하고 높은 번호의 철학자가 기아(Starvation) 상태에 빠짐.
+- Cause: 원형 구조에서 마지막 철학자와 1번 철학자가 모두 홀수일 때 패턴 충돌 발생. 운영체제 스케줄러가 특정 스레드를 선점하게 됨.
+- Solution: 인원수(Odd/Even)와 본인의 ID에 따라 시차를 두는 컨텍스트 인식 딜레이(Context-aware Staggered Start) 로직 적용.
+
+```C
+// 인원수의 홀/짝 특성에 따라 시작 타이밍을 분산하여 공정성 확보
+if (data->num_of_philos % 2 != 0 && (philo->id) % 2 != 0)
+    usleep_ms(5);
+else if (data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
+    usleep_ms(5);
+```
+
+- Result: 특정 ID에 쏠리던 식사 패턴이 전체 철학자에게 균등하게 분산됨을 확인. 시스템의 공정성(Fairness)과 안정성 동시 확보.
+
+### Bonus part
+
+#### 1. [Tooling] 새니타이저(ASan/TSan) 상호 배타성 및 런타임 충돌
+- Issue: CFLAGS에 AddressSanitizer(ASan)와 ThreadSanitizer(TSan)를 동시에 적용 시 컴파일 에러 또는 실행 오류 발생.
+- Cause: 두 도구 모두 쉐도우 메모리(Shadow Memory)를 할당하고 표준 라이브러리 함수를 가로채기(Interception) 때문에 메모리 레이아웃 충돌이 발생함. 또한 ASan과 Valgrind를 동시에 실행할 경우 메모리 관리 주도권 다툼으로 인해 SIGSEGV 발생.
+- Solution: 메모리 누수 및 오염은 ASan으로, 데이터 레이스는 TSan으로 각각 독립적인 디버깅 세션을 분리하여 테스트 진행. 도구 간의 특성을 이해하고 상호 배타적 사용 원칙 준수.
+
+#### 2. [Environment] 리눅스 ASLR과 TSan의 메모리 매핑 충돌
+- Issue: TSan 적용 시 FATAL: ThreadSanitizer: unexpected memory mapping 에러와 함께 프로그램 즉시 종료.
+- Cause: 리눅스 보안 기능인 ASLR(Address Space Layout Randomization)이 메모리 주소를 무작위로 배치하는데, TSan이 기대하는 고정된 메모리 맵과 충돌하여 발생 (특히 WSL2 환경에서 빈번함).
+- Solution: sudo sysctl kernel.randomize_va_space=0 명령을 통해 일시적으로 ASLR을 비활성화하여 TSan이 정상적으로 메모리 흐름을 추적할 수 있는 환경 구축.
+
+#### 3. [Concurrency] 자식 프로세스 종료 시 Use-After-Free 발생
+- Issue: 자식 프로세스가 사망을 감지하고 종료되는 과정에서 ASan이 heap-use-after-free 에러 감지.
+- Cause: 메인 흐름이 finalize_data를 통해 메모리를 해제하는 순간, 병렬로 동작하던 모니터 스레드가 해당 메모리 주소(예: last_meal_time)를 읽으려고 시도하여 발생.
+- Solution: "우아한 종료(Graceful Exit)"를 위해 pthread_join을 시도하는 대신, 사망 메시지 출력 즉시 exit(1)을 호출하도록 변경. 자식 프로세스의 모든 자원은 커널이 회수하도록 맡김으로써 데이터 레이스와 해제 후 접근 문제를 근본적으로 차단.
+
+#### 4. [IPC] 세마포어 조작으로 인한 "유령 포크(Ghost Fork)" 현상
+- Issue: 자식 프로세스를 깨우기 위해 세마포어를 조작할 때 시뮬레이션의 논리적 무결성이 깨짐.
+- Cause: sem_wait에 갇힌 메인 흐름을 깨우기 위해 모니터 스레드가 sem_post를 호출할 경우, 해당 자원이 시스템 전체 공용(System-wide)이기 때문에 다른 프로세스의 철학자가 존재하지 않는 가짜 포크를 집어가는 현상 발생.
+- Solution: 세마포어를 통한 강제 깨우기 로직을 지양하고, 부모 프로세스가 waitpid로 사망 소식을 듣는 즉시 모든 자식에게 kill 시그널을 보내 시뮬레이션을 중단시키는 설계 채택.
+
+#### 5. [Architecture] 10ms 사망 규칙과 시스템 오버헤드 간의 트레이드오프
+- Issue: Valgrind나 새니타이저 실행 시 프로그램이 느려져 사망 판정 규정(10ms)을 지키지 못하는 문제.
+- Cause: 디버깅 도구의 에뮬레이션 오버헤드로 인해 실제 시간 흐름과 프로그램 내부 시간 측정 간의 간극 발생.
+- Solution: 성능 분석 시에는 디버깅 플래그를 제거한 순수 빌드본을 사용하고, 메모리 안정성 검사는 별도의 세션에서 진행하여 "성능 최적화"와 "안정성 검증"이라는 두 마리 토끼를 잡음.
 
 ---
 
