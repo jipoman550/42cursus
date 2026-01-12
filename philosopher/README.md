@@ -161,7 +161,7 @@ sequenceDiagram
     participant P as Philo Main Thread
     participant M as Internal Monitor Thread
     end
-    box rgb(60, 30, 30) Kernel Space (Semaphores)
+	box rgb(60, 30, 30) Kernel Space [Semaphores]
     participant SF as /forks_sem (Count N)
     participant SP as /print_sem (Count 1)
     end
