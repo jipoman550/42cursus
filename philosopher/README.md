@@ -59,17 +59,158 @@
 - [x] 공유 변수 접근 시 뮤텍스로 데이터 경쟁 방지
 
 ### 3단계: 보너스 파트 (`philo_bonus` - 프로세스 & 세마포어)
-- [ ] 철학자를 프로세스로 생성 (`fork`)
-- [ ] 포크를 세마포어(`sem_open`, `sem_wait`, `sem_post`)로 중앙 관리
-- [ ] 로그 출력을 위한 세마포어 동기화 적용
-- [ ] 메인 프로세스가 철학자 종료 감지 후 다른 프로세스 종료 (`kill`, `waitpid`)
+- [x] 철학자를 프로세스로 생성 (`fork`)
+- [x] 포크를 세마포어(`sem_open`, `sem_wait`, `sem_post`)로 중앙 관리
+- [x] 로그 출력을 위한 세마포어 동기화 적용
+- [x] 메인 프로세스가 철학자 종료 감지 후 다른 프로세스 종료 (`kill`, `waitpid`)
 
 ### 4단계: 종료 및 리소스 정리
-- [ ] 모든 뮤텍스/세마포어 해제
-- [ ] 모든 스레드/프로세스 정상 종료 확인
-- [ ] 메모리 누수 검사 (`valgrind` 등 사용)
+- [x] 모든 뮤텍스/세마포어 해제
+- [x] 모든 스레드/프로세스 정상 종료 확인
+- [x] 메모리 누수 검사 (`valgrind` 등 사용)
 
 ---
+## 🏗️ 아키텍처
+
+### Mandatory Part
+
+#### 아키텍처 구조도 (Flowchart)
+
+```mermaid
+graph TD
+    Main[Main Thread] -->|Initialize| Data[Shared Data Structure]
+    Main -->|Create| Philo1[Philo Thread 1]
+    Main -->|Create| Philo2[Philo Thread 2]
+    Main -->|Create| PhiloN[Philo Thread N]
+    Main -->|Create| Monitor[Monitor Thread]
+
+    subgraph SharedMemory ["Shared Memory"]
+        Data
+        Forks[Fork Mutexes]
+        PrintM[Print Mutex]
+    end
+
+    Philo1 --- Forks
+    Philo2 --- Forks
+    Monitor -.->|Checks| Philo1
+    Monitor -.->|Checks| Philo2
+```
+
+#### 철학자 루틴 (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+    participant P as Philosopher
+    participant F as Forks (Mutex)
+    participant M as Monitor
+
+    rect rgb(50, 50, 50)
+    Note over P: Thinking
+    P->>F: Lock Left Fork
+    P->>F: Lock Right Fork
+    Note over P: Eating (Update last_meal_time)
+    M-->>P: Check Life Status
+    P->>F: Unlock Both Forks
+    Note over P: Sleeping
+    end
+```
+
+### Bonus Part
+
+#### 아키텍처 구조도 (Flowchart)
+
+```mermaid
+graph TD
+    subgraph Kernel_Space [OS Kernel Space - System Resources]
+        SemForks[Named Semaphore: /forks_sem <br/> Count: N]
+        SemPrint[Named Semaphore: /print_sem <br/> Count: 1]
+    end
+
+    subgraph Parent_Process [Parent Process - Manager]
+        Parent[Parent Main Thread]
+        Parent -->|1. sem_open & unlink| SemForks
+        Parent -->|2. fork x N| C1_Sub
+        Parent -->|2. fork x N| CN_Sub
+        Parent -.->|3. waitpid| Wait[Waiting State]
+        Wait -.->|4. kill SIGTERM| C1_Sub
+    end
+
+    subgraph C1_Sub [Child Process 1 - Isolated Memory]
+        P1_Main[Philo Main Thread <br/> Routine: Eat/Sleep/Think]
+        P1_Mon[Internal Monitor Thread <br/> Routine: Check Starvation]
+        P1_Main <-->|Internal Sync| P1_Mon
+    end
+
+    subgraph CN_Sub [Child Process N - Isolated Memory]
+        PN_Main[Philo Main Thread]
+        PN_Mon[Internal Monitor Thread]
+    end
+
+    %% 노드 간 연결 (식별자 일치)
+    P1_Main <==>|sem_wait / sem_post| SemForks
+    P1_Main ==>|sem_wait / sem_post| SemPrint
+    P1_Mon ==>|sem_wait / sem_post| SemPrint
+    PN_Main <==>|sem_wait / sem_post| SemForks
+```
+
+#### 철학자 루틴 (Sequence Diagram)
+
+```mermaid
+sequenceDiagram
+	box rgb(30, 40, 60) Child Process Memory Space
+    participant P as Philo Main Thread
+    participant M as Internal Monitor Thread
+    end
+    box rgb(60, 30, 30) Kernel Space (Semaphores)
+    participant SF as /forks_sem (Count N)
+    participant SP as /print_sem (Count 1)
+    end
+
+    Note over P, M: Process Created via fork()
+
+    par Parallel Execution
+        P->>P: Start Routine Loop
+    and
+        M->>M: Start Monitoring Loop
+    end
+
+    loop Simulation Routine (Main Thread)
+        Note over P: Thinking
+
+        P->>+SF: sem_wait() (Try take fork 1)
+        SF-->>-P: Acquired
+        P->>+SF: sem_wait() (Try take fork 2)
+        SF-->>-P: Acquired
+
+        rect rgb(30, 50, 30)
+            Note over P: Eating Status
+            P->>+SP: sem_wait() (Lock Print)
+            P->>P: Update last_meal_time (Atomic with internal lock)
+            P-->>SP: print("is eating")
+            SP-->>-P: sem_post() (Unlock Print)
+            P->>P: usleep(time_to_eat)
+        end
+
+        P->>SF: sem_post() (Release fork 1)
+        P->>SF: sem_post() (Release fork 2)
+
+        Note over P: Sleeping
+        P->>P: usleep(time_to_sleep)
+    end
+
+    par Death Detection Scenario
+        loop Monitoring (Monitor Thread)
+            M->>M: Check (current_time - last_meal_time) > time_to_die
+        end
+        Note right of M: Starvation Detected!
+        M->>+SP: sem_wait() (Lock Print)
+        M-->>SP: print("died")
+        Note over M: exit(1) called causing Process Termination
+    and Main Thread Interrupted
+        P->>P: Process Terminated abruptly by sibling thread's exit()
+    end
+```
+
 
 ## 🛠️ 디버깅 및 문제 해결 히스토리
 
