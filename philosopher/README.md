@@ -287,26 +287,34 @@ else if (data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
 ```
 
 .
-├── philo/
-│   ├── src/
-│   │   ├── main.c
-│   │   ├── philo.c
-│   │   ├── init.c
-│   │   └── utils.c
-│   ├── inc/
-│   │   └── philo.h
-│   └── Makefile
-├── philo_bonus/ (선택 사항)
-│   ├── src/
-│   │   ├── main_bonus.c
-│   │   ├── philo_bonus.c
-│   │   └── ...
-│   ├── inc/
-│   │   └── philo_bonus.h
-│   └── Makefile
-└── README.md
+├── README.md
+├── en.subject_philosopher.pdf
+├── philo
+│   ├── Makefile
+│   ├── cleanup.c
+│   ├── init.c
+│   ├── main.c
+│   ├── monitor.c
+│   ├── parse.c
+│   ├── philo.h
+│   ├── routine.c
+│   ├── simulation.c
+│   ├── time.c
+│   └── utils.c
+└── philo_bonus
+    ├── Makefile
+    ├── cleanup_bonus.c
+    ├── init_bonus.c
+    ├── main_bonus.c
+    ├── monitor_bonus.c
+    ├── parse_bonus.c
+    ├── philo_bonus.h
+    ├── routine_bonus.c
+    ├── simulation_bonus.c
+    ├── time_bonus.c
+    └── utils_bonus.c
 
-````
+```
 
 ---
 
@@ -316,7 +324,7 @@ else if (data->num_of_philos % 2 == 0 && (philo->id) % 2 == 0)
 ```bash
 cd philo
 make
-````
+```
 
 ### 🔨 빌드 방법 (보너스 파트: `philo_bonus`)
 
