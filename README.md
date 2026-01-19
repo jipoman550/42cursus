@@ -20,8 +20,8 @@
 - [minitalk](./minitalk) : 시그널 기반 클라이언트-서버 통신
 
 ## Circle 3
-- (진행 예정)
-
+- [exam03](./exam03)
+- [philosopher](./philosopher) : 식사하는 철학자 문제 (스레드 및 프로세스 동기화)
 ---
 
 ## PDF
