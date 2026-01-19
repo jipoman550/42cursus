@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   simulation_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 08:41:26 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/05 11:14:35 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/19 10:55:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,31 @@ static int	kill_process(t_data *data, size_t created, char *msg)
 	}
 	write(2, msg, ft_strlen(msg));
 	return (1);
+}
+
+/**
+ * @brief 식사 횟수 감시 스레드가 종료될 때까지 대기합니다.
+ * 누군가 죽어서 시뮬레이션이 끝난 경우, sem_wait에 갇혀 있을 스레드를
+ * sem_post로 강제 해제하여 join이 가능하도록 만듭니다.
+ */
+static void	wait_full_monitor_thread(t_data *data)
+{
+	size_t	i;
+
+	// 식사 제한 횟수 옵션이 없다면 스레드가 생성되지 않았으므로 리턴
+	if (data->must_eat_count == 0)
+		return ;
+
+	i = 0;
+	// 모니터 스레드가 'sem_wait(data->full_sem)' 루프에서 대기 중일 수 있으므로
+	// 철학자 수만큼 post를 던져 루프를 탈출하게 만듭니다.
+	while (i < data->num_of_philos)
+	{
+		sem_post(data->full_sem);
+		i++;
+	}
+	// 스레드가 루프를 탈출하고 종료될 때까지 기다려 자원을 회수합니다.
+	pthread_join(data->full_monitor_thread, NULL);
 }
 
 static void	monitor_simulation(t_data *data)
@@ -60,7 +85,7 @@ static void	monitor_simulation(t_data *data)
 	}
 }
 
-void	philo_routine(t_philo *philo)
+static void	philo_routine(t_philo *philo)
 {
 	// 1. 자식 프로세스 내부에 본인 사망을 감시할 스레드 생성
 	if (pthread_create(&philo->monitor_thread, NULL, monitor_routine, philo) != 0)
@@ -120,9 +145,13 @@ int	start_simulation(t_data *data)
 	{
 		if (pthread_create(&data->full_monitor_thread, NULL, full_monitor_routine, data) != 0)
 			return (kill_process(data, data->num_of_philos, ERR_THREAD_FAIL));
-		pthread_detach(data->full_monitor_thread); // 부모는 따로 join 안 하고 detach
+		// pthread_detach(data->full_monitor_thread); // 부모는 따로 join 안 하고 detach
 	}
-	// 부모 프로세스만 여기까지 도달합니다.
+
+	// 1. 사망자 발생 또는 전체 식사 완료를 기다림
 	monitor_simulation(data);
+
+	// 2. [함수 분리] 감시 스레드 종료 대기 및 자원 회수
+	wait_full_monitor_thread(data);
 	return (0);
 }

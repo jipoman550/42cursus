@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/14 08:30:14 by sisung            #+#    #+#             */
-/*   Updated: 2026/01/05 11:15:17 by sisung           ###   ########.fr       */
+/*   Updated: 2026/01/19 09:52:24 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ void	*full_monitor_routine(void *data_ptr)
 		sem_wait(data->full_sem);
 		i++;
 	}
-	// 모든 철학자가 다 먹었다면, 부모에게 알려 시뮬레이션 종료
-	sem_wait(data->print_sem); // 메시지 출력 방지용
+	//// 모든 철학자가 다 먹었다면, 부모에게 알려 시뮬레이션 종료
+	//sem_wait(data->print_sem); // 메시지 출력 방지용
 
-	// 자식 프로세스들을 정리하고 프로그램 종료
-	i = 0;
-	while (i < data->num_of_philos)
-	{
-		kill(data->pids[i], SIGKILL);
-		i++;
-	}
+	//// 자식 프로세스들을 정리하고 프로그램 종료
+	//i = 0;
+	//while (i < data->num_of_philos)
+	//{
+	//	kill(data->pids[i], SIGKILL);
+	//	i++;
+	//}
 
 	// 💡 중요: 부모 프로세스가 죽기 전에 메모리 정리!
 	// exit(0) 하면 main으로 돌아가지 않으므로 여기서 직접 치워야 함.
