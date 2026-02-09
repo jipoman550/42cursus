@@ -159,8 +159,9 @@ classDiagram
 * `echo "$USER is $HOME"` vs `echo '$USER is $HOME'`
 
 -----
-
 ## 📂 디렉토리 구조
+<details>
+<summary>디렉토리 구조</summary>
 
 ```text
 minishell/
@@ -168,16 +169,109 @@ minishell/
 ├── Dockerfile
 ├── Makefile
 ├── README.md
-├── en.subject_minishell.pdf
+├── en.subject_minishell_new.pdf
 ├── include
+│   ├── exec.h
 │   ├── minishell.h
 │   └── parser.h
-├── libft/
+├── libft
+│   ├── Makefile
+│   ├── ft_atoi.c
+│   ├── ft_bzero.c
+│   ├── ft_calloc.c
+│   ├── ft_isalnum.c
+│   ├── ft_isalpha.c
+│   ├── ft_isascii.c
+│   ├── ft_isdigit.c
+│   ├── ft_isprint.c
+│   ├── ft_itoa.c
+│   ├── ft_lstadd_back_bonus.c
+│   ├── ft_lstadd_front_bonus.c
+│   ├── ft_lstclear_bonus.c
+│   ├── ft_lstdelone_bonus.c
+│   ├── ft_lstiter_bonus.c
+│   ├── ft_lstlast_bonus.c
+│   ├── ft_lstmap_bonus.c
+│   ├── ft_lstnew_bonus.c
+│   ├── ft_lstsize_bonus.c
+│   ├── ft_memchr.c
+│   ├── ft_memcmp.c
+│   ├── ft_memcpy.c
+│   ├── ft_memmove.c
+│   ├── ft_memset.c
+│   ├── ft_putchar_fd.c
+│   ├── ft_putendl_fd.c
+│   ├── ft_putnbr_fd.c
+│   ├── ft_putstr_fd.c
+│   ├── ft_split.c
+│   ├── ft_strchr.c
+│   ├── ft_strdup.c
+│   ├── ft_striteri.c
+│   ├── ft_strjoin.c
+│   ├── ft_strlcat.c
+│   ├── ft_strlcpy.c
+│   ├── ft_strlen.c
+│   ├── ft_strmapi.c
+│   ├── ft_strncmp.c
+│   ├── ft_strnstr.c
+│   ├── ft_strrchr.c
+│   ├── ft_strtrim.c
+│   ├── ft_substr.c
+│   ├── ft_tolower.c
+│   ├── ft_toupper.c
+│   ├── ftp
+│   │   ├── Makefile
+│   │   ├── ft_conversions.c
+│   │   ├── ft_convert_char.c
+│   │   ├── ft_convert_decimal.c
+│   │   ├── ft_convert_hex.c
+│   │   ├── ft_convert_percent.c
+│   │   ├── ft_convert_pointer.c
+│   │   ├── ft_convert_string.c
+│   │   ├── ft_convert_unsigned.c
+│   │   ├── ft_printf.c
+│   │   ├── ft_printf.h
+│   │   ├── ft_utils.c
+│   │   └── libft
+│   │       ├── ftp_putchar_fd.c
+│   │       ├── ftp_putnbr_fd.c
+│   │       ├── ftp_putstr_fd.c
+│   │       ├── ftp_strlen.c
+│   │       └── libft.h
+│   ├── gnl
+│   │   ├── get_next_line.c
+│   │   ├── get_next_line.h
+│   │   └── get_next_line_utils.c
+│   ├── include
+│   │   ├── ft_printf.h
+│   │   ├── get_next_line.h
+│   │   └── libft.h
+│   └── libft2.h
 ├── minishell.supp
 └── src
     ├── exec
-    │   ├── built_in.c
-    │   └── dummy.c
+    │   ├── exe_builtin.c
+    │   ├── exe_external.c
+    │   ├── exe_pipeline.c
+    │   ├── exe_redir.c
+    │   ├── exe_single_cmd.c
+    │   ├── exe_utils1.c
+    │   ├── exe_utils2.c
+    │   ├── ft_builtin
+    │   │   ├── env_utils
+    │   │   │   ├── env_copy.c
+    │   │   │   ├── env_set_unset.c
+    │   │   │   ├── env_utils.c
+    │   │   │   └── env_valid.c
+    │   │   ├── ft_cd.c
+    │   │   ├── ft_echo.c
+    │   │   ├── ft_env.c
+    │   │   ├── ft_exit.c
+    │   │   ├── ft_export.c
+    │   │   ├── ft_export_print.c
+    │   │   ├── ft_pwd.c
+    │   │   └── ft_unset.c
+    │   └── is_builtin.c
     ├── free_utils.c
     ├── main.c
     ├── parser
@@ -198,7 +292,9 @@ minishell/
     │   ├── quote_removal.c
     │   └── token_list_utils.c
     └── signals.c
+
 ```
+</details>
 
 -----
 
