@@ -6,27 +6,42 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/18 10:20:48 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/02 19:19:01 by sisung           ###   ########.fr       */
+/*   Updated: 2026/02/09 17:10:06 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
+/*
+** 함수 역할: 문자가 공백 문자(스페이스, 탭, 개행 등)인지 확인.
+** @param c 검사할 문자.
+** @return 공백이면 1, 아니면 0.
+*/
 int	ft_isspace(char c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || \
-			c == '\v' || c == '\f' || c == '\r');
+			c == '\v' || c == '\f' || c == '\r'); // 공백 문자 여부 반환
 }
 
+/*
+** 함수 역할: 문자열에서 공백 문자를 건너뜀.
+** @param line 문자열.
+** @param i 인덱스 포인터.
+*/
 void	skip_spaces(char *line, int *i)
 {
-	while (line[*i] && ft_isspace(line[*i]))
-		(*i)++;
+	while (line[*i] && ft_isspace(line[*i])) // 현재 문자가 공백인 동안 반복
+		(*i)++; // 인덱스 증가
 }
 
+/*
+** 함수 역할: 문자가 메타 문자(공백, |, <, >)인지 확인. 단어의 끝을 결정하는 기준.
+** @param c 검사할 문자.
+** @return 메타 문자면 1, 아니면 0.
+*/
 int	is_metachar(char c)
 {
-	if (ft_isspace(c) || c == '|' || c == '<' || c == '>')
-		return (1);
-	return (0);
+	if (ft_isspace(c) || c == '|' || c == '<' || c == '>') // 공백, 파이프, 리다이렉션 문자인지 확인
+		return (1); // 메타 문자임
+	return (0); // 아님
 }
