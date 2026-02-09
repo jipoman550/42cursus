@@ -1,5 +1,7 @@
 # Minishell
 
+hama님 minishell github 주소: https://github.com/42gs-hama/minishell
+
 ## 📌 프로젝트 목적
 
 **나만의 쉘 만들기:** Bash와 유사하게 동작하는 간단한 쉘 프로그램을 처음부터 작성합니다.
