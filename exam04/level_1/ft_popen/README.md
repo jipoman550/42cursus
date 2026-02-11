@@ -80,7 +80,6 @@ close(fd);
 int fd = ft_popen("grep", args_grep, 'w');
 write(fd, "hello world\n", 12);
 close(fd); // 중요: close를 해야 grep이 입력이 끝났음을 인지하고 종료됩니다.
-
 ```
 
 ---
