@@ -1,9 +1,9 @@
-#include <stdlib.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-int	ft_popen(const char *file, char *const argv[], char type)
+int ft_popen(const char *file, char *const argv[], char type)
 {
-	int	fds[2];
+	int fds[2];
 
 	if (type != 'r' && type != 'w')
 		return (-1);

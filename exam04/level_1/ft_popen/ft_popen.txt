@@ -16,13 +16,13 @@ For example, the function could be used like that:
 
 int main()
 {
-    int  fd;
-    char *line;
+	int  fd;
+	char *line;
 
-    fd = ft_popen("ls", (char *const []){"ls", NULL}, 'r');
-    while ((line = get_next_line(fd)))
-        ft_putstr(line);
-    return (0);
+	fd = ft_popen("ls", (char *const []){"ls", NULL}, 'r');
+	while ((line = get_next_line(fd)))
+		ft_putstr(line);
+	return (0);
 }
 
 

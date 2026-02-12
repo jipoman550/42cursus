@@ -1,48 +1,69 @@
-#include <stdlib.h> // For exit
-#include <unistd.h> // For pipe, fork, close, dup2, execvp
+#include <stdlib.h>
+#include <unistd.h>
 
-// Corrected function name and added necessary includes
 int ft_popen(const char *file, char *const argv[], char type)
 {
 	int fds[2];
 
+	/* * 1단계: 인자 검사 및 파이프 생성
+	 * - 모드가 'r' 또는 'w'가 아니면 즉시 에러 리턴.
+	 * - 부모와 자식이 통신할 통로(pipe)를 먼저 만든다.
+	 */
 	if (type != 'r' && type != 'w')
 		return (-1);
 	if (pipe(fds) < 0)
 		return (-1);
 
+	/* * 2단계: 프로세스 복제 (fork)
+	 * - 실행할 명령어(자식)와 이를 제어할 나(부모)로 나눈다.
+	 * - 실패 시 생성했던 파이프를 모두 닫고 탈출한다.
+	 */
 	int pid = fork();
-	if (pid < 0) {
+	if (pid < 0)
+	{
 		close(fds[0]);
 		close(fds[1]);
 		return (-1);
 	}
 
-	if (pid == 0) // Child process
+	/* * 3단계: [자식 프로세스] 표준 스트림 교체
+	 * - 'r'(읽기 모드): 내 출력(STDOUT)을 파이프 입구(fds[1])로 보낸다.
+	 * - 'w'(쓰기 모드): 내 입력(STDIN)을 파이프 출구(fds[0])에서 받는다.
+	 * - 연결이 끝난 파이프 원본들은 모두 닫는다.
+	 */
+	if (pid == 0)
 	{
-		if (type == 'r') {
-			// Redirect stdout of the command to the pipe's write end
-			dup2(fds[1], STDOUT_FILENO); // Use STDOUT_FILENO for clarity
-		} else {                       // type == 'w'
-			// Redirect stdin of the command from the pipe's read end
-			dup2(fds[0], STDIN_FILENO); // Use STDIN_FILENO for clarity
-		}
+		if (type == 'r')
+			dup2(fds[1], STDOUT_FILENO);
+		else
+			dup2(fds[0], STDIN_FILENO);
+
 		close(fds[0]);
 		close(fds[1]);
+
+		/* * 4단계: [자식 프로세스] 명령어 실행
+		 * - 새로운 프로그램으로 완전히 대체한다.
+		 * - 만약 실행에 실패하면 즉시 종료(exit)하여 좀비를 방지한다.
+		 */
 		execvp(file, argv);
-		// If execvp fails, exit with an error
-		exit(EXIT_FAILURE); // Use EXIT_FAILURE for standard practice
+		exit(EXIT_FAILURE);
 	}
-	else                // Parent process
+
+	/* * 5단계: [부모 프로세스] 통신용 FD 리턴
+	 * - 자식이 쓰기용(fds[1])을 쓰면, 부모는 읽기용(fds[0])만 남기고 닫은 뒤 리턴.
+	 * - 자식이 읽기용(fds[0])을 쓰면, 부모는 쓰기용(fds[1])만 남기고 닫은 뒤 리턴.
+	 */
+	else
 	{
-		if (type == 'r') {
-			close(fds[1]); // Close the write end, parent doesn't need it for reading
-			return (fds[0]); // Return the read end of the pipe
-		}
-		else             // type == 'w'
+		if (type == 'r')
 		{
-			close(fds[0]);   // Close the read end, parent doesn't need it for writing
-			return (fds[1]); // Return the write end of the pipe
+			close(fds[1]);
+			return (fds[0]);
+		}
+		else
+		{
+			close(fds[0]);
+			return (fds[1]);
 		}
 	}
 }
