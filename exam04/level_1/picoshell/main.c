@@ -29,3 +29,36 @@ int main(void)
 
 	return 0;
 }
+
+/*
+// txt 파일에 있는 예시 버전 test
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int picoshell(char **cmds[]);
+
+int main(int argc, char **argv)
+{
+	if (argc < 2) return 0;
+
+	// 대략적인 명령어 배열 생성 (최대 100개 가정)
+	char ***cmds = calloc(argc, sizeof(char **));
+	int cmd_idx = 0;
+	int arg_start = 1;
+
+	for (int i = 1; i < argc; i++)
+	{
+		if (strcmp(argv[i], "|") == 0)
+		{
+			argv[i] = NULL; // 파이프를 NULL로 바꿔서 execvp 종료 표시
+			cmds[cmd_idx++] = &argv[arg_start];
+			arg_start = i + 1;
+		}
+	}
+	cmds[cmd_idx++] = &argv[arg_start];
+	cmds[cmd_idx] = NULL;
+
+	return picoshell(cmds);
+}
+*/

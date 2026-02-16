@@ -10,15 +10,15 @@ int main()
 
 	char **pipeline[] = {cmd1, cmd2, cmd3, NULL};
 
-	printf("------ 파이프라인 실행 시작 ------- \n");
+	printf("---------------시작----------------\n");
 
 	if (picoshell(pipeline) == 0)
 	{
-		printf("--- 실행 성공 ---\n");
+		printf("-------sucess!--------\n");
 	}
 	else
 	{
-		printf("--- 실행 중 오류 발생 ---\n");
+		printf("-------fail...:(--------\n");
 	}
 
 	return (0);

@@ -1,23 +1,23 @@
 #include <stdlib.h>
-#include <sys/wait.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 int    picoshell(char **cmds[])
 {
-	int i = 0;
 	int pipe_fds[2];
+	int i = 0;
 	int prev_read_end = -1;
 
 	while (cmds[i])
 	{
 		if (cmds[i + 1])
 		{
-			if (pipe(pipe_fds) < 0)
+			if (pipe(pipe_fds) == -1)
 				return (1);
 		}
 
 		pid_t pid = fork();
-		if (pid < 0)
+		if (pid == -1)
 		{
 			if (prev_read_end != -1)
 				close(prev_read_end);

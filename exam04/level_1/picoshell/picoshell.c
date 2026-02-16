@@ -30,12 +30,12 @@ int picoshell(char **cmds[])
 		{
 			if (prev_read_end != -1)
 				close(prev_read_end);
-            if (cmds[i + 1])
+			if (cmds[i + 1])
 			{
 				close(pipe_fds[0]);
 				close(pipe_fds[1]);
 			}
-            return (1);
+			return (1);
 		}
 
 		if (pid == 0)
@@ -98,6 +98,6 @@ int picoshell(char **cmds[])
 	 * 모든 명령을 내렸으니, 모든 자식들이 완주(종료)할 때까지 기다립니다.
 	 * wait()이 -1을 반환(더 이상 자식이 없음)할 때까지 루프를 돕니다.
 	 */
-	while (wait(NULL) > 0);
+	while (wait(NULL) > 0); // 궁금한게 이거 없으면 어떻게 되는지 원리를 보고 싶은데?
 	return 0;
 }
