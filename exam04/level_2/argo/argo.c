@@ -237,7 +237,7 @@ int	parse_string(json *dst, FILE *stream)
 		dst->string[len] = '\0';
 	}
 
-	// 만약 빈 문자열("")일 경우를 위해 최소한의 할당은 보장해야 함
+	// 4. 만약 빈 문자열("")일 경우를 위해 최소한의 할당은 보장해야 함
 	if (dst->string == NULL)
 		dst->string = calloc(1, 1);
 

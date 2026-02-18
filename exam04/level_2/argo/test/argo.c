@@ -25,16 +25,16 @@ typedef struct	pair {
 	json	value;
 }	pair;
 
+int parse_map(json *dst, FILE *stream);
+int parse_string(json *dst, FILE *stream);
+int	argo(json *dst, FILE *stream);
+
 int	peek(FILE *stream)
 {
 	int	c = getc(stream);
 	ungetc(c, stream);
 	return c;
 }
-
-int parse_map(json *dst, FILE *stream);
-int parse_string(json *dst, FILE *stream);
-int	argo(json *dst, FILE *stream);
 
 void	unexpected(FILE *stream)
 {
@@ -116,7 +116,7 @@ void	serialize(json j)
 
 int parse_map(json *dst, FILE *stream)
 {
-	// 1. { 제거
+	// 1. { 인지 확인
 	if (!expect(stream, '{'))
 		return (-1);
 
@@ -129,32 +129,32 @@ int parse_map(json *dst, FILE *stream)
 	if (accept(stream, '}'))
 		return (1);
 
-	// 4. 무한 루프
+	// 4. 무한루프
 	while (1)
 	{
 		pair new_pair;
 		json key_json;
 
-		// 1. [key 파싱] key는 항상 문자열
+		// 1. key 파싱
 		if (parse_string(&key_json, stream) != 1)
 			return (-1);
 		new_pair.key = key_json.string;
 
-		// 2. [separator 확인] 콜론(:)이 있어야 함
+		// 2. separator(:) 확인
 		if (!expect(stream, ':'))
 		{
 			free(new_pair.key);
 			return (-1);
 		}
 
-		// 3. [value 파싱] 여기서 재귀 호출! argo를 다시 부름
+		// 3. value 파싱: 여기서 재귀 호출(argo 호출)
 		if (argo(&new_pair.value, stream) != 1)
 		{
 			free(new_pair.key);
 			return (-1);
 		}
 
-		// 4. [메모리 확장] realloc 으로 pair 배열 크기를 하나 늘림
+		// 4. 메모리 확장
 		pair *tmp = realloc(dst->map.data, sizeof(pair) * (dst->map.size + 1));
 		if (!tmp)
 		{
@@ -166,12 +166,12 @@ int parse_map(json *dst, FILE *stream)
 		dst->map.data[dst->map.size] = new_pair;
 		dst->map.size++;
 
-		// 5. 다음 요소 확인: 쉼표(,)가 있으면 계속 ㄱ, 없으면 루프 종료
+		// 5. 다음요소 확인: , 유무에 따라
 		if (!accept(stream, ','))
 			break ;
 	}
 
-	// 5. } 제거
+	// 5. } 확인하고 제거
 	if (!expect(stream, '}'))
 		return (-1);
 
@@ -180,7 +180,7 @@ int parse_map(json *dst, FILE *stream)
 
 int parse_string(json *dst, FILE *stream)
 {
-	// 1. 시작확인 "
+	// 1. " 시작 확인 && 넘기기
 	if (!expect(stream, '"'))
 		return (-1);
 
@@ -189,12 +189,11 @@ int parse_string(json *dst, FILE *stream)
 	dst->string = NULL;
 	size_t len = 0;
 
-	// 3. 무한루프: " 가 나오기 or 파일이 끝날 때까지 한 글자씩 읽기
+	// 3. 무한루프: " 가 나오거나 파일이 끝날 때까지 한 글자씩 읽기
 	while (1)
 	{
-		// 1. 한 글자씩 읽기
+		// 1. 한글자씩 읽기
 		int c = getc(stream);
-
 		// 2. 에러 처리
 		if (c == EOF)
 		{
@@ -202,7 +201,7 @@ int parse_string(json *dst, FILE *stream)
 			return (-1);
 		}
 
-		// 3. 종료조건 (이스케이프 되지 않은 따옴표 발견)
+		// 3. 종료 조건
 		if (c == '"')
 			break ;
 
@@ -218,7 +217,7 @@ int parse_string(json *dst, FILE *stream)
 			}
 		}
 
-		// 5. 메모리 확장 및 문자 저장
+		// 5. 메모리 확장 및 문자저장
 		char *tmp = realloc(dst->string, len + 2);
 		if (!tmp)
 			return (-1);
@@ -228,10 +227,9 @@ int parse_string(json *dst, FILE *stream)
 		dst->string[len] = '\0';
 	}
 
-	// 4. 예외처리: 빈문자열("")일 경우 최소한 할당 보장
+	// 4. 빈문자열("") 일 경우
 	if (dst->string == NULL)
 		dst->string = calloc(1, 1);
-
 	return (1);
 }
 
@@ -239,7 +237,7 @@ int	argo(json *dst, FILE *stream)
 {
 	int p = peek(stream);
 
-	// 1. 정수처리
+	// 1. 정수
 	if (isdigit(p) || p == '-')
 	{
 		dst->type = INTEGER;
@@ -247,13 +245,13 @@ int	argo(json *dst, FILE *stream)
 			return (1);
 		return (-1);
 	}
-	// 2. 문자열 처리
+	// 2. 문자열
 	else if (p == '"')
 		return (parse_string(dst, stream));
-	// 3. 맵 처리
+	// 3. map
 	else if (p == '{')
 		return (parse_map(dst, stream));
-	// 4. 예외처리
+	// 4. 예외 처리
 	else
 	{
 		unexpected(stream);
