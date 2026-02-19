@@ -122,16 +122,16 @@ int parse_map(json *dst, FILE *stream)
 	if (!expect(stream, '{'))
 		return (-1);
 
-	// 초기화
+	// 2. 초기화
 	dst->type = MAP;
 	dst->map.data = NULL;
 	dst->map.size = 0;
 
-	// 2. } 가 바로 나오면 빈 맵 처리
+	// 3. } 가 바로 나오면 빈 맵 처리
 	if (accept(stream, '}'))
 		return (1);
 
-	// 3. 루프
+	// 4. 루프
 	while (1)
 	{
 		pair new_pair;
@@ -174,7 +174,7 @@ int parse_map(json *dst, FILE *stream)
 			break ;
 	}
 
-	// 4. } 제거
+	// 5. } 제거
 	if (!expect(stream, '}'))
 		return (-1);
 

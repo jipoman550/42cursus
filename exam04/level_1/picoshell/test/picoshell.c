@@ -4,7 +4,7 @@
 
 int    picoshell(char **cmds[])
 {
-	int pipe_fds[2];
+	int fds[2];
 	int i = 0;
 	int prev_read_end = -1;
 
@@ -12,19 +12,19 @@ int    picoshell(char **cmds[])
 	{
 		if (cmds[i + 1])
 		{
-			if (pipe(pipe_fds) == -1)
+			if (pipe(fds) == -1)
 				return (1);
 		}
 
-		pid_t pid = fork();
+		int pid = fork();
 		if (pid == -1)
 		{
 			if (prev_read_end != -1)
 				close(prev_read_end);
 			if (cmds[i + 1])
 			{
-				close(pipe_fds[0]);
-				close(pipe_fds[1]);
+				close(fds[0]);
+				close(fds[1]);
 			}
 			return (1);
 		}
@@ -38,9 +38,9 @@ int    picoshell(char **cmds[])
 			}
 			if (cmds[i + 1])
 			{
-				close(pipe_fds[0]);
-				dup2(pipe_fds[1], STDOUT_FILENO);
-				close(pipe_fds[1]);
+				close(fds[0]);
+				dup2(fds[1], STDOUT_FILENO);
+				close(fds[1]);
 			}
 			execvp(cmds[i][0], cmds[i]);
 			exit(1);
@@ -51,13 +51,30 @@ int    picoshell(char **cmds[])
 				close(prev_read_end);
 			if (cmds[i + 1])
 			{
-				close(pipe_fds[1]);
-				prev_read_end = pipe_fds[0];
+				close(fds[1]);
+				prev_read_end = fds[0];
 			}
 		}
 		i++;
 	}
 
 	while (wait(NULL) > 0);
+	return (0);
+}
+
+#include <stdio.h>
+
+int main()
+{
+	char *cmd1[] = {"ls", "-la", NULL};
+	char *cmd2[] = {"grep", "picoshell", NULL};
+	char *cmd3[] = {"wc", "-l", NULL};
+
+	char **pipeline[] = {cmd1, cmd2, cmd3, NULL};
+
+	if (picoshell(pipeline) != 1)
+		printf("success!\n");
+	else
+		printf("fail!\n");
 	return (0);
 }

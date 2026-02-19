@@ -12,7 +12,7 @@ int sandbox(void (*f)(void), unsigned int timeout, bool verbose)
 	int status;
 
 	pid = fork();
-	if (pid < 0 )
+	if (pid < 0)
 		return (-1);
 
 	if (pid == 0)

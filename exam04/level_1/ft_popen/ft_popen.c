@@ -11,7 +11,7 @@ int ft_popen(const char *file, char *const argv[], char type)
 	 */
 	if (type != 'r' && type != 'w')
 		return (-1);
-	if (pipe(fds) < 0)
+	if (pipe(fds) == -1)
 		return (-1);
 
 	/* * 2단계: 프로세스 복제 (fork)
@@ -19,7 +19,7 @@ int ft_popen(const char *file, char *const argv[], char type)
 	 * - 실패 시 생성했던 파이프를 모두 닫고 탈출한다.
 	 */
 	int pid = fork();
-	if (pid < 0)
+	if (pid == -1)
 	{
 		close(fds[0]);
 		close(fds[1]);
