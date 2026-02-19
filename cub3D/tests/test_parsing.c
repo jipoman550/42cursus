@@ -24,7 +24,7 @@ static int	g_fail = 0;
 /**
  * @brief game 구조체 멤버를 0으로 초기화하는 헬퍼
  */
-static void	init_game(t_game *game)
+static void	test_init_game(t_game *game)
 {
 	memset(game, 0, sizeof(t_game));
 	game->map.floor_color = -1;
@@ -34,7 +34,7 @@ static void	init_game(t_game *game)
 /**
  * @brief game 구조체의 동적 메모리를 해제하는 헬퍼
  */
-static void	free_game(t_game *game)
+static void	test_free_game(t_game *game)
 {
 	int	i;
 
@@ -70,7 +70,7 @@ static void	test_valid_map(const char *test_name, const char *file_path)
 	int		ret;
 
 	g_total++;
-	init_game(&game);
+	test_init_game(&game);
 	ret = parse_map(file_path, &game);
 	if (ret == 0)
 	{
@@ -83,7 +83,7 @@ static void	test_valid_map(const char *test_name, const char *file_path)
 			test_name, ret);
 		g_fail++;
 	}
-	free_game(&game);
+	test_free_game(&game);
 }
 
 /**
@@ -97,7 +97,7 @@ static void	test_invalid_map(const char *test_name, const char *file_path)
 	int		ret;
 
 	g_total++;
-	init_game(&game);
+	test_init_game(&game);
 	ret = parse_map(file_path, &game);
 	if (ret == -1)
 	{
@@ -110,7 +110,7 @@ static void	test_invalid_map(const char *test_name, const char *file_path)
 			test_name, ret);
 		g_fail++;
 	}
-	free_game(&game);
+	test_free_game(&game);
 }
 
 /**
@@ -122,14 +122,14 @@ static void	test_valid_basic_details(void)
 	int		ret;
 
 	g_total++;
-	init_game(&game);
+	test_init_game(&game);
 	ret = parse_map("tests/maps/valid_basic.cub", &game);
 	if (ret != 0)
 	{
 		printf("  " CLR_RED "[FAIL]" CLR_RESET
 			" valid_basic details: parse_map failed (%d)\n", ret);
 		g_fail++;
-		free_game(&game);
+		test_free_game(&game);
 		return ;
 	}
 
@@ -182,7 +182,7 @@ static void	test_valid_basic_details(void)
 		g_fail++;
 	}
 
-	free_game(&game);
+	test_free_game(&game);
 }
 
 /**
@@ -194,7 +194,7 @@ static void	test_nonexistent_file(void)
 	int		ret;
 
 	g_total++;
-	init_game(&game);
+	test_init_game(&game);
 	ret = parse_map("tests/maps/this_file_does_not_exist.cub", &game);
 	if (ret == -1)
 	{
@@ -207,7 +207,7 @@ static void	test_nonexistent_file(void)
 			" 존재하지 않는 파일 처리 (expected -1, got %d)\n", ret);
 		g_fail++;
 	}
-	free_game(&game);
+	test_free_game(&game);
 }
 
 /* ========================================================================== */

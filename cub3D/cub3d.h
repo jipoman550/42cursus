@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "mlx.h"
+# include <string.h>
 
 # include "libft2.h"
 
@@ -139,6 +140,12 @@ typedef struct s_game
 	t_img		textures[4];
 }	t_game;
 
-int	parse_map(const char *file_path, t_game *game);
+int		parse_map(const char *file_path, t_game *game);
+int		init_game(t_game *game);
+int		load_textures(t_game *game);
+void	free_game(t_game *game);
+void	exit_game(t_game *game, int exit_code);
+void	start_game_loop(t_game *game);
+void	put_pixel(t_img *img, int x, int y, int color);
 
 #endif

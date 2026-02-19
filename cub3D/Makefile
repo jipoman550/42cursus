@@ -31,14 +31,16 @@ MLX_FLAGS	= -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -lbsd
 # Sources
 SRCS_DIR	= srcs
 
-SRCS		= main.c \
+SRCS		= $(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/parsing.c \
-			$(SRCS_DIR)/parsing_utils.c
+			$(SRCS_DIR)/parsing_utils.c \
+			$(SRCS_DIR)/init.c
 OBJS		= $(SRCS:.c=.o)
 
-SRCS_BONUS	= main_bonus.c \
+SRCS_BONUS	= $(SRCS_DIR)/main_bonus.c \
 			$(SRCS_DIR)/parsing.c \
-			$(SRCS_DIR)/parsing_utils.c
+			$(SRCS_DIR)/parsing_utils.c \
+			$(SRCS_DIR)/init.c
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 
 # Test

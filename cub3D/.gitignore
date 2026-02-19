@@ -1,0 +1,10 @@
+# cub3D project
+*.o
+cub3D
+cub3D_bonus
+test_parsing
+
+# Documentation (not needed in repo)
+CHANGELOG.md
+GEMINI.md
+IMPLEMENTATION_PLAN.md
