@@ -32,7 +32,7 @@ char	*ft_strndup(const char *s, size_t n)
 	return (dup);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	while (*s)
 	{
@@ -45,7 +45,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	cnt;
 
@@ -60,15 +60,15 @@ size_t	ft_strlen(const char *s)
 	return (cnt);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*gnl_strjoin(char const *s1, char const *s2)
 {
 	size_t	s1_len;
 	size_t	s2_len;
 	char	*strjoin;
 	char	*p;
 
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
+	s1_len = gnl_strlen(s1);
+	s2_len = gnl_strlen(s2);
 	strjoin = (char *)malloc(s1_len + s2_len + 1);
 	if (!strjoin)
 		return (NULL);

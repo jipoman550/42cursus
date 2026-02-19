@@ -17,7 +17,7 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 RM			= rm -f
 
-INCLUDES	= -I./includes -I./minilibx-linux -I./libft
+INCLUDES	= -I. -I./includes -I./minilibx-linux -I./libft
 
 # Libft
 LIBFT_DIR	= ./libft
@@ -30,16 +30,24 @@ MLX_FLAGS	= -L$(MLX_DIR) -lmlx -L/usr/lib -lXext -lX11 -lm -lz -lbsd
 
 # Sources
 SRCS_DIR	= srcs
-MANDATORY_DIR	= $(SRCS_DIR)/mandatory
-BONUS_DIR	= $(SRCS_DIR)/bonus
 
-SRC_FILES	= main.c
-SRCS		= $(addprefix $(MANDATORY_DIR)/, $(SRC_FILES))
+SRCS		= main.c \
+			$(SRCS_DIR)/parsing.c \
+			$(SRCS_DIR)/parsing_utils.c
 OBJS		= $(SRCS:.c=.o)
 
-SRC_BONUS_FILES	= main_bonus.c
-SRCS_BONUS	= $(addprefix $(BONUS_DIR)/, $(SRC_BONUS_FILES))
+SRCS_BONUS	= main_bonus.c \
+			$(SRCS_DIR)/parsing.c \
+			$(SRCS_DIR)/parsing_utils.c
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
+
+# Test
+TEST_DIR	= tests
+TEST_NAME	= test_parsing
+TEST_SRCS	= $(TEST_DIR)/test_parsing.c \
+			$(SRCS_DIR)/parsing.c \
+			$(SRCS_DIR)/parsing_utils.c
+TEST_OBJS	= $(TEST_SRCS:.c=.o)
 
 all: $(NAME)
 
@@ -53,7 +61,7 @@ $(NAME_BONUS): $(OBJS_BONUS) $(LIBFT) $(MLX)
 
 $(LIBFT):
 	@if [ -d "$(LIBFT_DIR)" ]; then \
-		make -C $(LIBFT_DIR); \
+		make -C $(LIBFT_DIR) bonus; \
 	else \
 		echo "Error: libft directory not found."; \
 		exit 1; \
@@ -70,15 +78,23 @@ $(MLX):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+test: $(LIBFT) $(TEST_OBJS)
+	$(CC) $(CFLAGS) $(TEST_OBJS) $(LIBFT) -lm -o $(TEST_NAME)
+	@echo ""
+	@echo "🚀 Running parsing tests..."
+	@echo ""
+	@./$(TEST_NAME)
+	@$(RM) $(TEST_NAME)
+
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS)
+	$(RM) $(OBJS) $(OBJS_BONUS) $(TEST_OBJS)
 	@if [ -d "$(LIBFT_DIR)" ]; then make -C $(LIBFT_DIR) clean; fi
 	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS)
+	$(RM) $(NAME) $(NAME_BONUS) $(TEST_NAME)
 	@if [ -d "$(LIBFT_DIR)" ]; then make -C $(LIBFT_DIR) fclean; fi
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus test

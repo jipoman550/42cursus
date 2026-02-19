@@ -22,9 +22,10 @@
 
 char	*get_next_line(int fd);
 
-size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strchr(const char *s, int c);
+/* GNL-internal helper (unique name to avoid symbol clash with libft) */
+char	*gnl_strchr(const char *s, int c);
+size_t	gnl_strlen(const char *s);
+char	*gnl_strjoin(char const *s1, char const *s2);
 char	*ft_strndup(const char *s, size_t n);
 
 #endif

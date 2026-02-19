@@ -19,18 +19,18 @@ static char	*extract_and_rest_buf(char **buffer)
 	char	*next_buf;
 	int		len;
 
-	newline_char = ft_strchr(*buffer, '\n');
+	newline_char = gnl_strchr(*buffer, '\n');
 	if (newline_char)
 	{
 		len = newline_char - *buffer + 1;
 		extract_line = ft_strndup(*buffer, len);
-		next_buf = ft_strndup(*buffer + len, ft_strlen(*buffer + len));
+		next_buf = ft_strndup(*buffer + len, gnl_strlen(*buffer + len));
 		free(*buffer);
 		*buffer = next_buf;
 	}
 	else
 	{
-		extract_line = ft_strndup(*buffer, ft_strlen(*buffer));
+		extract_line = ft_strndup(*buffer, gnl_strlen(*buffer));
 		free(*buffer);
 		*buffer = NULL;
 	}
@@ -55,10 +55,10 @@ static char	*read_and_strjoin(int fd, char **buffer)
 		if (read_value == -1)
 			return (free(read_buf), free(*buffer), *buffer = NULL, NULL);
 		read_buf[read_value] = '\0';
-		tmp = ft_strjoin(*buffer, read_buf);
+		tmp = gnl_strjoin(*buffer, read_buf);
 		free(*buffer);
 		*buffer = tmp;
-		if (ft_strchr(read_buf, '\n'))
+		if (gnl_strchr(read_buf, '\n'))
 			break ;
 	}
 	return (free(read_buf), *buffer);

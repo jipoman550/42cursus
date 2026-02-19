@@ -20,10 +20,7 @@
 # include <math.h>
 # include "mlx.h"
 
-/*
-** libft가 준비되면 주석을 해제하세요.
-** # include "libft.h"
-*/
+# include "libft2.h"
 
 # define SCREEN_W 1280
 # define SCREEN_H 720
@@ -141,5 +138,7 @@ typedef struct s_game
 	t_player	player;
 	t_img		textures[4];
 }	t_game;
+
+int	parse_map(const char *file_path, t_game *game);
 
 #endif
