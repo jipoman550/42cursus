@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:31 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/19 23:25:33 by sisung           ###   ########.fr       */
+/*   Updated: 2026/02/20 09:57:36 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,5 +147,6 @@ void	free_game(t_game *game);
 void	exit_game(t_game *game, int exit_code);
 void	start_game_loop(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
+int		parse_color(int *color_field, const char *rgb_str);
 
 #endif
