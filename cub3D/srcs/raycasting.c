@@ -100,6 +100,28 @@ static void	calculate_wall_dims(t_ray *ray)
 }
 
 /**
+ * @brief 벽의 방향과 텍스처 좌표(tex_x)를 계산
+ * @param ray 광선 정보
+ * @param player 플레이어 정보
+ * @return 텍스처 인덱스 (0:NO, 1:SO, 2:WE, 3:EA)
+ */
+static int	get_texture_idx(t_ray *ray)
+{
+	if (ray->side == 0) // X축 벽 (동/서)
+	{
+		if (ray->ray_dir_x > 0)
+			return (3); // East
+		return (2);     // West
+	}
+	else // Y축 벽 (남/북)
+	{
+		if (ray->ray_dir_y > 0)
+			return (1); // South
+		return (0);     // North
+	}
+}
+
+/**
  * @brief 매 프레임마다 호출되어 화면을 렌더링하는 메인 함수
  * @param game 게임 구조체 포인터
  * @return 0
@@ -108,11 +130,11 @@ int	render_frame(t_game *game)
 {
 	int		x;
 	t_ray	ray;
-	int		color;
+	int		tex_idx;
+	double	wall_x;
+	int		tex_x;
 
-	// 1. 천장과 바닥 먼저 그리기
 	draw_background(game);
-	// 2. 각 세로선마다 레이캐스팅 수행
 	x = 0;
 	while (x < SCREEN_W)
 	{
@@ -120,21 +142,37 @@ int	render_frame(t_game *game)
 		calculate_step(&ray, &game->player);
 		perform_dda(&ray, &game->map);
 		calculate_wall_dims(&ray);
-		// 단색 벽 색상 결정 (X축/Y축 부딪힘에 따라 음영 조절)
+
+		// 1. 텍스처 방향 및 충돌 지점 계산
+		tex_idx = get_texture_idx(&ray);
 		if (ray.side == 0)
-			color = 0xCCCCCC; // 밝은 회색
+			wall_x = game->player.pos_y + ray.perp_wall_dist * ray.ray_dir_y;
 		else
-			color = 0x999999; // 어두운 회색
-		// 세로선 그리기
+			wall_x = game->player.pos_x + ray.perp_wall_dist * ray.ray_dir_x;
+		wall_x -= floor(wall_x);
+
+		// 2. 텍스처 x좌표 계산
+		tex_x = (int)(wall_x * (double)TEX_WIDTH);
+		if ((ray.side == 0 && ray.ray_dir_x > 0) || (ray.side == 1 && ray.ray_dir_y < 0))
+			tex_x = TEX_WIDTH - tex_x - 1;
+
+		// 3. 세로선 그리기 (텍스처 매핑)
+		double step = 1.0 * TEX_HEIGHT / ray.line_height;
+		double tex_pos = (ray.draw_start - SCREEN_H / 2 + ray.line_height / 2) * step;
 		int y = ray.draw_start;
 		while (y < ray.draw_end)
 		{
+			int tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
+			tex_pos += step;
+			// 텍스처 메모리에서 색상 읽기
+			int color = *(int *)(game->textures[tex_idx].addr +
+						(tex_y * game->textures[tex_idx].line_len +
+						 tex_x * (game->textures[tex_idx].bpp / 8)));
 			put_pixel(&game->img, x, y, color);
 			y++;
 		}
 		x++;
 	}
-	// 3. 만들어진 이미지를 윈도우에 출력
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }
