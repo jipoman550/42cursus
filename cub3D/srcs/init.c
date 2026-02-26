@@ -1,25 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/26 10:42:01 by sisung            #+#    #+#             */
+/*   Updated: 2026/02/26 10:42:06 by sisung           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
-
-/**
- * @brief 이미지 버퍼의 (x, y) 좌표에 색상을 기록
- * @param img 픽셀을 그릴 대상 이미지 구조체
- * @param x 픽셀의 x 좌표
- * @param y 픽셀의 y 좌표
- * @param color 기록할 색상 값 (TRGB)
- */
-void	put_pixel(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	// 화면 범위를 벗어나는 좌표는 무시 (Segfault 방지)
-	if (x < 0 || x >= SCREEN_W || y < 0 || y >= SCREEN_H)
-		return ;
-	// 메모리 주소 계산: 시작 주소 + (y * 한 줄 길이) + (x * 픽셀 당 바이트 수)
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	// 계산된 주소에 색상 값 저장
-	*(unsigned int *)dst = color;
-}
-
 
 /**
  * @brief MLX 세션, 윈도우, 이미지 버퍼를 초기화
@@ -162,6 +153,8 @@ void	start_game_loop(t_game *game)
 	mlx_hook(game->win, 2, 1L << 0, key_press, game);
 	// 창 닫기 버튼 이벤트(17) 훅 등록 → input.c의 close_window()
 	mlx_hook(game->win, 17, 0, close_window, game);
+	// 매 프레임마다 렌더링을 수행하도록 훅 등록
+	mlx_loop_hook(game->mlx, render_frame, game);
 	// MLX 메인 루프 시작 (이벤트 대기)
 	mlx_loop(game->mlx);
 }

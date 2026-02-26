@@ -35,6 +35,8 @@ SRCS		= $(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/parsing.c \
 			$(SRCS_DIR)/parsing_utils.c \
 			$(SRCS_DIR)/input.c \
+			$(SRCS_DIR)/raycasting.c \
+			$(SRCS_DIR)/render_utils.c \
 			$(SRCS_DIR)/init.c
 OBJS		= $(SRCS:.c=.o)
 
@@ -42,6 +44,8 @@ SRCS_BONUS	= $(SRCS_DIR)/main_bonus.c \
 			$(SRCS_DIR)/parsing.c \
 			$(SRCS_DIR)/parsing_utils.c \
 			$(SRCS_DIR)/input.c \
+			$(SRCS_DIR)/raycasting.c \
+			$(SRCS_DIR)/render_utils.c \
 			$(SRCS_DIR)/init.c
 OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
 

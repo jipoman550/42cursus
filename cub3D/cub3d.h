@@ -149,6 +149,13 @@ void	start_game_loop(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
 int		parse_color(int *color_field, const char *rgb_str);
 
+/* srcs/render_utils.c — 렌더링 유틸리티 */
+void	put_pixel(t_img *img, int x, int y, int color);
+void	draw_background(t_game *game);
+
+/* srcs/raycasting.c — 레이캐스팅 및 렌더링 메인 */
+int		render_frame(t_game *game);
+
 /* srcs/input.c — 키 입력 및 플레이어 이동 */
 int		key_press(int keycode, t_game *game);
 int		close_window(t_game *game);
