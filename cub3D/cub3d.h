@@ -149,4 +149,10 @@ void	start_game_loop(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
 int		parse_color(int *color_field, const char *rgb_str);
 
+/* srcs/input.c — 키 입력 및 플레이어 이동 */
+int		key_press(int keycode, t_game *game);
+int		close_window(t_game *game);
+void	rotate_left(t_game *game);
+void	rotate_right(t_game *game);
+
 #endif

@@ -20,31 +20,6 @@ void	put_pixel(t_img *img, int x, int y, int color)
 	*(unsigned int *)dst = color;
 }
 
-/**
- * @brief ESC 키 또는 지원 키 입력 시 호출되는 콜백 (Step 1에서는 ESC만 처리)
- * @param keycode 입력된 키의 코드 값
- * @param game 게임 구조체 포인터
- * @return 이벤트 처리 결과 (0)
- */
-static int	key_press_handler(int keycode, t_game *game)
-{
-	// ESC 키(65307)가 눌리면 게임 종료
-	if (keycode == 65307)
-		exit_game(game, 0);
-	return (0);
-}
-
-/**
- * @brief 창 X 버튼 클릭 시 호출되는 콜백
- * @param game 게임 구조체 포인터
- * @return 이벤트 처리 결과 (0)
- */
-static int	close_window_handler(t_game *game)
-{
-	// 창 닫기 버튼 클릭 시 게임 종료
-	exit_game(game, 0);
-	return (0);
-}
 
 /**
  * @brief MLX 세션, 윈도우, 이미지 버퍼를 초기화
@@ -178,14 +153,15 @@ void	exit_game(t_game *game, int exit_code)
 
 /**
  * @brief MLX 이벤트 훅을 등록하고 루프를 시작
+ * input.c에서 정의한 key_press(), close_window() 콜백을 등록
  * @param game 게임 구조체 포인터
  */
 void	start_game_loop(t_game *game)
 {
-	// 키 입력 이벤트(2) 훅 등록
-	mlx_hook(game->win, 2, 1L << 0, key_press_handler, game);
-	// 창 닫기 버튼 이벤트(17) 훅 등록
-	mlx_hook(game->win, 17, 0, close_window_handler, game);
+	// 키 입력 이벤트(2) 훅 등록 → input.c의 key_press()
+	mlx_hook(game->win, 2, 1L << 0, key_press, game);
+	// 창 닫기 버튼 이벤트(17) 훅 등록 → input.c의 close_window()
+	mlx_hook(game->win, 17, 0, close_window, game);
 	// MLX 메인 루프 시작 (이벤트 대기)
 	mlx_loop(game->mlx);
 }
