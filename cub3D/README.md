@@ -54,13 +54,13 @@
 ```text
 .
 ├── includes/       # 헤더 파일 (*.h)
-├── libft/          # 사용자 정의 라이브러리 [cite: 41]
+├── libft/          # 사용자 정의 라이브러리
 ├── maps/           # 테스트용 .cub 맵 파일
 ├── srcs/           # 소스 파일 (*.c)
 │   ├── mandatory/  # 필수 파트 코드
-│   └── bonus/      # 보너스 파트 코드 [cite: 39]
+│   └── bonus/      # 보너스 파트 코드
 ├── textures/       # 벽 텍스처 이미지 (XPM 형식)
-└── Makefile        # 빌드 스크립트 [cite: 35, 37]
+└── Makefile        # 빌드 스크립트
 
 ```
 
