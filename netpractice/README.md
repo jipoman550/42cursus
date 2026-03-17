@@ -1,12 +1,12 @@
 *This project has been created as part of the 42 curriculum by sisung.*
 
-## **Description**
+# **Description**
 
 NetPractice is a project focused on the fundamentals of computer networking. The goal is to solve 10 levels of simulated network configurations to make each network functional. Through this exercise, I learned how to configure TCP/IP addresses, understand subnet masks, and manage data routing through default gateways, routers, and switches.
 
-## **Instructions**
+# **Instructions**
 
-### **How to Run**
+## **How to Run**
 
 1. Download and extract the project files.
 
@@ -21,7 +21,7 @@ NetPractice is a project focused on the fundamentals of computer networking. The
 
 
 
-### **Exporting and Submission**
+## **Exporting and Submission**
 
 * To save your progress, use the **[Get my config]** button to export a configuration file for each level.
 
@@ -33,13 +33,13 @@ NetPractice is a project focused on the fundamentals of computer networking. The
 
 
 
-## **Resources**
+# **Resources**
 
-### **Networking Concepts Studied**
+## **Networking Concepts Studied**
 
 This project covered several essential networking concepts:
 
-#### **1. The OSI 7-Layer Model**
+### **1. The OSI 7-Layer Model**
 
 * **Layer 1 (Physical)**: Handles physical connections via cables, hubs, and electrical signals.
 * **Layer 2 (Data Link)**: Operates using **MAC Addresses** and **Switches** to deliver data within the same local area network (LAN).
@@ -49,7 +49,7 @@ This project covered several essential networking concepts:
 * **Layer 6 (Presentation)**: Defines data formats, including encryption (SSL/TLS) and compression (JPEG, ZIP).
 * **Layer 7 (Application)**: The interface for end-user services such as **HTTP** (Web), **SMTP** (Email), and **IRC** (Chat services).
 
-#### **2. IP Addressing & Subnetting Logic**
+### **2. IP Addressing & Subnetting Logic**
 
 * **IP Address**: A unique logical address assigned to each device on a network to identify it and enable communication.
 * **Subnet Masks**: Define the boundaries of a network and determine the range of available host addresses (e.g., /24, /25, /30) .
@@ -58,7 +58,7 @@ This project covered several essential networking concepts:
 * **Network ID Extraction**: Calculated using a bitwise AND operation between the IP and the Mask ($IP \ \& \ Mask = Network \ ID$).
 
 
-#### **3. Hardware Identification & Resolution**
+### **3. Hardware Identification & Resolution**
 
 * **Router**: A Layer 3 device that connects multiple distinct networks and determines the best path for packets using IP addresses and routing tables.
 * **Switch**: A Layer 2 device that connects multiple devices within the same network segment and manages local traffic using MAC addresses.
@@ -66,19 +66,56 @@ This project covered several essential networking concepts:
 * **ARP (Address Resolution Protocol)**: A mechanism used to discover the MAC address of a device when only its IP address is known. This is essential for delivering packets over a physical link.
 * **Packet**: The basic unit of data transmitted over a network, containing both the payload and header information (source/destination addresses).
 
-#### **4. TCP/IP Suite vs. Individual Protocols**
+### **4. TCP/IP Suite vs. Individual Protocols**
 
 * **TCP/IP Suite**: A standard set of communication protocols used to interconnect network devices on the internet. It acts as a "set menu" that includes various protocols like TCP, UDP, and IP.
 * **IP (Internet Protocol)**: A single protocol within the suite responsible for **addressing and routing** packets to the correct destination (The "Delivery System").
 * **TCP (Transmission Control Protocol)**: A protocol within the suite that ensures data is delivered **reliably, in the correct order, and without errors** (The "Reliability System").
 
-#### **5. Physical Ports vs. Logical Ports (Layer 4)**
+### **5. Physical Ports vs. Logical Ports (Layer 4)**
 
 * **Hardware Ports (Physical)**: These are the actual physical connectors (e.g., RJ45 jacks) on a **Router or Switch** used to plug in Ethernet cables. They define the physical topology of the network at Layer 1 and Layer 2.
 * **Software Ports (Logical/L4)**: These are 16-bit numbers (ranging from 0 to 65535) used at the **Transport Layer (Layer 4)** to identify specific applications or services on a device.
 * **The Distinction**: While a Hardware Port facilitates the **physical path** for data, a Logical Port acts as a **"Room Number"** inside a building (IP address), ensuring the data reaches the correct software (e.g., Port 80 for HTTP, Port 6667 for IRC).
 
-### **AI Usage Disclosure**
+### **6. Packet Routing Logic: How a Host Decides**
+
+When a host sends a packet, it follows a specific 3-step logic to determine the path:
+
+* **Step 1: Subnet Decision (Local vs. Remote)**:
+    * The host performs a bitwise AND operation to check if the destination is in the same "neighborhood."
+    * Formula: $$(My\ IP \ \& \ Mask) == (Dest\ IP \ \& \ Mask)$$
+    * **Result (Local)**: If they match, it sends the packet directly via a **Switch** using an **ARP Request**.
+    * **Result (Remote)**: If they don't match, it sends the packet to the **Default Gateway** (Router).
+
+* **Step 2: Device Role Differentiation**:
+    * **Switch (Layer 2)**: Acts as a "Local Postman." It ignores IP addresses and uses **MAC Addresses** to deliver packets to the correct port within a LAN.
+    * **Router (Layer 3)**: Acts as a "Highway Interchange." It uses **IP Addresses** and **Routing Tables** to forward packets between different subnets.
+
+* **Step 3: Header Encapsulation**:
+    * **IP Address (Constant)**: Like the address inside a letter, it never changes from source to final destination.
+    * **MAC Address (Variable)**: Like a ticket for a single bus ride, it is replaced (Decapsulated/Encapsulated) every time the packet crosses a Router to reach the next hop.
+
+### **7. Reserved Addresses: Network ID vs. Broadcast ID**
+
+In every subnet, two addresses are reserved for system use and cannot be assigned to hosts:
+
+* **Network ID (The "Zip Code")**:
+    * **Position**: The first address in the subnet block.
+    * **Usage**: Used in **Routing Tables** as the representative name for the entire subnet and as a reference point for subnet identification.
+* **Broadcast ID (The "Megaphone")**:
+    * **Position**: The last address in the subnet block.
+    * **Usage**: Used to send packets to **all devices** within the subnet simultaneously. Essential for **ARP Requests** ("Who has this IP?") and **DHCP Discoveries**.
+
+| Address Type | Position | Assigned to Host? | Primary Purpose |
+| :--- | :--- | :--- | :--- |
+| **Network ID** | First | **No** | Identifies the subnet in Routing Tables |
+| **Host IP** | Middle | **Yes** | Identifies specific devices (PC, Server) |
+| **Broadcast ID** | Last | **No** | Used for one-to-all communication (ARP) |
+
+> **Tip**: If asked what happens when a packet is sent to a Broadcast ID, explain that the packet is delivered to the LAN card of **every device** in the subnet. Each device opens the packet and only responds if the content (e.g., an ARP request for its IP) is relevant to them.
+
+## **AI Usage Disclosure**
 
 AI was utilized as a collaborative tutor during this project to strengthen my understanding of complex scenarios:
 
