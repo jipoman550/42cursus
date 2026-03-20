@@ -54,10 +54,6 @@ $ ./megaphone
 
 ---
 
-제공해주신 `README_kor.md` 파일의 형식에 맞춰, 우리가 대화하며 구현한 `ex01: My Awesome PhoneBook`의 내용을 정리했습니다. 아래 내용을 그대로 복사하여 `README_kor.md`의 `Exercise 00` 뒷부분에 붙여넣으시면 됩니다.
-
----
-
 ## 📖 Exercise 01: My Awesome PhoneBook
 80년대 스타일의 투박하지만 멋진 전화번호부 소프트웨어를 구현하는 단계입니다. 클래스의 설계, 객체의 생명주기(생성자와 소멸자), 그리고 표준 입출력 제어를 심도 있게 다룹니다.
 
@@ -108,9 +104,43 @@ The program quits and the contacts are lost forever!
 
 ---
 
+## 🏦 Exercise 02: The Job Of Your Dreams
+이 과제는 주어진 설계도(`Account.hpp`)와 테스트 결과물(로그 파일)을 바탕으로 실제 동작하는 로직을 복원하는 **리버스 엔지니어링(Reverse Engineering)** 단계입니다.
+
+### Objectives
+* **`Account.cpp` 복원**: 제공된 `Account.hpp`와 `tests.cpp`를 수정하지 않고, 로그 파일(`19920104_091532.log`)과 동일한 출력을 생성하는 소스 코드를 작성합니다.
+* **은행 시스템 로직 구현**: 개별 계좌의 입출금뿐만 아니라, 모든 계좌를 아우르는 은행 전체의 통계(총 잔액, 총 입출금 횟수 등)를 실시간으로 관리합니다.
+
+### Key Features
+* **정적(Static) 멤버 관리**: 모든 객체가 공유하는 은행 전체 데이터를 처리하기 위해 `static` 변수와 함수를 활용합니다.
+* **타임스탬프 출력**: `_displayTimestamp` 함수를 통해 로그의 모든 줄 시작 부분에 `[YYYYMMDD_HHMMSS]` 형식의 현재 시간을 출력합니다.
+* **입출금 유효성 검사**: 출금 시 잔액이 부족하면 `refused` 메시지를 출력하고 트랜잭션을 거부하는 예외 처리 로직을 포함합니다.
+
+### Key Concepts (Lessons Learned)
+* **`static` 멤버 변수 & 함수**: 클래스 인스턴스가 아닌 클래스 자체에 귀속되는 데이터와 기능을 정의하고, `.cpp` 파일에서 이를 초기화하는 방법을 익혔습니다.
+* **멤버 초기화 리스트 (Member Initializer List)**: 생성자 본체가 실행되기 전에 멤버 변수를 효율적으로 초기화하는 문법(`: variable(value)`)을 학습했습니다.
+* **캡슐화와 Getter**: `private` 데이터를 안전하게 읽기 위한 `get...()` 및 `check...()` 함수(Getter)의 역할과 중요성을 이해했습니다.
+* **`const` Correctness**: 객체의 상태를 변경하지 않는 함수에 `const`를 명시하여 코드의 안정성을 확보하는 습관을 들였습니다.
+
+### Usage & Testing
+```bash
+# 컴파일 및 실행
+$ make
+$ ./account > my_log.log
+
+# 타임스탬프를 제외한 로직 결과 비교 (리눅스/맥 기준)
+$ diff <(sed 's/\[[^]]*\] //' my_log.log) <(sed 's/\[[^]]*\] //' 19920104_091532.log)
+
+$ diff <(cut -d ' ' -f2- my_log.log) <(cut -d ' ' -f2- 19920104_091532.log)
+# 결과가 아무것도 출력되지 않으면 로그 매칭 성공!
+```
+
+---
+
 ## 📁 Directory Structure Update
 * `ex00/`: Megaphone 프로그램 및 Makefile.
-* `ex01/`: My Awesome PhoneBook 프로그램 (클래스 기반 구현).
-* `ex02/`: The Job Of Your Dreams (진행 예정).
+* `ex01/`: My Awesome PhoneBook 프로그램.
+* `ex02/`: The Job Of Your Dreams (은행 계좌 관리 시스템 복원).
+
 
 
