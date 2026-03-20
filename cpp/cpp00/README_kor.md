@@ -48,6 +48,10 @@ $ ./megaphone
 * LOUD AND UNBEARABLE FEEDBACK NOISE *
 ```
 
+// for 문 문법 정리
+
+// std::cout, std::endl, std::toupper 정리
+
 ---
 
 ## 📁 Directory Structure
