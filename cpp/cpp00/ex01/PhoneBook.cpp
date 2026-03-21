@@ -59,7 +59,7 @@ void PhoneBook::searchContact() const
 	}
 
 	// 3. 인덱스 입력 받기
-	std::string input;
+	std::string	input;
 	std::cout << "Enter index to display details: ";
 	if (!std::getline(std::cin, input))
 	{

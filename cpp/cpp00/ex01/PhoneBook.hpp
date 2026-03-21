@@ -20,7 +20,7 @@ class PhoneBook
 		~PhoneBook();
 
 		// 4. 주요 기능 함수들
-		void	addContact();		// ADD 명령 처리
+		void	addContact();			// ADD 명령 처리
 		void	searchContact() const;	// SEARCH 명령 처리
 };
 
