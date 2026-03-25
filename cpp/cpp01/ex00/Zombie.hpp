@@ -6,7 +6,7 @@
 class Zombie
 {
 	private:
-		std::string	name; // 좀비의 이름 (private 속성)
+		std::string	_name; // 좀비의 이름 (private 속성)
 
 	public:
 		Zombie(std::string name);	// 생성자: 좀비를 만들 때 이름을 지어줌
