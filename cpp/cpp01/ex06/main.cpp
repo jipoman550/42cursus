@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 			// ERROR 레벨의 complain 메시지 출력
 			harl.complain("ERROR");
 			// switch 문 종료
-			break;
+			break ;
 		// 정의되지 않은 레벨일 경우
 		default:
 			// 기본 메시지 출력

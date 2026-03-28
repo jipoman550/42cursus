@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	{
 		std::cerr << "Error: Invalid number of arguments." << std::endl;
 		std::cerr << "Usage: ./sed_is_for_losers <filename> <s1> <s2>" << std::endl;
-		return 1;
+		return (1);
 	}
 
 	// --- 인자 저장 및 엣지 케이스 처리 ---
