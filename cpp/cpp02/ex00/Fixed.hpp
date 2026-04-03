@@ -6,13 +6,19 @@
 class Fixed
 {
 	private:
-		int val;
-		static const int bits = 8;
-	public:
-		Fixed(): val(0){};
-		~Fixed();
-		Fixed &operator=(Fixed const &rhs);
-		Fixed(Fixed const &src);
+		int					val; // 고정 소수점 값을 저장할 정수
+		static const int	bits = 8; // 소수부 비트 수 (항상 8)
 
-}
+	public:
+		// Orthodox Canonical Class Form
+		Fixed();
+		Fixed(const Fixed &src);
+		Fixed &operator=(const Fixed &rhs);
+		~Fixed();
+
+		// 멤버 함수
+		int getRawBits(void) const;
+		void setRawBits(int const raw);
+};
+
 #endif
