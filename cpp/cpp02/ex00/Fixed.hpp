@@ -2,12 +2,13 @@
 # define FIXED_HPP
 
 # include <iostream>
+# include <string.h>
 
 class Fixed
 {
 	private:
-		int					val; // 고정 소수점 값을 저장할 정수
-		static const int	bits = 8; // 소수부 비트 수 (항상 8)
+		int					_val; // 고정 소수점 값을 저장할 정수
+		static const int	_bits = 8; // 소수부 비트 수 (항상 8)
 
 	public:
 		// Orthodox Canonical Class Form
