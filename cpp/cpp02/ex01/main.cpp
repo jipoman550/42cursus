@@ -1,4 +1,3 @@
-#include <iostream>
 #include "Fixed.hpp"
 
 // 서브젝트에서 제공된 테스트 코드

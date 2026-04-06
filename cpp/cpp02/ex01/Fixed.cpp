@@ -1,5 +1,4 @@
 #include "Fixed.hpp"
-#include <iostream>
 #include <cmath> // roundf 함수를 사용하기 위해 포함
 
 // 기본 생성자: val을 0으로 초기화
