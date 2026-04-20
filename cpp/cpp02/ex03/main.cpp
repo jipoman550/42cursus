@@ -55,5 +55,5 @@ int main(void)
 	else
 		std::cout << "\033[31mFalse\033[0m" << std::endl;
 
-	return 0;
+	return (0);
 }
