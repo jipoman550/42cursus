@@ -6,8 +6,8 @@
 class Fixed
 {
 	private:
-		int					val; // 고정 소수점 값을 저장할 정수 (raw bits)
-		static const int	bits = 8; // 소수부 비트 수 (항상 8로 고정)
+		int					_val; // 고정 소수점 값을 저장할 정수 (raw bits)
+		static const int	_bits = 8; // 소수부 비트 수 (항상 8로 고정)
 
 	public:
 		// Orthodox Canonical Class Form

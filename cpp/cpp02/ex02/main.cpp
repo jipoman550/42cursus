@@ -10,7 +10,7 @@
 // 10.1016       ← Fixed::max(a, b)의 결과
 int main(void)
 {
-	Fixed		a;                    // 기본 생성자: 값 = 0
+	Fixed		a;                          // 기본 생성자: 값 = 0
 	Fixed const	b(Fixed(5.05f) * Fixed(2)); // 5.05 * 2 = 10.1 을 고정 소수점으로 연산
 
 	// [1] a의 초기값 출력: 0

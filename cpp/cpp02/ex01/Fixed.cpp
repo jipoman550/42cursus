@@ -2,7 +2,7 @@
 #include <cmath> // roundf 함수를 사용하기 위해 포함
 
 // 기본 생성자: val을 0으로 초기화
-Fixed::Fixed() : val(0)
+Fixed::Fixed() : _val(0)
 {
 	std::cout << "Default constructor called" << std::endl;
 }
@@ -11,7 +11,7 @@ Fixed::Fixed() : val(0)
 // 정수 n을 왼쪽으로 bits(8)만큼 비트 시프트하여 저장
 // 예: n=5 → val = 5 << 8 = 5 * 256 = 1280
 // 이는 10진수에서 소수점 자리를 확보하기 위해 5를 50으로 저장하는 것과 같은 원리
-Fixed::Fixed(const int n) : val(n << bits)
+Fixed::Fixed(const int n) : _val(n << _bits)
 {
 	std::cout << "Int constructor called" << std::endl;
 }
@@ -20,7 +20,7 @@ Fixed::Fixed(const int n) : val(n << bits)
 // float는 비트 시프트(<<)를 직접 할 수 없으므로, (1 << bits) = 256을 곱한 뒤
 // roundf로 반올림하여 가장 가까운 정수로 저장
 // 예: f=1.5 → val = roundf(1.5 * 256) = roundf(384.0) = 384
-Fixed::Fixed(const float f) : val(roundf(f * (1 << bits)))
+Fixed::Fixed(const float f) : _val(roundf(f * (1 << _bits)))
 {
 	std::cout << "Float constructor called" << std::endl;
 }
@@ -40,9 +40,9 @@ Fixed &Fixed::operator=(const Fixed &rhs)
 	std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &rhs)
 	{
-		this->val = rhs.val;
+		this->_val = rhs._val;
 	}
-	return *this;
+	return (*this);
 }
 
 // 소멸자: 객체 소멸 시 호출
@@ -55,13 +55,13 @@ Fixed::~Fixed()
 // ex01에서는 getRawBits 호출 메시지를 출력하지 않음 (서브젝트 출력 예시에 맞춤)
 int Fixed::getRawBits(void) const
 {
-	return this->val;
+	return (this->_val);
 }
 
 // setRawBits: 고정 소수점의 raw value를 직접 설정
 void Fixed::setRawBits(int const raw)
 {
-	this->val = raw;
+	this->_val = raw;
 }
 
 // toFloat: 고정 소수점 값을 부동 소수점(float)으로 변환
@@ -69,7 +69,7 @@ void Fixed::setRawBits(int const raw)
 // 예: val=384 → 384 / 256.0 = 1.5
 float Fixed::toFloat(void) const
 {
-	return (float)this->val / (1 << bits);
+	return ((float)this->_val / (1 << _bits));
 }
 
 // toInt: 고정 소수점 값을 정수(int)로 변환
@@ -77,7 +77,7 @@ float Fixed::toFloat(void) const
 // 예: val=384 (실수 1.5) → 384 >> 8 = 1 (소수부 절삭)
 int Fixed::toInt(void) const
 {
-	return this->val >> bits;
+	return (this->_val >> _bits);
 }
 
 // operator<< 오버로딩: Fixed 객체를 ostream에 출력
@@ -86,5 +86,5 @@ int Fixed::toInt(void) const
 std::ostream &operator<<(std::ostream &os, const Fixed &fixed)
 {
 	os << fixed.toFloat();
-	return os;
+	return (os);
 }
