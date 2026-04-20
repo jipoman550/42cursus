@@ -36,7 +36,7 @@ Fixed &Fixed::operator=(const Fixed &rhs)
 {
 	if (this != &rhs)
 	{
-		this->_val = rhs._val;
+		this->_val = rhs.getRawBits();
 	}
 	return (*this);
 }

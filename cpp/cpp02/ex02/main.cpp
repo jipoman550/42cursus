@@ -36,5 +36,5 @@ int main(void)
 	// [7] Fixed::max(a, b): a(0.0078125)와 b(10.1016) 중 큰 값인 b를 출력
 	std::cout << Fixed::max(a, b) << std::endl;
 
-	return 0;
+	return (0);
 }
