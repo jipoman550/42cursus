@@ -166,7 +166,7 @@
 ### Objectives
 * 고정 소수점을 사용하는 2D 좌표 클래스 `Point`를 작성합니다. (x, y 값은 상수로 보호됨)
 * BSP(이진 공간 분할) 원리 또는 외적(Cross Product) / 넓이(Barycentric coordinates) 방식을 사용하여 `bsp` 함수를 완성합니다.
-* `bool bsp( Point const a, Point const b, Point const c, Point const point);`
+* `bool bsp( Point const a, Point const b, Point const c, Point const point );`
 
 ### 🚀 Usage & Testing (사용 및 테스트 방법)
 

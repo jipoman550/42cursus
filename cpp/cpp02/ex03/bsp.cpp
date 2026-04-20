@@ -17,7 +17,7 @@ static Fixed getCrossProduct(Point const p1, Point const p2, Point const p3)
 
 	// 외적 Z 성분 반환: v1.x * v2.y - v1.y * v2.x
 	// ex02에서 만든 산술 연산자(*, -)가 정확하게 작동해야 올바른 값이 도출됨.
-	return (v1_x * v2_y) - (v1_y * v2_x);
+	return ((v1_x * v2_y) - (v1_y * v2_x));
 }
 
 // bsp 알고리즘: Binary Space Partitioning을 활용해 점이 삼각형 내부에 있는지 확인
@@ -38,8 +38,8 @@ bool bsp(Point const a, Point const b, Point const c, Point const point)
 	if ((cp1 > Fixed(0) && cp2 > Fixed(0) && cp3 > Fixed(0)) ||
 		(cp1 < Fixed(0) && cp2 < Fixed(0) && cp3 < Fixed(0)))
 	{
-		return true;
+		return (true);
 	}
 
-	return false;
+	return (false);
 }

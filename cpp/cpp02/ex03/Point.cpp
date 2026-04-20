@@ -23,7 +23,7 @@ Point &Point::operator=(const Point &rhs)
 {
 	// 할당할 수 없으므로 컴파일러 경고를 피하기 위해 rhs를 무시
 	(void)rhs;
-	return *this;
+	return (*this);
 }
 
 // 소멸자
@@ -34,11 +34,11 @@ Point::~Point()
 // Getter: x의 고정 소수점 값 반환
 Fixed Point::getX(void) const
 {
-	return this->x;
+	return (this->x);
 }
 
 // Getter: y의 고정 소수점 값 반환
 Fixed Point::getY(void) const
 {
-	return this->y;
+	return (this->y);
 }

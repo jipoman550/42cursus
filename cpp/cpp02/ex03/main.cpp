@@ -11,7 +11,7 @@ int main(void)
 	Point const c(0.0f, 10.0f);
 
 	std::cout << "========== BSP Test ==========" << std::endl;
-	
+
 	// 테스트 1: 삼각형 완전히 내부에 있는 점
 	Point const p1(2.0f, 2.0f);
 	std::cout << "Test 1: p1(2, 2) is inside? ";
