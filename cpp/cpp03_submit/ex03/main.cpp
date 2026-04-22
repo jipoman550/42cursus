@@ -7,15 +7,13 @@ int main()
 	std::cout << std::endl;
 
 	std::cout << "=== 2. DiamondTrap Actions ===" << std::endl;
-	// attack() from ScavTrap
 	diamond.attack("Target");
 	diamond.takeDamage(20);
 	diamond.beRepaired(10);
 
-	// 특수 능력들
-	diamond.guardGate();       // ScavTrap
-	diamond.highFivesGuys();   // FragTrap
-	diamond.whoAmI();          // DiamondTrap
+	diamond.guardGate();
+	diamond.highFivesGuys();
+	diamond.whoAmI();
 	std::cout << std::endl;
 
 	std::cout << "=== 3. Orthodox Canonical Form Test ===" << std::endl;

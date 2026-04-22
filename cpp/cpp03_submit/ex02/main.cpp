@@ -14,15 +14,15 @@ int main()
 	std::cout << std::endl;
 
 	std::cout << "=== 3. Orthodox Canonical Form Test ===" << std::endl;
-	FragTrap frag2(frag);	// 복사 생성자
+	FragTrap frag2(frag);
 	FragTrap frag3("Temp");
-	frag3 = frag;			// 대입 연산자
+	frag3 = frag;
 	std::cout << std::endl;
 
 	std::cout << "=== 4. Death Test ===" << std::endl;
-	frag.takeDamage(200);	// 사망
-	frag.attack("Dummy");	// 사망 후 공격 불가
-	frag.highFivesGuys();	// 사망 후 특수 능력 불가
+	frag.takeDamage(200);
+	frag.attack("Dummy");
+	frag.highFivesGuys();
 	std::cout << std::endl;
 
 	std::cout << "=== 5. Destruction ===" << std::endl;

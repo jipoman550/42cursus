@@ -6,17 +6,13 @@
 class ScavTrap : public ClapTrap
 {
 	public:
-		// Orthodox Canonical Form
-		ScavTrap();									// 기본 생성자
-		ScavTrap(std::string name);					// 매개변수 생성자
-		ScavTrap(const ScavTrap& other);			// 복사 생성자
-		ScavTrap& operator=(const ScavTrap& other);	// 대입 연산자 오버로딩
-		virtual ~ScavTrap();						// 소멸자
+		ScavTrap();
+		ScavTrap(std::string name);
+		ScavTrap(const ScavTrap& other);
+		ScavTrap& operator=(const ScavTrap& other);
+		virtual ~ScavTrap();
 
-		// 멤버 함수 (ClapTrap 기능 덮어쓰기)
 		void attack(const std::string& target);
-
-		// 특수 능력 함수
 		void guardGate();
 };
 

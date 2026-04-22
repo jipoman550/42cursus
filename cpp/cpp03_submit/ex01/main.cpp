@@ -14,15 +14,15 @@ int main()
 	std::cout << std::endl;
 
 	std::cout << "=== 3. Orthodox Canonical Form Test ===" << std::endl;
-	ScavTrap scav2(scav);	// 복사 생성자
+	ScavTrap scav2(scav);
 	ScavTrap scav3("Temp");
-	scav3 = scav;			// 대입 연산자
+	scav3 = scav;
 	std::cout << std::endl;
 
 	std::cout << "=== 4. Death Test ===" << std::endl;
 	scav.takeDamage(100);
-	scav.attack("Thief");	// 사망 후 공격 불가
-	scav.guardGate();		// 사망 후 특수 능력 불가
+	scav.attack("Thief");
+	scav.guardGate();
 	std::cout << std::endl;
 
 	std::cout << "=== 5. Destruction ===" << std::endl;
