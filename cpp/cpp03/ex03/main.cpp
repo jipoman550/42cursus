@@ -3,7 +3,7 @@
 int main()
 {
 	std::cout << "=== 1. DiamondTrap Creation ===" << std::endl;
-	DiamondTrap diamond("Frankenstein");
+	DiamondTrap diamond("The Second Duck");
 	std::cout << std::endl;
 
 	std::cout << "=== 2. DiamondTrap Actions ===" << std::endl;
@@ -11,7 +11,7 @@ int main()
 	diamond.attack("Target");
 	diamond.takeDamage(20);
 	diamond.beRepaired(10);
-	
+
 	// 특수 능력들
 	diamond.guardGate();       // ScavTrap
 	diamond.highFivesGuys();   // FragTrap
