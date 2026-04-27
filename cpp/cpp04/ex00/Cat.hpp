@@ -8,14 +8,14 @@
 // ────────────────────────────────────────────────────────────
 class Cat : public Animal
 {
-public:
-    Cat();                              // 기본 생성자
-    Cat(const Cat &other);             // 복사 생성자
-    Cat &operator=(const Cat &other);  // 대입 연산자
-    virtual ~Cat();                    // 가상 소멸자
+	public:
+		Cat();								// 기본 생성자
+		Cat(const Cat &other);				// 복사 생성자
+		Cat &operator=(const Cat &other);	// 대입 연산자
+		virtual ~Cat();						// 가상 소멸자
 
-    // ── makeSound() 재정의: 고양이 소리를 출력 ──
-    virtual void makeSound() const;
+		// ── makeSound() 재정의: 고양이 소리를 출력 ──
+		virtual void makeSound() const;
 };
 
 #endif

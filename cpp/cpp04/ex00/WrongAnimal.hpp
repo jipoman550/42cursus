@@ -10,19 +10,19 @@
 // ────────────────────────────────────────────────────────────
 class WrongAnimal
 {
-protected:
-    std::string type;
+	protected:
+		std::string type;
 
-public:
-    WrongAnimal();
-    WrongAnimal(const WrongAnimal &other);
-    WrongAnimal &operator=(const WrongAnimal &other);
-    ~WrongAnimal(); // virtual 이 없음! → 자식 소멸자가 호출 안 됨
+	public:
+		WrongAnimal();
+		WrongAnimal(const WrongAnimal &other);
+		WrongAnimal &operator=(const WrongAnimal &other);
+		~WrongAnimal(); // virtual 이 없음! → 자식 소멸자가 호출 안 됨
 
-    // virtual 이 없음! → 항상 WrongAnimal::makeSound()가 호출됨 (정적 바인딩)
-    void makeSound() const;
+		// virtual 이 없음! → 항상 WrongAnimal::makeSound()가 호출됨 (정적 바인딩)
+		void makeSound() const;
 
-    std::string getType() const;
+		std::string getType() const;
 };
 
 #endif

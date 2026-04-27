@@ -9,14 +9,14 @@
 // ────────────────────────────────────────────────────────────
 class WrongCat : public WrongAnimal
 {
-public:
-    WrongCat();
-    WrongCat(const WrongCat &other);
-    WrongCat &operator=(const WrongCat &other);
-    ~WrongCat(); // virtual 없음
+	public:
+		WrongCat();
+		WrongCat(const WrongCat &other);
+		WrongCat &operator=(const WrongCat &other);
+		~WrongCat(); // virtual 없음
 
-    // 이 함수는 WrongAnimal 포인터로 호출하면 절대 불리지 않음!
-    void makeSound() const;
+		// 이 함수는 WrongAnimal 포인터로 호출하면 절대 불리지 않음!
+		void makeSound() const;
 };
 
 #endif
