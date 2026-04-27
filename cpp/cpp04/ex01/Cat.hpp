@@ -9,17 +9,17 @@
 // ────────────────────────────────────────────────────────────
 class Cat : public Animal
 {
-private:
-    Brain *brain; // 힙(heap)에 동적 할당된 Brain 객체 포인터
+	private:
+		Brain *brain; // 힙(heap)에 동적 할당된 Brain 객체 포인터
 
-public:
-    Cat();
-    Cat(const Cat &other);
-    Cat &operator=(const Cat &other);
-    virtual ~Cat();
+	public:
+		Cat();
+		Cat(const Cat &other);
+		Cat &operator=(const Cat &other);
+		virtual ~Cat();
 
-    virtual void makeSound() const;
-    Brain       *getBrain() const;
+		virtual void makeSound() const;
+		Brain *getBrain() const;
 };
 
 #endif
