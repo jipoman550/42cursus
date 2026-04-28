@@ -14,9 +14,9 @@ class Dog : public Animal
 
 	public:
 		Dog();
-		Dog(const Dog &other);             // 깊은 복사 필요!
-		Dog &operator=(const Dog &other);  // 깊은 복사 필요!
-		virtual ~Dog();                    // delete brain 처리
+		Dog(const Dog &other);				// 깊은 복사 필요!
+		Dog &operator=(const Dog &other);	// 깊은 복사 필요!
+		virtual ~Dog();						// delete brain 처리
 
 		virtual void makeSound() const;
 		Brain *getBrain() const; // brain 포인터 반환 (외부 접근용)

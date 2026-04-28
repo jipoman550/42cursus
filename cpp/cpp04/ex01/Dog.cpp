@@ -28,9 +28,9 @@ Dog &Dog::operator=(const Dog &other)
 	std::cout << "Dog: Call assignment operator (brain deep copy)" << std::endl;
 	if (this != &other)
 	{
-		Animal::operator=(other);    // 부모 클래스 대입 먼저 처리
-		delete this->brain;          // 기존 brain 메모리 해제
-		this->brain = new Brain(*other.brain); // 새 brain 깊은 복사
+		Animal::operator=(other);				// 부모 클래스 대입 먼저 처리
+		delete this->brain;						// 기존 brain 메모리 해제
+		this->brain = new Brain(*other.brain);	// 새 brain 깊은 복사
 	}
 	return (*this);
 }
