@@ -9,15 +9,15 @@
 // ────────────────────────────────────────────────────────────
 class IMateriaSource
 {
-public:
-    virtual ~IMateriaSource() {}
+	public:
+		virtual ~IMateriaSource() {}
 
-    // learnMateria(): 마테리아를 기억함 (최대 4개)
-    virtual void learnMateria(AMateria *m) = 0;
+		// learnMateria(): 마테리아를 기억함 (최대 4개)
+		virtual void learnMateria(AMateria *m) = 0;
 
-    // createMateria(): type 문자열로 기억된 마테리아를 복제해 반환
-    // 모르는 타입이면 0(NULL) 반환
-    virtual AMateria *createMateria(std::string const &type) = 0;
+		// createMateria(): type 문자열로 기억된 마테리아를 복제해 반환
+		// 모르는 타입이면 0(NULL) 반환
+		virtual AMateria *createMateria(std::string const &type) = 0;
 };
 
 #endif

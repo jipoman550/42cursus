@@ -1,10 +1,16 @@
-NAME    = Materia
+NAME = Materia
 
-CXX     = c++
+CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-SRCS    = main.cpp AMateria.cpp Ice.cpp Cure.cpp Character.cpp MateriaSource.cpp
-OBJS    = $(SRCS:.cpp=.o)
+SRCS = main.cpp \
+	   AMateria.cpp \
+	   Ice.cpp \
+	   Cure.cpp \
+	   Character.cpp \
+	   MateriaSource.cpp
+
+OBJS = $(SRCS:.cpp=.o)
 
 all: $(NAME)
 

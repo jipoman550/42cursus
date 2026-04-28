@@ -10,17 +10,17 @@
 class MateriaSource : public IMateriaSource
 {
 private:
-    AMateria *templates[4]; // 기억하는 마테리아 템플릿 (최대 4개)
+	AMateria *templates[4]; // 기억하는 마테리아 템플릿 (최대 4개)
 
 public:
-    MateriaSource();
-    MateriaSource(const MateriaSource &other);
-    MateriaSource &operator=(const MateriaSource &other);
-    virtual ~MateriaSource();
+	MateriaSource();
+	MateriaSource(const MateriaSource &other);
+	MateriaSource &operator=(const MateriaSource &other);
+	virtual ~MateriaSource();
 
-    // ── IMateriaSource 인터페이스 구현 ──
-    virtual void      learnMateria(AMateria *m);
-    virtual AMateria *createMateria(std::string const &type);
+	// ── IMateriaSource 인터페이스 구현 ──
+	virtual void learnMateria(AMateria *m);
+	virtual AMateria *createMateria(std::string const &type);
 };
 
 #endif

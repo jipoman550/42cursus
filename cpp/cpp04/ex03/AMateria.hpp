@@ -14,28 +14,28 @@ class ICharacter;
 // ────────────────────────────────────────────────────────────
 class AMateria
 {
-protected:
-    std::string type; // 마테리아 종류 ("ice", "cure" 등)
+	protected:
+		std::string type; // 마테리아 종류 ("ice", "cure" 등)
 
-public:
-    // ── Orthodox Canonical Form ──
-    AMateria();
-    AMateria(std::string const &type);
-    AMateria(const AMateria &other);
-    AMateria &operator=(const AMateria &other);
-    virtual ~AMateria();
+	public:
+		// ── Orthodox Canonical Form ──
+		AMateria();
+		AMateria(std::string const &type);
+		AMateria(const AMateria &other);
+		AMateria &operator=(const AMateria &other);
+		virtual ~AMateria();
 
-    // ── type getter ──
-    std::string const &getType() const; // const 참조 반환으로 복사 없이 읽기
+		// ── type getter ──
+		std::string const &getType() const; // const 참조 반환으로 복사 없이 읽기
 
-    // ── 순수 가상 함수: 자식 클래스에서 반드시 구현 ──
+		// ── 순수 가상 함수: 자식 클래스에서 반드시 구현 ──
 
-    // clone(): 자신과 동일한 타입의 새 객체를 동적으로 만들어 반환
-    // → Prototype 패턴: 타입을 모르더라도 복사본을 만들 수 있음
-    virtual AMateria *clone() const = 0;
+		// clone(): 자신과 동일한 타입의 새 객체를 동적으로 만들어 반환
+		// → Prototype 패턴: 타입을 모르더라도 복사본을 만들 수 있음
+		virtual AMateria *clone() const = 0;
 
-    // use(): 마테리아를 사용해 대상(target)에게 효과 적용
-    virtual void use(ICharacter &target);
+		// use(): 마테리아를 사용해 대상(target)에게 효과 적용
+		virtual void use(ICharacter &target);
 };
 
 #endif
