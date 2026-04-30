@@ -31,6 +31,14 @@ int main()
 	me->equip(tmp);						// 슬롯 0에 장착
 	tmp = src->createMateria("cure");	// Cure 복제 반환
 	me->equip(tmp);						// 슬롯 1에 장착
+	tmp = src->createMateria("ice");	// Ice 복제 반환
+	me->equip(tmp);						// 슬롯 2에 장착
+	tmp = src->createMateria("cure");	// Cure 복제 반환
+	me->equip(tmp);						// 슬롯 3에 장착
+	tmp = src->createMateria("ice");	// Ice 복제 반환
+	me->equip(tmp);						// 여기서 어떻게 처리가 되야하나~ 슬롯이 가득찬 상황인데 말이다.
+	tmp = src->createMateria("cure");	// Cure 복제 반환
+	me->equip(tmp);						// 여기도 슬롯이 가득찬 상황에서 어떻게 해야할지.
 
 	// 알 수 없는 타입 → NULL 반환 (장착 안 됨)
 	tmp = src->createMateria("fire");
@@ -94,10 +102,10 @@ int main()
 	{
 		AMateria* tmp2 = src3->createMateria("ice");
 		me2->equip(tmp2); // 5번째는 장착되지 않으므로 수동 delete 필요할 수도 있음 (실제 코드 로직 확인)
-		if (i == 4)
-		{
-			delete tmp2; // 슬롯이 가득 차서 못 받은 아이템 처리
-		}
+		//if (i == 4)
+		//{
+		//	delete tmp2; // 슬롯이 가득 차서 못 받은 아이템 처리
+		//}
 	}
 
 	// 잘못된 인덱스 접근 테스트

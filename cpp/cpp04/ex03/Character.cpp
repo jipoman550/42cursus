@@ -118,6 +118,7 @@ void Character::equip(AMateria *m)
 		}
 	}
 	// 빈 슬롯이 없으면 아무것도 하지 않음
+	delete m; // slot이 꽉찼을 때 m 메모리를 책임지고 해제
 	std::cout << this->name << ": slots are full!" << std::endl;
 }
 
