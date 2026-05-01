@@ -3,15 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+         #
+#    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/19 23:25:02 by sisung            #+#    #+#              #
-#    Updated: 2026/02/19 23:25:05 by sisung           ###   ########.fr        #
+#    Updated: 2026/05/01 13:43:51 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		= cub3D
-NAME_BONUS	= cub3D_bonus
 
 CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
@@ -40,15 +39,6 @@ SRCS		= $(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/init.c
 OBJS		= $(SRCS:.c=.o)
 
-SRCS_BONUS	= $(SRCS_DIR)/main_bonus.c \
-			$(SRCS_DIR)/parsing.c \
-			$(SRCS_DIR)/parsing_utils.c \
-			$(SRCS_DIR)/input.c \
-			$(SRCS_DIR)/raycasting.c \
-			$(SRCS_DIR)/render_utils.c \
-			$(SRCS_DIR)/init.c
-OBJS_BONUS	= $(SRCS_BONUS:.c=.o)
-
 # Test
 TEST_DIR	= tests
 TEST_NAME	= test_parsing
@@ -61,11 +51,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT) $(MLX)
 	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX_FLAGS) -o $(NAME)
-
-bonus: $(NAME_BONUS)
-
-$(NAME_BONUS): $(OBJS_BONUS) $(LIBFT) $(MLX)
-	$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX_FLAGS) -o $(NAME_BONUS)
 
 $(LIBFT):
 	@if [ -d "$(LIBFT_DIR)" ]; then \
@@ -95,14 +80,14 @@ test: $(LIBFT) $(TEST_OBJS)
 	@$(RM) $(TEST_NAME)
 
 clean:
-	$(RM) $(OBJS) $(OBJS_BONUS) $(TEST_OBJS)
+	$(RM) $(OBJS) $(TEST_OBJS)
 	@if [ -d "$(LIBFT_DIR)" ]; then make -C $(LIBFT_DIR) clean; fi
 	@if [ -d "$(MLX_DIR)" ]; then make -C $(MLX_DIR) clean; fi
 
 fclean: clean
-	$(RM) $(NAME) $(NAME_BONUS) $(TEST_NAME)
+	$(RM) $(NAME) $(TEST_NAME)
 	@if [ -d "$(LIBFT_DIR)" ]; then make -C $(LIBFT_DIR) fclean; fi
 
 re: fclean all
 
-.PHONY: all clean fclean re bonus test
+.PHONY: all clean fclean re test
