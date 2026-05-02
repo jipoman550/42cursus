@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:23 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/20 09:50:20 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/02 15:40:55 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 	// 맵 파일 파싱 및 유효성 검사
 	if (parse_map(argv[1], &game) == -1)
 	{
-		write(2, "Error\nFailed to parse map\n", 25);
+		write(2, "Error\nFailed to parse map\n", 26);
 		free_game(&game);
 		return (1);
 	}

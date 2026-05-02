@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:35 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/26 10:42:37 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/02 17:38:15 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /* Key codes for Linux (X11) */
-# define KEY_W      119
-# define KEY_A      97
-# define KEY_S      115
-# define KEY_D      100
-# define KEY_LEFT   65361
-# define KEY_RIGHT  65363
-# define KEY_ESC    65307
+# define KEY_W		119
+# define KEY_A		97
+# define KEY_S		115
+# define KEY_D		100
+# define KEY_LEFT	65361
+# define KEY_RIGHT	65363
+# define KEY_ESC	65307
 
 /**
  * @brief 플레이어를 앞으로 전진시킨다 (W키)

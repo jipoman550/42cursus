@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:55 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/26 10:42:57 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/02 18:53:51 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,10 @@ int	parse_map(const char *file_path, t_game *game)
 	int		config_count = 0;
 	t_list	*map_lines = NULL;
 
-	// 색상 초기값을 -1로 설정하여 중복/미설정 확인
-	game->map.floor_color = -1;
-	game->map.ceil_color = -1;
+	// 색상 초기값을 -1로 설정하여 중복/미설정 확인.
+	// init_game_struct(&game) 에서 이미 해줌. 중복인듯
+	//game->map.floor_color = -1;
+	//game->map.ceil_color = -1;
 	// 파일 열기
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
@@ -51,6 +52,13 @@ int	parse_map(const char *file_path, t_game *game)
 		{
 			free(line);
 			ft_lstclear(&map_lines, free);
+			// 남은 gnl처리 안해서 리크
+			line = get_next_line(fd);
+			while (line)
+			{
+				free(line);
+				line = get_next_line(fd);
+			};
 			return (-1);
 		}
 		free(line);
@@ -122,11 +130,49 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 			return (0);
 		}
 
-		// 식별자 확인 및 데이터 저장
-		if (ft_strncmp(tokens[0], "NO", 3) == 0 && tokens[1]) game->map.no_path = ft_strdup(tokens[1]);
-		else if (ft_strncmp(tokens[0], "SO", 3) == 0 && tokens[1]) game->map.so_path = ft_strdup(tokens[1]);
-		else if (ft_strncmp(tokens[0], "WE", 3) == 0 && tokens[1]) game->map.we_path = ft_strdup(tokens[1]);
-		else if (ft_strncmp(tokens[0], "EA", 3) == 0 && tokens[1]) game->map.ea_path = ft_strdup(tokens[1]);
+		if (ft_strncmp(tokens[0], "NO", 3) == 0 && tokens[1])
+		{
+			if (game->map.ea_path != NULL)
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				return (-1);
+			}
+			game->map.no_path = ft_strdup(tokens[1]);
+		}
+		else if (ft_strncmp(tokens[0], "SO", 3) == 0 && tokens[1])
+		{
+			if (game->map.ea_path != NULL)
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				return (-1);
+			}
+			game->map.so_path = ft_strdup(tokens[1]);
+		}
+		else if (ft_strncmp(tokens[0], "WE", 3) == 0 && tokens[1])
+		{
+			if (game->map.ea_path != NULL)
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				return (-1);
+			}
+			game->map.we_path = ft_strdup(tokens[1]);
+		}
+		else if (ft_strncmp(tokens[0], "EA", 3) == 0 && tokens[1])
+		{
+			// [중요] 이미 경로가 존재한다면 이는 중복 설정(Misconfiguration)입니다.
+			if (game->map.ea_path != NULL)
+			{
+				// 스플릿 반환이 배열형태인데 하나만 해제 다른 곳도 다 해야함
+				free_split(tokens);
+				// free(tokens);		// 현재 줄의 토큰 해제
+				free(trimmed_line);	// strtrim한 문자열 해제
+				return (-1);		// parse_map으로 에러 리턴 -> main에서 free_game 호출됨
+			}
+			game->map.ea_path = ft_strdup(tokens[1]);
+		}
 		else if (ft_strncmp(tokens[0], "F", 2) == 0 && tokens[1])
 		{
 			if (parse_color(&game->map.floor_color, tokens[1]) == -1)

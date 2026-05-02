@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:45 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/26 10:42:49 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/02 17:40:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
  * @brief ft_split으로 할당된 문자열 배열 메모리를 해제
  * @param tokens 해제할 문자열 배열
  */
-static void	free_split(char **tokens)
+void	free_split(char **tokens)
 {
 	int	i;
 
