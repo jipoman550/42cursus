@@ -6,32 +6,11 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:23 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/02 15:40:55 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/04 18:13:51 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-/**
- * @brief 파일 경로가 특정 확장자로 끝나는지 확인하는 함수
- * @param path 검사할 파일 경로 문자열
- * @param ext 확인할 확장자 문자열 (예: ".cub")
- * @return 확장자가 일치하면 1, 그렇지 않으면 0 반환
- */
-static int	check_extension(const char *path, const char *ext)
-{
-	size_t	path_len;
-	size_t	ext_len;
-
-	// 파일 경로와 확장자의 길이를 구함
-	path_len = ft_strlen(path);
-	ext_len = ft_strlen(ext);
-	// 경로가 확장자보다 짧으면 일치할 수 없음
-	if (path_len < ext_len)
-		return (0);
-	// 경로의 끝부분이 확장자와 일치하는지 비교
-	return (ft_strncmp(path + path_len - ext_len, ext, ext_len + 1) == 0);
-}
 
 /**
  * @brief t_game 구조체를 0으로 초기화하고 기본값을 설정하는 함수

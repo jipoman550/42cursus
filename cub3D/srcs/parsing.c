@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:55 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/02 18:53:51 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/04 17:21:26 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 static int	convert_map_list_to_array(t_game *game, t_list *map_lines);
 static int	validate_map_and_player(t_game *game);
 static void	init_player_direction(t_player *player, char dir);
+int	check_extension(const char *path, const char *ext);
 // parse_color는 parsing_utils.c에 정의되어 있고 외부에서 사용되므로 cub3d.h로 이동했습니다.
 
 /**
@@ -107,6 +108,14 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 	if (ft_strlen(trimmed_line) == 0) // 빈 줄은 무시
 	{
 		free(trimmed_line);
+		if (*config_count == 6)
+		{
+			/*
+			** 빈 줄을 무시하지 않고 빈 문자열로 리스트에 추가!
+			** 나중에 convert_map_list_to_array에서 game->map.width 만큼의 공백으로 쫙 채워짐
+			*/
+			ft_lstadd_back(map_lines, ft_lstnew(ft_strdup("")));
+		}
 		return (0);
 	}
 
@@ -129,33 +138,75 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 			free(tokens);
 			return (0);
 		}
+		/*
+		** 식별자 라인은 반드시 [식별자] [데이터] 두 토큰만 존재해야 함
+		** tokens[2]가 존재한다면 'NO ./path garbage'와 같은 오류 상황임
+		*/
+		//if (tokens[0] && tokens[1] && tokens[2])
+		//{
+		//	free_split(tokens);
+		//	free(trimmed_line);
+		//	// write(2, "Error\nInvalid line configuration\n", 33);
+		//	return (-1);
+		//}
+		/* 3. 데이터 개수 초과 검사 (Misconfiguration) */
+		if (tokens[1] != NULL && tokens[2] != NULL)
+		{
+			free_split(tokens);
+			free(trimmed_line);
+			/* 42 규칙: 에러 발생 시 명확한 메시지 출력 */
+			write(2, "Error\nInvalid line configuration: Too many arguments\n", 53);
+			return (-1);
+		}
 
 		if (ft_strncmp(tokens[0], "NO", 3) == 0 && tokens[1])
 		{
-			if (game->map.ea_path != NULL)
+			if (game->map.no_path != NULL)
 			{
 				free_split(tokens);
 				free(trimmed_line);
+				// error msg
+				return (-1);
+			}
+			if (!check_extension(tokens[1], ".xpm"))
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				// error msg
 				return (-1);
 			}
 			game->map.no_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "SO", 3) == 0 && tokens[1])
 		{
-			if (game->map.ea_path != NULL)
+			if (game->map.so_path != NULL)
 			{
 				free_split(tokens);
 				free(trimmed_line);
+				return (-1);
+			}
+			if (!check_extension(tokens[1], ".xpm"))
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				// error msg
 				return (-1);
 			}
 			game->map.so_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "WE", 3) == 0 && tokens[1])
 		{
-			if (game->map.ea_path != NULL)
+			if (game->map.we_path != NULL)
 			{
 				free_split(tokens);
 				free(trimmed_line);
+				return (-1);
+			}
+			if (!check_extension(tokens[1], ".xpm"))
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				// error msg
 				return (-1);
 			}
 			game->map.we_path = ft_strdup(tokens[1]);
@@ -171,31 +222,47 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 				free(trimmed_line);	// strtrim한 문자열 해제
 				return (-1);		// parse_map으로 에러 리턴 -> main에서 free_game 호출됨
 			}
+			if (!check_extension(tokens[1], ".xpm"))
+			{
+				free_split(tokens);
+				free(trimmed_line);
+				// error msg
+				return (-1);
+			}
 			game->map.ea_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "F", 2) == 0 && tokens[1])
 		{
 			if (parse_color(&game->map.floor_color, tokens[1]) == -1)
-			{ free(trimmed_line); int i = 0; while (tokens[i]) free(tokens[i++]); free(tokens); return (-1); }
+			{
+				free(trimmed_line);
+				free_split(tokens);
+				return (-1);
+			}
 		}
 		else if (ft_strncmp(tokens[0], "C", 2) == 0 && tokens[1])
 		{
 			if (parse_color(&game->map.ceil_color, tokens[1]) == -1)
-			{ free(trimmed_line); int i = 0; while (tokens[i]) free(tokens[i++]); free(tokens); return (-1); }
+			{
+				free(trimmed_line);
+				free_split(tokens);
+				return (-1);
+			}
 		}
+		// 불필요한거 같음.
 		// 설정이 덜 끝났는데 맵 데이터(1, 0 등)가 나오면 맵 시작으로 간주
-		else if (ft_strchr(" 01NSWE", tokens[0][0]))
-			is_map_line = 1;
+		//else if (ft_strchr(" 01NSWE", tokens[0][0]))
+		//	is_map_line = 1;
 		else
 		{
 			// 알 수 없는 식별자
 			free(trimmed_line);
-			int i = 0; while (tokens[i]) free(tokens[i++]); free(tokens);
+			free_split(tokens);
 			return (-1);
 		}
 
 		// 토큰 메모리 해제
-		int i = 0; while (tokens[i]) free(tokens[i++]); free(tokens);
+		free_split(tokens);
 	}
 
 	if (!is_map_line)
@@ -231,11 +298,13 @@ static int	convert_map_list_to_array(t_game *game, t_list *map_lines)
 
 	// 맵의 높이 계산
 	game->map.height = ft_lstsize(map_lines);
-	if (game->map.height == 0) return (-1);
+	if (game->map.height == 0)
+		return (-1);
 
 	// 높이만큼 포인터 배열 할당
 	game->map.grid = (char **)malloc(sizeof(char *) * (game->map.height + 1));
-	if (!game->map.grid) return (-1);
+	if (!game->map.grid)
+		return (-1);
 
 	// 맵의 최대 너비 계산
 	game->map.width = 0;
@@ -254,7 +323,8 @@ static int	convert_map_list_to_array(t_game *game, t_list *map_lines)
 	while (current)
 	{
 		game->map.grid[i] = (char *)malloc(game->map.width + 1);
-		if (!game->map.grid[i]) return (-1); // 실제로는 이전 할당 해제 필요
+		if (!game->map.grid[i])
+			return (-1); // 실제로는 이전 할당 해제 필요
 
 		ft_strlcpy(game->map.grid[i], (char *)current->content, game->map.width + 1);
 
@@ -278,11 +348,13 @@ static int	convert_map_list_to_array(t_game *game, t_list *map_lines)
  */
 static int	validate_map_and_player(t_game *game)
 {
-	int		x, y;
+	int		x;
+	int		y;
 	int		player_count = 0;
 	char	player_dir = 0;
 
-	if (!game->map.grid) return (-1);
+	if (!game->map.grid)
+		return (-1);
 	y = 0;
 	while (y < game->map.height)
 	{
@@ -295,7 +367,8 @@ static int	validate_map_and_player(t_game *game)
 			// 플레이어 위치 및 방향 확인
 			if (ft_strchr("NSWE", game->map.grid[y][x]))
 			{
-				if (player_count > 0) return (-1); // 플레이어가 2명 이상이면 에러
+				if (player_count > 0)
+					return (-1); // 플레이어가 2명 이상이면 에러
 				game->player.pos_x = x + 0.5;
 				game->player.pos_y = y + 0.5;
 				player_dir = game->map.grid[y][x];
@@ -314,7 +387,9 @@ static int	validate_map_and_player(t_game *game)
 		y++;
 	}
 	// 플레이어가 정확히 1명이어야 함
-	if (player_count != 1) return (-1);
+	// 0명일때 처리해줌
+	if (player_count != 1)
+		return (-1);
 
 	init_player_direction(&game->player, player_dir);
 	return (0);
@@ -327,8 +402,53 @@ static int	validate_map_and_player(t_game *game)
  */
 static void	init_player_direction(t_player *player, char dir)
 {
-	if (dir == 'N') { player->dir_x = 0; player->dir_y = -1; player->plane_x = 0.66; player->plane_y = 0; }
-	else if (dir == 'S') { player->dir_x = 0; player->dir_y = 1; player->plane_x = -0.66; player->plane_y = 0; }
-	else if (dir == 'W') { player->dir_x = -1; player->dir_y = 0; player->plane_x = 0; player->plane_y = -0.66; }
-	else if (dir == 'E') { player->dir_x = 1; player->dir_y = 0; player->plane_x = 0; player->plane_y = 0.66; }
+	if (dir == 'N')
+	{
+		player->dir_x = 0;
+		player->dir_y = -1;
+		player->plane_x = 0.66;
+		player->plane_y = 0;
+	}
+	else if (dir == 'S')
+	{
+		player->dir_x = 0;
+		player->dir_y = 1;
+		player->plane_x = -0.66;
+		player->plane_y = 0;
+	}
+	else if (dir == 'W')
+	{
+		player->dir_x = -1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = -0.66;
+	}
+	else if (dir == 'E')
+	{
+		player->dir_x = 1;
+		player->dir_y = 0;
+		player->plane_x = 0;
+		player->plane_y = 0.66;
+	}
+}
+
+/**
+ * @brief 파일 경로가 특정 확장자로 끝나는지 확인하는 함수
+ * @param path 검사할 파일 경로 문자열
+ * @param ext 확인할 확장자 문자열 (예: ".cub")
+ * @return 확장자가 일치하면 1, 그렇지 않으면 0 반환
+ */
+int	check_extension(const char *path, const char *ext)
+{
+	size_t	path_len;
+	size_t	ext_len;
+
+	// 파일 경로와 확장자의 길이를 구함
+	path_len = ft_strlen(path);
+	ext_len = ft_strlen(ext);
+	// 경로가 확장자보다 짧으면 일치할 수 없음
+	if (path_len < ext_len)
+		return (0);
+	// 경로의 끝부분이 확장자와 일치하는지 비교
+	return (ft_strncmp(path + path_len - ext_len, ext, ext_len + 1) == 0);
 }

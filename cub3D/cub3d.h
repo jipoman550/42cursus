@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:31 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/02 17:41:23 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/04 09:26:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	start_game_loop(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
 int		parse_color(int *color_field, const char *rgb_str);
 void	free_split(char **tokens);
+int		check_extension(const char *path, const char *ext);
 
 /* srcs/render_utils.c — 렌더링 유틸리티 */
 void	put_pixel(t_img *img, int x, int y, int color);
