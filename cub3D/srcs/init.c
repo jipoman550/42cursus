@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:01 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/26 10:42:06 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/05 14:49:13 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	init_game(t_game *game)
 	// MLX 라이브러리 연결 초기화
 	game->mlx = mlx_init();
 	if (!game->mlx)
-		return (-1);
+		return (print_error_and_return(ERR_MLX_INIT));
 	// 윈도우 생성 (제목: cub3D)
 	game->win = mlx_new_window(game->mlx, SCREEN_W, SCREEN_H, "cub3D");
 	if (!game->win)
-		return (-1);
+		return (print_error_and_return(ERR_MLX_WIN));
 	// 화면에 표시할 메인 이미지 버퍼 생성
 	game->img.img = mlx_new_image(game->mlx, SCREEN_W, SCREEN_H);
 	if (!game->img.img)
-		return (-1);
+		return (print_error_and_return(ERR_MLX_IMG));
 	// 이미지 데이터의 메모리 주소 및 정보 가져오기
 	game->img.addr = mlx_get_data_addr(game->img.img,
 			&game->img.bpp, &game->img.line_len, &game->img.endian);
@@ -48,38 +48,26 @@ int	init_game(t_game *game)
  */
 int	load_textures(t_game *game)
 {
-	int	w;
-	int	h;
+	int		w;
+	int		h;
+	int		i;
+	char	*paths[4];
 
-	// 각 방향의 xpm 파일을 읽어 이미지로 변환
-	game->textures[0].img = mlx_xpm_file_to_image(game->mlx,
-			game->map.no_path, &w, &h);
-	game->textures[1].img = mlx_xpm_file_to_image(game->mlx,
-			game->map.so_path, &w, &h);
-	game->textures[2].img = mlx_xpm_file_to_image(game->mlx,
-			game->map.we_path, &w, &h);
-	game->textures[3].img = mlx_xpm_file_to_image(game->mlx,
-			game->map.ea_path, &w, &h);
-	// 이미지 로드 실패 여부 확인
-	if (!game->textures[0].img || !game->textures[1].img
-		|| !game->textures[2].img || !game->textures[3].img)
+	paths[0] = game->map.no_path;
+	paths[1] = game->map.so_path;
+	paths[2] = game->map.we_path;
+	paths[3] = game->map.ea_path;
+	i = 0;
+	while (i < 4)
 	{
-		write(2, "Error\nFailed to load textures\n", 30);
-		return (-1);
+		game->textures[i].img = mlx_xpm_file_to_image(game->mlx, paths[i], &w, &h);
+		if (!game->textures[i].img)
+			return (print_error_and_return(ERR_MLX_TEX)); // 실패 시 즉시 반환
+		game->textures[i].addr = mlx_get_data_addr(game->textures[i].img,
+				&game->textures[i].bpp, &game->textures[i].line_len,
+				&game->textures[i].endian);
+		i++;
 	}
-	// 로드된 텍스처 이미지의 데이터 주소 가져오기 (픽셀 접근용)
-	game->textures[0].addr = mlx_get_data_addr(game->textures[0].img,
-			&game->textures[0].bpp, &game->textures[0].line_len,
-			&game->textures[0].endian);
-	game->textures[1].addr = mlx_get_data_addr(game->textures[1].img,
-			&game->textures[1].bpp, &game->textures[1].line_len,
-			&game->textures[1].endian);
-	game->textures[2].addr = mlx_get_data_addr(game->textures[2].img,
-			&game->textures[2].bpp, &game->textures[2].line_len,
-			&game->textures[2].endian);
-	game->textures[3].addr = mlx_get_data_addr(game->textures[3].img,
-			&game->textures[3].bpp, &game->textures[3].line_len,
-			&game->textures[3].endian);
 	return (0);
 }
 

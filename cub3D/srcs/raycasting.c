@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sisung <sisung@student.42gyeongsan.kr>     +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/02/26 10:43:04 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/05 15:08:00 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,39 @@ static int	get_texture_idx(t_ray *ray)
 }
 
 /**
+ * @brief 화면의 수직선(세로줄)에 텍스처를 매핑하여 그리는 함수
+ *
+ * @param game 게임 구조체 포인터
+ * @param x 화면에 그릴 수직선의 x 좌표
+ * @param ray 광선 정보 구조체 포인터
+ * @param tex_idx 매핑할 텍스처 배열의 인덱스 (0: NO, 1: SO, 2: WE, 3: EA)
+ * @param tex_x 텍스처 이미지 상에서 읽어올 픽셀의 x 좌표
+ */
+static void	draw_wall_line(t_game *game, int x, t_ray *ray, int tex_idx, int tex_x)
+{
+	double	step;
+	double	tex_pos;
+	int		y;
+	int		tex_y;
+	int		color;
+
+	step = 1.0 * TEX_HEIGHT / ray->line_height;
+	tex_pos = (ray->draw_start - SCREEN_H / 2 + ray->line_height / 2) * step;
+	y = ray->draw_start;
+	while (y < ray->draw_end)
+	{
+		tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
+		tex_pos += step;
+		// 텍스처 메모리에서 색상 읽기
+		color = *(int *)(game->textures[tex_idx].addr +
+					(tex_y * game->textures[tex_idx].line_len +
+					tex_x * (game->textures[tex_idx].bpp / 8)));
+		put_pixel(&game->img, x, y, color);
+		y++;
+	}
+}
+
+/**
  * @brief 매 프레임마다 호출되어 화면을 렌더링하는 메인 함수
  * @param game 게임 구조체 포인터
  * @return 0
@@ -156,21 +189,8 @@ int	render_frame(t_game *game)
 		if ((ray.side == 0 && ray.ray_dir_x > 0) || (ray.side == 1 && ray.ray_dir_y < 0))
 			tex_x = TEX_WIDTH - tex_x - 1;
 
-		// 3. 세로선 그리기 (텍스처 매핑)
-		double step = 1.0 * TEX_HEIGHT / ray.line_height;
-		double tex_pos = (ray.draw_start - SCREEN_H / 2 + ray.line_height / 2) * step;
-		int y = ray.draw_start;
-		while (y < ray.draw_end)
-		{
-			int tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
-			tex_pos += step;
-			// 텍스처 메모리에서 색상 읽기
-			int color = *(int *)(game->textures[tex_idx].addr +
-						(tex_y * game->textures[tex_idx].line_len +
-						 tex_x * (game->textures[tex_idx].bpp / 8)));
-			put_pixel(&game->img, x, y, color);
-			y++;
-		}
+		// 3. 세로선 그리기
+		draw_wall_line(game, x, &ray, tex_idx, tex_x);
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:45 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/04 17:41:22 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/05 11:07:50 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,22 +106,23 @@ static int	count_commas(const char *str)
  *          모두 걸러내어 안전한 비트 연산(0x00RRGGBB)을 수행합니다.
  * @param color_field 파싱된 RGB 값을 저장할 변수의 주소
  * @param rgb_str 파싱할 "R,G,B" 형식의 원본 문자열
- * @return 성공 시 0, 어떠한 형태의 설정 오류라도 발견 시 -1
+ * @return 성공 시 ERR_NONE, 에러 발생 시 해당하는 t_error 코드
  */
-int	parse_color(int *color_field, const char *rgb_str)
+t_error	parse_color(int *color_field, const char *rgb_str)
 {
 	char	**tokens;
 	int		rgb[3];
 	int		i;
 
-	// 이미 색상값이 설정되어 있거나(중복 파싱 방지), 콤마의 개수가 정확히 2개가 아니면 에러 반환
-	if (*color_field != -1 || count_commas(rgb_str) != 2)
-		return (-1);
+	if (*color_field != -1)
+		return (ERR_DUP_CONFIG);
+	if (count_commas(rgb_str) != 2)
+		return (ERR_INV_COLOR);
 	// 콤마를 기준으로 문자열을 분리 (예: "255,100,50" -> ["255", "100", "50"])
 	tokens = ft_split(rgb_str, ',');
 	if (!tokens)
 		// 메모리 할당 실패 시 에러 반환
-		return (-1);
+		return (ERR_MALLOC);
 	i = -1;
 	// 분리된 3개의 토큰(R, G, B)에 대해 유효성 검사 및 정수 변환 수행
 	while (++i < 3)
@@ -140,11 +141,11 @@ int	parse_color(int *color_field, const char *rgb_str)
 	if (i != 3 || tokens[i] != NULL)
 	{
 		free_split(tokens);
-		return (-1);
+		return (ERR_INV_COLOR);
 	}
 	// R, G, B 값을 비트 시프트 연산으로 병합하여 하나의 int (0x00RRGGBB)로 생성
 	*color_field = ((rgb[0] << 16) | (rgb[1] << 8) | rgb[2]);
 	// 동적 할당된 토큰 배열 메모리 해제
 	free_split(tokens);
-	return (0);
+	return (ERR_NONE);
 }

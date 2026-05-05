@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:31 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/04 09:26:16 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/05 14:38:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,32 @@
 # define SCREEN_H 720
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
+
+/**
+ * @brief cub3D 프로젝트에서 발생하는 모든 에러 코드
+ */
+typedef enum e_error
+{
+	ERR_NONE = 0,	/* 정상 처리 (에러 아님). 출력을 건너뛰기 위해 빈 문자열("")을 가짐 */
+	ERR_MALLOC,		/* 메모리 할당 실패 */
+	ERR_ARG,		/* 잘못된 실행 인자 */
+	ERR_EXT,		/* 잘못된 파일 확장자 */
+	ERR_FILE_OPEN,	/* 파일 열기 실패 */
+	ERR_DUP_CONFIG,	/* 설정 중복 (NO, SO 등) */
+	ERR_MISS_CONFIG,/* 필수 설정 누락 (텍스처 또는 색상) */
+	ERR_INV_ARGS,	/* 설정 줄에 인자가 너무 많음 */
+	ERR_INV_ID,		/* 알 수 없는 식별자 (NO, SO 등이 아님) */
+	ERR_INV_TEX,	/* 유효하지 않은 텍스처 경로 */
+	ERR_INV_COLOR,	/* 유효하지 않은 RGB 포맷 */
+	ERR_MLX_INIT,	/* MLX 초기화 실패 */
+	ERR_MLX_WIN,	/* MLX 윈도우 생성 실패 */
+	ERR_MLX_IMG,	/* MLX 이미지 생성 실패 */
+	ERR_MLX_TEX,	/* MLX 텍스처 로드 실패 */
+	ERR_MAP_GAP,	/* 맵 중간에 빈 줄 존재 */
+	ERR_MAP_CHAR,	/* 맵 내 허용되지 않은 문자 */
+	ERR_PLAYER,		/* 플레이어가 없거나 2명 이상 */
+	ERR_WALL		/* 맵이 벽으로 밀폐되지 않음 */
+}	t_error;
 
 /**
  * @brief MiniLibX 이미지 정보를 담는 구조체
@@ -147,7 +173,7 @@ void	free_game(t_game *game);
 void	exit_game(t_game *game, int exit_code);
 void	start_game_loop(t_game *game);
 void	put_pixel(t_img *img, int x, int y, int color);
-int		parse_color(int *color_field, const char *rgb_str);
+t_error	parse_color(int *color_field, const char *rgb_str);
 void	free_split(char **tokens);
 int		check_extension(const char *path, const char *ext);
 
@@ -163,5 +189,10 @@ int		key_press(int keycode, t_game *game);
 int		close_window(t_game *game);
 void	rotate_left(t_game *game);
 void	rotate_right(t_game *game);
+
+/* srcs/cleanup.c*/
+int		return_main_error(t_game *game, t_error code);
+int		print_error_and_return(t_error code);
+int		free_parse_locals(char **tokens, char *str1, char *str2, t_error code);
 
 #endif

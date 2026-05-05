@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:55 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/04 17:21:26 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/05 14:01:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parse_map(const char *file_path, t_game *game)
 	// 파일 열기
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		return (-1);
+		return (print_error_and_return(ERR_FILE_OPEN));
 
 	// GNL을 사용하여 파일 끝까지 한 줄씩 읽기
 	line = get_next_line(fd);
@@ -71,7 +71,7 @@ int	parse_map(const char *file_path, t_game *game)
 	if (config_count != 6)
 	{
 		ft_lstclear(&map_lines, free);
-		return (-1);
+		return (print_error_and_return(ERR_MISS_CONFIG));
 	}
 
 	// 리스트에 저장된 맵 데이터를 2차원 배열로 변환
@@ -100,11 +100,12 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 	char	**tokens;
 	char	*trimmed_line;
 	int		is_map_line = 0;
+	t_error	err;
 
 	// 개행 문자 제거
 	trimmed_line = ft_strtrim(line, "\n");
 	if (!trimmed_line)
-		return (-1);
+		return (print_error_and_return(ERR_MALLOC));
 	if (ft_strlen(trimmed_line) == 0) // 빈 줄은 무시
 	{
 		free(trimmed_line);
@@ -129,7 +130,7 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 		if (!tokens)
 		{
 			free(trimmed_line);
-			return (-1);
+			return (print_error_and_return(ERR_MALLOC));
 		}
 		if (!tokens[0])
 		{
@@ -152,102 +153,53 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 		/* 3. 데이터 개수 초과 검사 (Misconfiguration) */
 		if (tokens[1] != NULL && tokens[2] != NULL)
 		{
-			free_split(tokens);
-			free(trimmed_line);
-			/* 42 규칙: 에러 발생 시 명확한 메시지 출력 */
-			write(2, "Error\nInvalid line configuration: Too many arguments\n", 53);
-			return (-1);
+			return (free_parse_locals(tokens, trimmed_line, NULL, ERR_INV_ARGS));
 		}
 
 		if (ft_strncmp(tokens[0], "NO", 3) == 0 && tokens[1])
 		{
 			if (game->map.no_path != NULL)
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				// error msg
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_DUP_CONFIG));
 			if (!check_extension(tokens[1], ".xpm"))
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				// error msg
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_EXT));
 			game->map.no_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "SO", 3) == 0 && tokens[1])
 		{
 			if (game->map.so_path != NULL)
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_DUP_CONFIG));
 			if (!check_extension(tokens[1], ".xpm"))
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				// error msg
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_EXT));
 			game->map.so_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "WE", 3) == 0 && tokens[1])
 		{
 			if (game->map.we_path != NULL)
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_DUP_CONFIG));
 			if (!check_extension(tokens[1], ".xpm"))
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				// error msg
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_EXT));
 			game->map.we_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "EA", 3) == 0 && tokens[1])
 		{
 			// [중요] 이미 경로가 존재한다면 이는 중복 설정(Misconfiguration)입니다.
 			if (game->map.ea_path != NULL)
-			{
-				// 스플릿 반환이 배열형태인데 하나만 해제 다른 곳도 다 해야함
-				free_split(tokens);
-				// free(tokens);		// 현재 줄의 토큰 해제
-				free(trimmed_line);	// strtrim한 문자열 해제
-				return (-1);		// parse_map으로 에러 리턴 -> main에서 free_game 호출됨
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_DUP_CONFIG));
 			if (!check_extension(tokens[1], ".xpm"))
-			{
-				free_split(tokens);
-				free(trimmed_line);
-				// error msg
-				return (-1);
-			}
+				return (free_parse_locals(tokens, trimmed_line, NULL, ERR_EXT));
 			game->map.ea_path = ft_strdup(tokens[1]);
 		}
 		else if (ft_strncmp(tokens[0], "F", 2) == 0 && tokens[1])
 		{
-			if (parse_color(&game->map.floor_color, tokens[1]) == -1)
-			{
-				free(trimmed_line);
-				free_split(tokens);
-				return (-1);
-			}
+			err = parse_color(&game->map.floor_color, tokens[1]);
+			if (err != ERR_NONE)
+				return (free_parse_locals(tokens, trimmed_line, NULL, err));
 		}
 		else if (ft_strncmp(tokens[0], "C", 2) == 0 && tokens[1])
 		{
-			if (parse_color(&game->map.ceil_color, tokens[1]) == -1)
-			{
-				free(trimmed_line);
-				free_split(tokens);
-				return (-1);
-			}
+			err = parse_color(&game->map.ceil_color, tokens[1]);
+			if (err != ERR_NONE)
+				return (free_parse_locals(tokens, trimmed_line, NULL, err));
 		}
 		// 불필요한거 같음.
 		// 설정이 덜 끝났는데 맵 데이터(1, 0 등)가 나오면 맵 시작으로 간주
@@ -256,9 +208,7 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 		else
 		{
 			// 알 수 없는 식별자
-			free(trimmed_line);
-			free_split(tokens);
-			return (-1);
+			return (free_parse_locals(tokens, trimmed_line, NULL, ERR_INV_ID));
 		}
 
 		// 토큰 메모리 해제
@@ -272,13 +222,20 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 		// 맵 라인은 공백이 중요하므로 ft_split/trim 대신 원본 라인 사용
 		// 마지막 개행 문자만 제거하여 리스트에 추가
 		char *map_content;
+		t_list	*new_node;
 		size_t len = ft_strlen(line);
+
 		if (len > 0 && line[len - 1] == '\n')
 			map_content = ft_substr(line, 0, len - 1);
 		else
 			map_content = ft_strdup(line);
 
-		ft_lstadd_back(map_lines, ft_lstnew(map_content));
+		if (!map_content)
+			return (free_parse_locals(NULL, trimmed_line, NULL, ERR_MALLOC));
+		new_node = ft_lstnew(map_content);
+		if (!new_node)
+			return (free_parse_locals(NULL, trimmed_line, map_content, ERR_MALLOC));
+		ft_lstadd_back(map_lines, new_node);
 	}
 	free(trimmed_line);
 	return (0);
@@ -293,18 +250,19 @@ static int	parse_line(char *line, t_game *game, int *config_count, t_list **map_
 static int	convert_map_list_to_array(t_game *game, t_list *map_lines)
 {
 	int		i;
+	int		j;
 	t_list	*current;
 	size_t	len;
 
 	// 맵의 높이 계산
 	game->map.height = ft_lstsize(map_lines);
 	if (game->map.height == 0)
-		return (-1);
+		return (print_error_and_return(ERR_WALL)); // 맵 데이터가 아예 없는 경우
 
 	// 높이만큼 포인터 배열 할당
 	game->map.grid = (char **)malloc(sizeof(char *) * (game->map.height + 1));
 	if (!game->map.grid)
-		return (-1);
+		return (print_error_and_return(ERR_MALLOC));
 
 	// 맵의 최대 너비 계산
 	game->map.width = 0;
@@ -324,12 +282,18 @@ static int	convert_map_list_to_array(t_game *game, t_list *map_lines)
 	{
 		game->map.grid[i] = (char *)malloc(game->map.width + 1);
 		if (!game->map.grid[i])
-			return (-1); // 실제로는 이전 할당 해제 필요
+		{
+			// 메모리 할당 실패 시 이전에 할당된 모든 행을 해제 (메모리 누수 방지)
+			while (--i >= 0)
+				free(game->map.grid[i]);
+			free(game->map.grid);
+			return (print_error_and_return(ERR_MALLOC));
+		}
 
 		ft_strlcpy(game->map.grid[i], (char *)current->content, game->map.width + 1);
 
 		// 나머지 부분을 공백으로 채우기
-		int j = ft_strlen((char *)current->content);
+		j = ft_strlen((char *)current->content);
 		while (j < game->map.width)
 			game->map.grid[i][j++] = ' ';
 		game->map.grid[i][game->map.width] = '\0';
@@ -353,8 +317,6 @@ static int	validate_map_and_player(t_game *game)
 	int		player_count = 0;
 	char	player_dir = 0;
 
-	if (!game->map.grid)
-		return (-1);
 	y = 0;
 	while (y < game->map.height)
 	{
@@ -363,12 +325,12 @@ static int	validate_map_and_player(t_game *game)
 		{
 			// 허용되지 않은 문자 검사
 			if (game->map.grid[y][x] != ' ' && !ft_strchr("01NSWE", game->map.grid[y][x]))
-				return (-1);
+				return (print_error_and_return(ERR_MAP_CHAR));
 			// 플레이어 위치 및 방향 확인
 			if (ft_strchr("NSWE", game->map.grid[y][x]))
 			{
 				if (player_count > 0)
-					return (-1); // 플레이어가 2명 이상이면 에러
+					return (print_error_and_return(ERR_PLAYER)); // 플레이어가 2명 이상이면 에러
 				game->player.pos_x = x + 0.5;
 				game->player.pos_y = y + 0.5;
 				player_dir = game->map.grid[y][x];
@@ -380,7 +342,7 @@ static int	validate_map_and_player(t_game *game)
 				if (y == 0 || y == game->map.height - 1 || x == 0 || x == game->map.width - 1 ||
 					game->map.grid[y-1][x] == ' ' || game->map.grid[y+1][x] == ' ' ||
 					game->map.grid[y][x-1] == ' ' || game->map.grid[y][x+1] == ' ')
-					return (-1);
+					return (print_error_and_return(ERR_WALL));
 			}
 			x++;
 		}
@@ -389,7 +351,7 @@ static int	validate_map_and_player(t_game *game)
 	// 플레이어가 정확히 1명이어야 함
 	// 0명일때 처리해줌
 	if (player_count != 1)
-		return (-1);
+		return (print_error_and_return(ERR_PLAYER));
 
 	init_player_direction(&game->player, player_dir);
 	return (0);
