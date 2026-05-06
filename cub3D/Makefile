@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/19 23:25:02 by sisung            #+#    #+#              #
-#    Updated: 2026/05/01 13:43:51 by sisung           ###   ########.fr        #
+#    Updated: 2026/05/06 13:40:30 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,8 @@ SRCS		= $(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/input.c \
 			$(SRCS_DIR)/raycasting.c \
 			$(SRCS_DIR)/render_utils.c \
-			$(SRCS_DIR)/init.c
+			$(SRCS_DIR)/init.c \
+			$(SRCS_DIR)/cleanup.c
 OBJS		= $(SRCS:.c=.o)
 
 # Test

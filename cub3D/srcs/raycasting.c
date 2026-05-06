@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/05 15:08:00 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:26:01 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,11 @@ int	render_frame(t_game *game)
 	double	wall_x;
 	int		tex_x;
 
+	if (game->is_moved == 0)
+		return (0);
 	draw_background(game);
 	x = 0;
-	while (x < SCREEN_W)
+	while (x < SCREEN_W)// =================== 여기부터 해라.
 	{
 		init_ray(x, &ray, &game->player);
 		calculate_step(&ray, &game->player);
@@ -194,5 +196,6 @@ int	render_frame(t_game *game)
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
+	game->is_moved = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:01 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/05 14:49:13 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/06 14:39:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	init_game(t_game *game)
 	// 플레이어 이동 및 회전 속도 초기값 설정
 	game->player.move_speed = 0.05;
 	game->player.rot_speed = 0.03;
+	game->is_moved = 1;
 	return (0);
 }
 

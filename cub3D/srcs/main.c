@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:23 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/05 15:17:18 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/06 14:09:41 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv)
 	// 맵 파일 파싱 및 유효성 검사
 	if (parse_map(argv[1], &game) == -1)
 		return (return_main_error(&game, ERR_NONE));
-	// MLX 라이브러리 초기화 (윈도우 생성 등)
 	if (init_game(&game) == -1)
 		return (return_main_error(&game, ERR_NONE));
 	// 텍스처 이미지 로드

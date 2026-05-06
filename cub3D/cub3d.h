@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:31 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/05 14:38:01 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/06 18:23:32 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@
 
 # include "libft2.h"
 
+/* 화면 해상도 설정 (사용자 지정) */
 # define SCREEN_W 1280
 # define SCREEN_H 720
+
+/* 벽 텍스처 규격 설정 (일반적으로 64x64 사용) */
 # define TEX_WIDTH 64
 # define TEX_HEIGHT 64
 
@@ -164,6 +167,7 @@ typedef struct s_game
 	t_map		map;
 	t_player	player;
 	t_img		textures[4];
+	int			is_moved;
 }	t_game;
 
 int		parse_map(const char *file_path, t_game *game);
