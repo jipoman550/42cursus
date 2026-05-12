@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/06 18:26:01 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/11 17:40:43 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void	calculate_step(t_ray *ray, t_player *player)
  */
 static void	perform_dda(t_ray *ray, t_map *map)
 {
+	// 여기서 나중에 벽 통과할 때는 어떻게 해야할까.
 	while (ray->hit == 0)
 	{
 		if (ray->side_dist_x < ray->side_dist_y)
@@ -83,6 +84,7 @@ static void	perform_dda(t_ray *ray, t_map *map)
 
 /**
  * @brief 벽까지의 수직 거리와 실제 그려질 높이 계산
+ * ?? 만약 이 부분이 없으면 어안 렌즈 보정이 안되서 어안렌즈처럼 보이나?
  */
 static void	calculate_wall_dims(t_ray *ray)
 {
@@ -107,17 +109,17 @@ static void	calculate_wall_dims(t_ray *ray)
  */
 static int	get_texture_idx(t_ray *ray)
 {
-	if (ray->side == 0) // X축 벽 (동/서)
+	if (ray->side == 0)	// X축 벽 (동/서)
 	{
 		if (ray->ray_dir_x > 0)
-			return (3); // East
-		return (2);     // West
+			return (3);	// East
+		return (2);		// West
 	}
 	else // Y축 벽 (남/북)
 	{
 		if (ray->ray_dir_y > 0)
-			return (1); // South
-		return (0);     // North
+			return (1);	// South
+		return (0);		// North
 	}
 }
 
@@ -187,7 +189,7 @@ int	render_frame(t_game *game)
 		wall_x -= floor(wall_x);
 
 		// 2. 텍스처 x좌표 계산
-		tex_x = (int)(wall_x * (double)TEX_WIDTH);
+		tex_x = (int)(wall_x * (double)TEX_WIDTH); // (int), (double) 이런건 왜 해야함?
 		if ((ray.side == 0 && ray.ray_dir_x > 0) || (ray.side == 1 && ray.ray_dir_y < 0))
 			tex_x = TEX_WIDTH - tex_x - 1;
 

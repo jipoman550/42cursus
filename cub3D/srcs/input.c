@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:35 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/06 17:01:37 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/07 17:36:49 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	rotate_right(t_game *game)
 int	key_press(int keycode, t_game *game)
 {
 	// 여기서 벽 충돌 로직을 풀어줘야 할 듯
+	// 여기 수학적 원리가 있는데 공부해야할듯
 	if (keycode == KEY_ESC)
 		exit_game(game, 0);
 	else if (keycode == KEY_W)
