@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:35 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/07 17:36:49 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/12 15:44:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
  * 방향 벡터 방향으로 move_speed만큼 이동하되, 벽 충돌 체크를 수행
  * @param game 게임 구조체 포인터
  */
-static void	move_forward(t_game *game)
+void	move_forward(t_game *game)
 {
 	double	new_x;
 	double	new_y;
@@ -36,12 +36,17 @@ static void	move_forward(t_game *game)
 		* game->player.move_speed;
 	new_y = game->player.pos_y + game->player.dir_y
 		* game->player.move_speed;
-	// X축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
-		game->player.pos_x = new_x;
-	// Y축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
-		game->player.pos_y = new_y;
+
+	/* 기존에 있던 if (game->map.grid... != '1') 검사를 지우고 무조건 위치 갱신! */
+	game->player.pos_x = new_x;
+	game->player.pos_y = new_y;
+
+	//// X축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
+	//	game->player.pos_x = new_x;
+	//// Y축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
+	//	game->player.pos_y = new_y;
 }
 
 /**
@@ -49,7 +54,7 @@ static void	move_forward(t_game *game)
  * 방향 벡터 반대 방향으로 move_speed만큼 이동
  * @param game 게임 구조체 포인터
  */
-static void	move_backward(t_game *game)
+void	move_backward(t_game *game)
 {
 	double	new_x;
 	double	new_y;
@@ -59,12 +64,17 @@ static void	move_backward(t_game *game)
 		* game->player.move_speed;
 	new_y = game->player.pos_y - game->player.dir_y
 		* game->player.move_speed;
-	// X축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
-		game->player.pos_x = new_x;
-	// Y축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
-		game->player.pos_y = new_y;
+
+	/* 기존에 있던 if (game->map.grid... != '1') 검사를 지우고 무조건 위치 갱신! */
+	game->player.pos_x = new_x;
+	game->player.pos_y = new_y;
+
+	//// X축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
+	//	game->player.pos_x = new_x;
+	//// Y축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
+	//	game->player.pos_y = new_y;
 }
 
 /**
@@ -72,7 +82,7 @@ static void	move_backward(t_game *game)
  * 카메라 평면 벡터의 반대 방향으로 이동 (왼쪽 스트레이프)
  * @param game 게임 구조체 포인터
  */
-static void	move_left(t_game *game)
+void	move_left(t_game *game)
 {
 	double	new_x;
 	double	new_y;
@@ -82,12 +92,17 @@ static void	move_left(t_game *game)
 		* game->player.move_speed;
 	new_y = game->player.pos_y - game->player.plane_y
 		* game->player.move_speed;
-	// X축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
-		game->player.pos_x = new_x;
-	// Y축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
-		game->player.pos_y = new_y;
+
+	/* 기존에 있던 if (game->map.grid... != '1') 검사를 지우고 무조건 위치 갱신! */
+	game->player.pos_x = new_x;
+	game->player.pos_y = new_y;
+
+	//// X축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
+	//	game->player.pos_x = new_x;
+	//// Y축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
+	//	game->player.pos_y = new_y;
 }
 
 /**
@@ -95,7 +110,7 @@ static void	move_left(t_game *game)
  * 카메라 평면 벡터 방향으로 이동 (오른쪽 스트레이프)
  * @param game 게임 구조체 포인터
  */
-static void	move_right(t_game *game)
+void	move_right(t_game *game)
 {
 	double	new_x;
 	double	new_y;
@@ -105,12 +120,17 @@ static void	move_right(t_game *game)
 		* game->player.move_speed;
 	new_y = game->player.pos_y + game->player.plane_y
 		* game->player.move_speed;
-	// X축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
-		game->player.pos_x = new_x;
-	// Y축 이동: 벽이 아닌 경우에만 위치 갱신
-	if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
-		game->player.pos_y = new_y;
+
+	/* 기존에 있던 if (game->map.grid... != '1') 검사를 지우고 무조건 위치 갱신! */
+	game->player.pos_x = new_x;
+	game->player.pos_y = new_y;
+
+	//// X축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)game->player.pos_y][(int)new_x] != '1')
+	//	game->player.pos_x = new_x;
+	//// Y축 이동: 벽이 아닌 경우에만 위치 갱신
+	//if (game->map.grid[(int)new_y][(int)game->player.pos_x] != '1')
+	//	game->player.pos_y = new_y;
 }
 
 /**
@@ -180,25 +200,55 @@ int	key_press(int keycode, t_game *game)
 	if (keycode == KEY_ESC)
 		exit_game(game, 0);
 	else if (keycode == KEY_W)
-		move_forward(game);
+		game->player.key_w = 1;
 	else if (keycode == KEY_S)
-		move_backward(game);
+		game->player.key_s = 1;
 	else if (keycode == KEY_A)
-		move_left(game);
+		game->player.key_a = 1;
 	else if (keycode == KEY_D)
-		move_right(game);
+		game->player.key_d = 1;
 	else if (keycode == KEY_LEFT)
-		rotate_left(game);
+		game->player.key_left = 1;
 	else if (keycode == KEY_RIGHT)
-		rotate_right(game);
-	//if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
-	//	|| keycode == KEY_D || keycode == KEY_LEFT || keycode == KEY_RIGHT)
-	else
-	{
-		return (0); /* 매핑되지 않은 쓸데없는 키면 플래그 변경 없이 즉시 리턴 */
-	}
-	/* 여기까지 코드가 도달했다는 것은, 유효한 이동/회전 키가 눌렸다는 뜻입니다. */
-	game->is_moved = 1;
+		game->player.key_right = 1;
+	//else if (keycode == KEY_W)
+	//	move_forward(game);
+	//else if (keycode == KEY_S)
+	//	move_backward(game);
+	//else if (keycode == KEY_A)
+	//	move_left(game);
+	//else if (keycode == KEY_D)
+	//	move_right(game);
+	//else if (keycode == KEY_LEFT)
+	//	rotate_left(game);
+	//else if (keycode == KEY_RIGHT)
+	//	rotate_right(game);
+	////if (keycode == KEY_W || keycode == KEY_S || keycode == KEY_A
+	////	|| keycode == KEY_D || keycode == KEY_LEFT || keycode == KEY_RIGHT)
+	//else
+	//{
+	//	return (0); /* 매핑되지 않은 쓸데없는 키면 플래그 변경 없이 즉시 리턴 */
+	//}
+	///* 여기까지 코드가 도달했다는 것은, 유효한 이동/회전 키가 눌렸다는 뜻입니다. */
+	//game->is_moved = 1;
+	return (0);
+}
+
+// 키에서 손을 뗐을 때 0으로 초기화
+int key_release(int keycode, t_game *game)
+{
+	if (keycode == KEY_W)
+		game->player.key_w = 0;
+	else if (keycode == KEY_S)
+		game->player.key_s = 0;
+	else if (keycode == KEY_A)
+		game->player.key_a = 0;
+	else if (keycode == KEY_D)
+		game->player.key_d = 0;
+	else if (keycode == KEY_LEFT)
+		game->player.key_left = 0;
+	else if (keycode == KEY_RIGHT)
+		game->player.key_right = 0;
 	return (0);
 }
 

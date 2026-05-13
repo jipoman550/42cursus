@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/19 23:25:31 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/06 18:23:32 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/12 13:42:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,12 @@ typedef struct s_player
 	double	plane_y;
 	double	move_speed;
 	double	rot_speed;
+	int		key_w;
+	int		key_s;
+	int		key_a;
+	int		key_d;
+	int		key_left;
+	int		key_right;
 }	t_player;
 
 /**
@@ -190,7 +196,12 @@ int		render_frame(t_game *game);
 
 /* srcs/input.c — 키 입력 및 플레이어 이동 */
 int		key_press(int keycode, t_game *game);
+int		key_release(int keycode, t_game *game);
 int		close_window(t_game *game);
+void	move_forward(t_game *game);
+void	move_backward(t_game *game);
+void	move_left(t_game *game);
+void	move_right(t_game *game);
 void	rotate_left(t_game *game);
 void	rotate_right(t_game *game);
 

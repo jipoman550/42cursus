@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:01 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/06 14:39:16 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/12 15:51:03 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	init_game(t_game *game)
 	game->img.addr = mlx_get_data_addr(game->img.img,
 			&game->img.bpp, &game->img.line_len, &game->img.endian);
 	// 플레이어 이동 및 회전 속도 초기값 설정
-	game->player.move_speed = 0.05;
-	game->player.rot_speed = 0.03;
+	game->player.move_speed = 0.009; // 처음값: 0.05
+	game->player.rot_speed = 0.003; // 처음값: 0.03
 	game->is_moved = 1;
 	return (0);
 }
@@ -139,7 +139,10 @@ void	exit_game(t_game *game, int exit_code)
 void	start_game_loop(t_game *game)
 {
 	// 키 입력 이벤트(2) 훅 등록 → input.c의 key_press()
+	// 2: KeyPress (눌림)
 	mlx_hook(game->win, 2, 1L << 0, key_press, game);
+	// 3: KeyRelease (뗌)
+	mlx_hook(game->win, 3, 1L << 1, key_release, game);
 	// 창 닫기 버튼 이벤트(17) 훅 등록 → input.c의 close_window()
 	mlx_hook(game->win, 17, 0, close_window, game);
 	// 매 프레임마다 렌더링을 수행하도록 훅 등록

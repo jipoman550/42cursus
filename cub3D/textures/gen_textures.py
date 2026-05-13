@@ -1,70 +1,60 @@
 #!/usr/bin/env python3
-"""Generate 64x64 brick-pattern .xpm textures for cub3D testing."""
-
 import os
 
-def generate_brick_xpm(filename, name, brick_color, mortar_color, highlight_color):
-	"""Generate a 64x64 brick pattern XPM file."""
-	W, H = 64, 64
-	BRICK_W, BRICK_H = 16, 8  # brick size
-	MORTAR = 1  # mortar thickness
+# 5x5 해상도의 픽셀 아트 폰트
+LETTERS = {
+    'N': ["10001", "11001", "10101", "10011", "10001"],
+    'S': ["11111", "10000", "11111", "00001", "11111"],
+    'W': ["10001", "10001", "10101", "11011", "10001"],
+    'E': ["11111", "10000", "11111", "10000", "11111"]
+}
 
-	# Build pixel grid
-	pixels = []
-	for y in range(H):
-		row = []
-		for x in range(W):
-			# Horizontal mortar lines
-			if y % BRICK_H < MORTAR:
-				row.append('m')  # mortar
-			else:
-				# Offset every other row
-				offset = (BRICK_W // 2) if ((y // BRICK_H) % 2 == 1) else 0
-				bx = (x + offset) % BRICK_W
-				# Vertical mortar lines
-				if bx < MORTAR:
-					row.append('m')  # mortar
-				else:
-					# Add highlight on top-left edge of brick
-					local_y = y % BRICK_H
-					if local_y == MORTAR and bx > MORTAR:
-						row.append('h')  # highlight
-					elif bx == MORTAR and local_y > MORTAR:
-						row.append('h')  # highlight
-					else:
-						row.append('b')  # brick
-		pixels.append(''.join(row))
+# 방향별 색상: (글자색, 배경색)
+COLORS = {
+    'N': ('#FF5555', '#330000'), # Red
+    'S': ('#5555FF', '#000033'), # Blue
+    'W': ('#55FF55', '#003300'), # Green
+    'E': ('#FFFF55', '#333300')  # Yellow
+}
 
-	# Write XPM
-	with open(filename, 'w') as f:
-		f.write('/* XPM */\n')
-		f.write(f'static char *{name}[] = {{\n')
-		f.write(f'"64 64 3 1",\n')
-		f.write(f'"b c {brick_color}",\n')
-		f.write(f'"m c {mortar_color}",\n')
-		f.write(f'"h c {highlight_color}",\n')
-		for i, row in enumerate(pixels):
-			comma = ',' if i < len(pixels) - 1 else ''
-			f.write(f'"{row}"{comma}\n')
-		f.write('};\n')
+def generate_xpm(direction, filename):
+    fg, bg = COLORS[direction]
+    letter = LETTERS[direction]
 
-	print(f"  ✅ Generated {filename}")
+    with open(filename, 'w') as f:
+        f.write("/* XPM */\n")
+        f.write(f"static char *{direction}_test[] = {{\n")
+        f.write('"64 64 3 1",\n')
+        f.write(f'"  c {bg}",\n')   # 배경
+        f.write(f'"X c {fg}",\n')   # 글자
+        f.write(f'". c #FFFFFF",\n') # 좌측 상단 마커 (흰색)
 
-if __name__ == '__main__':
-	tex_dir = '/root/workspace/42cursus/cub3D/textures'
-	os.makedirs(tex_dir, exist_ok=True)
+        for y in range(64):
+            row = ""
+            for x in range(64):
+                # 1. 절대 비대칭 마커: 좌측 상단(Top-Left) 8x8 픽셀은 무조건 흰색
+                if x < 8 and y < 8:
+                    row += "."
+                # 2. 정중앙에 방향 알파벳 렌더링 (5x5 폰트를 30x30 사이즈로 스케일업)
+                elif 16 <= x < 46 and 16 <= y < 46:
+                    lx = (x - 16) // 6
+                    ly = (y - 16) // 6
+                    if letter[ly][lx] == '1':
+                        row += "X"
+                    else:
+                        row += " "
+                else:
+                    row += " "
 
-	# North - Blue bricks
-	generate_brick_xpm(f'{tex_dir}/north.xpm', 'north',
-						'#4466AA', '#222233', '#6688CC')
-	# South - Green bricks
-	generate_brick_xpm(f'{tex_dir}/south.xpm', 'south',
-						'#44AA44', '#223322', '#66CC66')
-	# West - Red bricks
-	generate_brick_xpm(f'{tex_dir}/west.xpm', 'west',
-						'#AA4444', '#332222', '#CC6666')
-	# East - Yellow/Orange bricks
-	generate_brick_xpm(f'{tex_dir}/east.xpm', 'east',
-						'#AAAA44', '#333322', '#CCCC66')
+            comma = "," if y < 63 else ""
+            f.write(f'"{row}"{comma}\n')
 
-	print("\n🎨 All 4 textures generated in textures/")
+        f.write("};\n")
+
+if __name__ == "__main__":
+    os.makedirs("textures", exist_ok=True)
+    generate_xpm('N', 'textures/NO_test.xpm')
+    generate_xpm('S', 'textures/SO_test.xpm')
+    generate_xpm('W', 'textures/WE_test.xpm')
+    generate_xpm('E', 'textures/EA_test.xpm')
+    print("✅ 4개의 비대칭 테스트용 XPM 텍스처가 textures/ 폴더에 생성되었습니다!")
