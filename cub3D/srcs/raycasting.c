@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/13 14:03:23 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/13 15:35:51 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,23 @@
 
 void update_player(t_game *game)
 {
-	int moved = 0;
-
 	// 여러 키가 동시에 1이면, 이동 함수가 여러 번 불리면서 대각선으로 부드럽게 이동합니다!
 	if (game->player.key_w)
-	{
 		move_forward(game);
-		moved = 1; // 이거 때문에 norm이 안맞는데 그냥 지워버릴까?
-	}
 	if (game->player.key_s)
-	{
 		move_backward(game);
-		moved = 1;
-	}
 	if (game->player.key_a)
-	{
 		move_left(game);
-		moved = 1;
-	}
 	if (game->player.key_d)
-	{
 		move_right(game);
-		moved = 1;
-	}
 	if (game->player.key_left)
-	{
 		rotate_left(game);
-		moved = 1;
-	}
 	if (game->player.key_right)
-	{
 		rotate_right(game);
-		moved = 1;
-	}
 
 	// 이전에 만들었던 Dirty Flag를 여기서 세팅합니다.
-	if (moved)
+	if (game->player.key_w || game->player.key_s || game->player.key_a
+		|| game->player.key_d || game->player.key_left || game->player.key_right)
 		game->is_moved = 1;
 }
 
