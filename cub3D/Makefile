@@ -6,7 +6,7 @@
 #    By: sisung <sisung@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/19 23:25:02 by sisung            #+#    #+#              #
-#    Updated: 2026/05/06 13:40:30 by sisung           ###   ########.fr        #
+#    Updated: 2026/05/14 16:51:43 by sisung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,14 @@ SRCS		= $(SRCS_DIR)/main.c \
 			$(SRCS_DIR)/cleanup.c
 OBJS		= $(SRCS:.c=.o)
 
-# Test
+# Test ==============
 TEST_DIR	= tests
 TEST_NAME	= test_parsing
 TEST_SRCS	= $(TEST_DIR)/test_parsing.c \
 			$(SRCS_DIR)/parsing.c \
 			$(SRCS_DIR)/parsing_utils.c
 TEST_OBJS	= $(TEST_SRCS:.c=.o)
+# ====================
 
 all: $(NAME)
 
@@ -72,6 +73,7 @@ $(MLX):
 %.o: %.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
+# test ==============
 test: $(LIBFT) $(TEST_OBJS)
 	$(CC) $(CFLAGS) $(TEST_OBJS) $(LIBFT) -lm -o $(TEST_NAME)
 	@echo ""
@@ -79,6 +81,7 @@ test: $(LIBFT) $(TEST_OBJS)
 	@echo ""
 	@./$(TEST_NAME)
 	@$(RM) $(TEST_NAME)
+# ====================
 
 clean:
 	$(RM) $(OBJS) $(TEST_OBJS)
