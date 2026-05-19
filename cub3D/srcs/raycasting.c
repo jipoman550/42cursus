@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/13 15:35:51 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/19 18:02:56 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,19 +178,39 @@ static void	perform_dda(t_ray *ray, t_map *map)
 
 /**
  * @brief 벽까지의 수직 거리와 실제 그려질 높이 계산
- * ?? 만약 이 부분이 없으면 어안 렌즈 보정이 안되서 어안렌즈처럼 보이나?
+ * 어안렌즈 현상을 방지하고, 화면에 그릴 벽의 시작점과 끝점을 구합니다.
  */
 static void	calculate_wall_dims(t_ray *ray)
 {
+	// 1. 수직 거리(Perpendicular Distance) 계산
+	// ray->side == 0은 광선이 X축 격자선(세로선) 즉, 동/서쪽 벽에 부딪혔음을 의미합니다.
 	if (ray->side == 0)
+		// DDA 루프는 벽을 '발견'하는 순간 이미 벽 안쪽으로 1스텝(delta_dist)을
+		// 밟아버린 상태로 종료됩니다. 따라서 마지막에 더했던 1스텝(delta_dist_x)을
+		// 다시 빼주어야 정확히 벽 '표면'까지의 거리가 나옵니다.
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
+	// ray->side == 1은 광선이 Y축 격자선(가로선) 즉, 남/북쪽 벽에 부딪혔음을 의미합니다.
 	else
+		// 위와 동일한 원리로 Y축 방향의 마지막 1스텝을 빼줍니다.
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+	// 2. 모니터에 그릴 벽의 픽셀 높이(line_height) 계산
+	// 거리가 멀면 벽이 작게, 가까우면 크게 보여야 합니다. (반비례 관계)
+	// 모니터 세로 해상도(SCREEN_H)를 수직 거리로 나누어 실제 픽셀 높이를 구합니다.
 	ray->line_height = (int)(SCREEN_H / ray->perp_wall_dist);
+	// 3. 화면에서 벽을 그리기 시작할 Y 좌표(draw_start) 계산
+	// 화면의 정중앙(SCREEN_H / 2)을 기준으로,
+	// 계산된 벽 높이의 절반(-line_height / 2)만큼 위로 올라간 곳이 시작점입니다.
 	ray->draw_start = -ray->line_height / 2 + SCREEN_H / 2;
+	// 만약 벽이 너무 가까워서 화면 천장(0)을 뚫고 올라갔다면,
+	// 그리기 시작점을 화면의 맨 위인 0으로 고정(Clamping)하여 화면 밖 메모리 침범을 막습니다.
 	if (ray->draw_start < 0)
 		ray->draw_start = 0;
+	// 4. 화면에서 벽 그리기를 끝낼 Y 좌표(draw_end) 계산
+	// 화면의 정중앙(SCREEN_H / 2)을 기준으로,
+	// 계산된 벽 높이의 절반(line_height / 2)만큼 아래로 내려간 곳이 끝점입니다.
 	ray->draw_end = ray->line_height / 2 + SCREEN_H / 2;
+	// 만약 벽이 너무 가까워서 화면 바닥(SCREEN_H)을 뚫고 내려갔다면,
+	// 그리기 끝점을 화면의 맨 아래인 SCREEN_H - 1로 고정하여 에러를 막습니다.
 	if (ray->draw_end >= SCREEN_H)
 		ray->draw_end = SCREEN_H - 1;
 }
@@ -281,14 +301,25 @@ int	render_frame(t_game *game)
 			calculate_wall_dims(&ray);
 
 			// 1. 텍스처 방향 및 충돌 지점 계산
+			// 광선이 부딪힌 면(동/서/남/북)을 판별하여 4개의 텍스처 중 어느 이미지를 쓸지 고릅니다.
 			tex_idx = get_texture_idx(&ray);
+			// ray.side == 0은 광선이 X축 모눈종이 선(동쪽 또는 서쪽을 바라보는 벽)에 맞았음을 의미합니다.
 			if (ray.side == 0)
+			// 🚨 핵심: X축 벽에 맞았다는 건, 벽이 화면상에서 세로로 길게 서 있다는 뜻입니다.
+			// 벽 표면의 어디에 맞았는지 알려면 광선의 정확한 'Y좌표' 도착점을 구해야 합니다!
+			// 공식: 도착점 = 시작점(pos_y) + (이동한 거리(perp_wall_dist) * Y축 방향(ray_dir_y))
 				wall_x = game->player.pos_y + ray.perp_wall_dist * ray.ray_dir_y;
+			// ray.side == 1은 광선이 Y축 모눈종이 선(남쪽 또는 북쪽을 바라보는 벽)에 맞았음을 의미합니다.
 			else
+				// 반대로 Y축 벽에 맞았으므로, 벽 표면의 위치를 알기 위해 정확한 'X좌표' 도착점을 구합니다.
 				wall_x = game->player.pos_x + ray.perp_wall_dist * ray.ray_dir_x;
+			// 여기까지 오면 wall_x에는 5.37, 12.81 같은 실수 형태의 절대 좌표가 들어있습니다.
+			// 우리는 "몇 번째 벽돌이냐(5번, 12번)"가 궁금한 게 아니라 "벽돌 표면의 몇 % 지점이냐(0.37, 0.81)"가 궁금합니다.
+			// 따라서 자신의 내림값(floor)을 빼주어 정수 부분을 날려버리고 순수한 소수점(0.0 ~ 0.999...)만 남깁니다.
 			wall_x -= floor(wall_x);
 
 			/* 🚨 부동소수점 오차로 인한 텍스처 찢어짐(틈새) 방지 안전장치 */
+			// 이거 필요없는거 같은데...?
 			if (tex_x >= TEX_WIDTH)
 				tex_x = TEX_WIDTH - 1;
 			if (tex_x < 0)
