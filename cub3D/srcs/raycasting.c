@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/19 18:02:56 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/20 12:40:16 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,23 +248,36 @@ static int	get_texture_idx(t_ray *ray)
  */
 static void	draw_wall_line(t_game *game, int x, t_ray *ray, int tex_idx, int tex_x)
 {
-	double	step;
-	double	tex_pos;
-	int		y;
-	int		tex_y;
-	int		color;
+	double	step;		// 모니터 1픽셀을 칠할 때, 텍스처 이미지를 몇 픽셀 건너뛸지(보폭)
+	double	tex_pos;	// 원본 텍스처 이미지 상의 정확한 Y 실수 좌표
+	int		y;			// 모니터의 Y 좌표 (화면 위에서 아래로 스캔)
+	int		tex_y;		// tex_pos를 정수로 바꾼 진짜 텍스처 Y 인덱스 번호
+	int		color;		// 텍스처에서 뜯어온 픽셀 1개의 색상값
 
+	// 1. 텍스처 팽창/압축 보폭(step) 계산
+	// 예: 텍스처(64)를 모니터(128)에 늘려 그릴 때 -> step = 0.5 (텍스처를 0.5씩 천천히 읽음)
+	// 예: 텍스처(64)를 모니터(32)에 줄여 그릴 때 -> step = 2.0 (텍스처를 2칸씩 띄엄띄엄 읽음)
 	step = 1.0 * TEX_HEIGHT / ray->line_height;
+	// 2. 텍스처 읽기 시작점(tex_pos) 계산 (벽이 화면 위로 뚫고 나갔을 때를 대비한 보정)
+	// 만약 벽이 너무 가까워서 모니터 밖으로 잘렸다면, 텍스처의 0번(맨 위)부터 읽으면 안 됩니다!
+	// 잘려나간 만큼 텍스처도 중간부터 읽기 시작하도록 시작점을 0보다 큰 값으로 당겨줍니다.
 	tex_pos = (ray->draw_start - SCREEN_H / 2 + ray->line_height / 2) * step;
 	y = ray->draw_start;
 	while (y < ray->draw_end)
 	{
+		// 3. 텍스처 Y 인덱스 추출 및 오버플로우 방지 (비트 연산 마법)
+		// (int)로 소수점을 버리고 정수로 만듭니다.
+		// & (TEX_HEIGHT - 1) 은 비트 마스킹 기법으로, tex_y가 64(TEX_HEIGHT)를 넘어갈 경우
+		// 강제로 63 이하로 묶어버려 Out of Bounds(Segfault)를 방지하는 극한의 최적화입니다.
 		tex_y = (int)tex_pos & (TEX_HEIGHT - 1);
+		// 다음 모니터 픽셀을 위해 텍스처 좌표도 보폭(step)만큼 전진
 		tex_pos += step;
-		// 텍스처 메모리에서 색상 읽기
+		// 4. MLX 이미지 메모리에서 픽셀 색상값 직접 뜯어오기
+		// 1차원 배열로 된 이미지 메모리에서 2차원(x, y) 좌표를 찾는 공식: (y * 너비) + x
 		color = *(int *)(game->textures[tex_idx].addr +
 					(tex_y * game->textures[tex_idx].line_len +
 					tex_x * (game->textures[tex_idx].bpp / 8)));
+		// 5. 찾아낸 색상을 내 모니터 이미지 버퍼에 그리기
 		put_pixel(&game->img, x, y, color);
 		y++;
 	}
@@ -289,6 +302,8 @@ int	render_frame(t_game *game)
 		return (0);
 	draw_background(game);
 	x = 0;
+	ft_memset(&ray, 0, sizeof(t_ray));
+	tex_x = 0;
 	while (x < SCREEN_W)
 	{
 		init_ray(x, &ray, &game->player);
@@ -305,9 +320,9 @@ int	render_frame(t_game *game)
 			tex_idx = get_texture_idx(&ray);
 			// ray.side == 0은 광선이 X축 모눈종이 선(동쪽 또는 서쪽을 바라보는 벽)에 맞았음을 의미합니다.
 			if (ray.side == 0)
-			// 🚨 핵심: X축 벽에 맞았다는 건, 벽이 화면상에서 세로로 길게 서 있다는 뜻입니다.
-			// 벽 표면의 어디에 맞았는지 알려면 광선의 정확한 'Y좌표' 도착점을 구해야 합니다!
-			// 공식: 도착점 = 시작점(pos_y) + (이동한 거리(perp_wall_dist) * Y축 방향(ray_dir_y))
+				// 🚨 핵심: X축 벽에 맞았다는 건, 벽이 화면상에서 세로로 길게 서 있다는 뜻입니다.
+				// 벽 표면의 어디에 맞았는지 알려면 광선의 정확한 'Y좌표' 도착점을 구해야 합니다!
+				// 공식: 도착점 = 시작점(pos_y) + (이동한 거리(perp_wall_dist) * Y축 방향(ray_dir_y))
 				wall_x = game->player.pos_y + ray.perp_wall_dist * ray.ray_dir_y;
 			// ray.side == 1은 광선이 Y축 모눈종이 선(남쪽 또는 북쪽을 바라보는 벽)에 맞았음을 의미합니다.
 			else
@@ -326,8 +341,22 @@ int	render_frame(t_game *game)
 				tex_x = 0;
 
 			// 2. 텍스처 x좌표 계산
-			tex_x = (int)(wall_x * (double)TEX_WIDTH); // (int), (double) 이런건 왜 해야함?
+			// wall_x는 앞서 계산한 0.0 ~ 0.999 사이의 벽 표면 타격 '비율'입니다.
+			// (double)TEX_WIDTH: TEX_WIDTH(예: 64)라는 정수 매크로를 실수(64.0)로 강제 변환하여,
+			// wall_x(실수)와의 곱셈에서 발생할 수 있는 자료형 충돌을 막고 정밀하게 계산합니다.
+			// 결과값(예: 0.35 * 64.0 = 22.4)은 텍스처 이미지 상의 정확한 실수 픽셀 위치가 됩니다.
+			// (int): 컴퓨터 메모리(배열)에는 '22.4번째 인덱스'라는 것이 존재할 수 없으므로,
+			// 1소수점을 가차 없이 버리고 '22'라는 정확한 정수 인덱스 번호로 만들어 줍니다.
+			tex_x = (int)(wall_x * (double)TEX_WIDTH);
+			// 🚨 텍스처 좌우 반전(Mirroring) 교정 조건문
+			// 맵의 글로벌 좌표계(커지는 방향)와 플레이어의 시선이 엇갈려 텍스처가 뒤집혀 보이는 2가지 케이스입니다.
+			// 1) ray.side == 0 (동/서쪽 벽)인데 ray_dir_x < 0 (서쪽을 바라볼 때)
+			// 2) ray.side == 1 (남/북쪽 벽)인데 ray_dir_y > 0 (남쪽을 바라볼 때)
 			if ((ray.side == 0 && ray.ray_dir_x < 0) || (ray.side == 1 && ray.ray_dir_y > 0))
+				// 텍스처가 거울처럼 뒤집혀 있다면, 우리가 가져올 픽셀 인덱스도 강제로 반대로 뒤집어줍니다.
+				// 예: TEX_WIDTH가 64이고 계산된 tex_x가 0(맨 왼쪽)이라면?
+				// 64 - 0 - 1 = 63 (맨 오른쪽 인덱스로 변경!)
+				// 끝에 -1을 해주는 이유는 배열의 인덱스가 1~64가 아니라 0~63이기 때문입니다.
 				tex_x = TEX_WIDTH - tex_x - 1;
 
 			// 3. 세로선 그리기
@@ -335,7 +364,6 @@ int	render_frame(t_game *game)
 		}
 		/* 만약 ray.hit == -1 이라면? 아무것도 안 그립니다.
 		   즉, 이전에 draw_background에서 칠해둔 지평선(바닥/천장)이 그대로 화면에 남습니다! */
-		// ??근데 이렇게 되면 벽일 뚫고 나갔을 때 외부 벽이 안보이지 않나?
 		x++;
 	}
 	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
