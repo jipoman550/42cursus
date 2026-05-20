@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:42:55 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/07 17:17:37 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/20 16:50:11 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,7 +341,9 @@ static int	validate_map_and_player(t_game *game)
 			{
 				if (y == 0 || y == game->map.height - 1 || x == 0 || x == game->map.width - 1 ||
 					game->map.grid[y-1][x] == ' ' || game->map.grid[y+1][x] == ' ' ||
-					game->map.grid[y][x-1] == ' ' || game->map.grid[y][x+1] == ' ')
+					game->map.grid[y][x-1] == ' ' || game->map.grid[y][x+1] == ' ' ||
+					game->map.grid[y-1][x-1] == ' ' || game->map.grid[y-1][x+1] == ' ' ||	// 상단 대각선
+					game->map.grid[y+1][x-1] == ' ' || game->map.grid[y+1][x+1] == ' ')		// 하단 대각선
 					return (print_error_and_return(ERR_WALL));
 			}
 			x++;

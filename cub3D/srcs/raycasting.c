@@ -6,7 +6,7 @@
 /*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 10:43:03 by sisung            #+#    #+#             */
-/*   Updated: 2026/05/20 12:40:16 by sisung           ###   ########.fr       */
+/*   Updated: 2026/05/20 17:15:09 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,7 +212,7 @@ static void	calculate_wall_dims(t_ray *ray)
 	// 만약 벽이 너무 가까워서 화면 바닥(SCREEN_H)을 뚫고 내려갔다면,
 	// 그리기 끝점을 화면의 맨 아래인 SCREEN_H - 1로 고정하여 에러를 막습니다.
 	if (ray->draw_end >= SCREEN_H)
-		ray->draw_end = SCREEN_H - 1;
+		ray->draw_end = SCREEN_H;
 }
 
 /**
