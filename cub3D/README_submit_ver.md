@@ -128,7 +128,7 @@ The core of the program resides in `render_frame()` (`raycasting.c`), which is e
 5. **`calculate_wall_dims()`**: Computes `perp_wall_dist` (perpendicular distance) to avoid fisheye distortion, and derives the `draw_start` and `draw_end` vertical bounds for the wall on the screen.
 6. **`draw_wall_line()`**: Maps the correct texture based on the hit side (North, South, East, West), calculates the exact `tex_x` column, reads the pixel colors from the loaded texture buffer, and draws the vertical line into the main image buffer.
 
-### 5. Function Call Graph & Prototypes
+### 5. Function Call Graph & Prototypes =====이거 바꿔야됨.
 Below is the execution flow of the primary functions, outlining how they are called and their signatures:
 
 ```text
