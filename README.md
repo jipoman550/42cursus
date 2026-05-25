@@ -22,6 +22,13 @@
 ## Circle 3
 - [exam03](./exam03)
 - [philosopher](./philosopher) : 식사하는 철학자 문제 (스레드 및 프로세스 동기화)
+- [minishell](./minishell) : 간이 셸 구현 (파싱, 실행, 리다이렉션, 파이프)
+
+## Circle 4
+- [exam04](./exam04)
+- [cub3D](./cub3D) : 레이캐스팅 기반 3D 미로 렌더링
+- [cpp](./cpp) : C++ 모듈
+
 ---
 
 ## PDF
