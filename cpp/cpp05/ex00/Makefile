@@ -8,7 +8,9 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # 소스 파일 및 오브젝트 파일
-SRCS = Bureaucrat.cpp main.cpp
+SRCS = Bureaucrat.cpp \
+	   main.cpp
+
 OBJS = $(SRCS:.cpp=.o)
 
 # 기본 타겟
