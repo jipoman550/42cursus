@@ -90,7 +90,11 @@ int main() {
 		std::cout << "Assignment After Result: " << std::endl << assigned << std::endl; // Signed 상태여야 함
 	} catch (const std::exception& e) {
 		std::cerr << "Exception: " << e.what() << std::endl;
-}
+	}
+
+	std::cout << "\n=================================================" << std::endl;
+	std::cout << "                 All Tests Done                  " << std::endl;
+	std::cout << "=================================================" << std::endl;
 
 	return 0;
 }
