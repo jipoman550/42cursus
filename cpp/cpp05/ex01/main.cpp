@@ -33,6 +33,9 @@ int main() {
 		// 서명 성공 이후의 객체 상태 출력 (Status가 Signed로 바뀌어 있어야 함)
 		std::cout << std::endl << "After signing attempt:" << std::endl;
 		std::cout << importantDoc << std::endl;
+
+		// 재서명 시도
+		boss.signForm(importantDoc);
 	} catch (const std::exception& e) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}
@@ -49,10 +52,45 @@ int main() {
 
 		// 150(관료) > 100(서류) 이므로 서명에 실패하고, catch 블록에서 에러 메시지를 출력함
 		intern.signForm(regularDoc);
+		std::cout << regularDoc << std::endl;
 	} catch (const std::exception& e) {
 		std::cerr << "Exception caught: " << e.what() << std::endl;
 	}
 	std::cout << std::endl;
+
+	// [Test 4] 경계값 테스트: 등급이 일치할 때
+	std::cout << "[Test 4] Boundary Grade Match Test" << std::endl;
+	try {
+		Bureaucrat middle("Middle", 50);
+		Form normalDoc("Normal Doc", 50, 50);
+		std::cout << middle << std::endl;
+		middle.signForm(normalDoc); // 50 == 50 이므로 성공해야 함
+		std::cout << normalDoc << std::endl;
+	} catch (const std::exception& e) {
+		std::cerr << "Exception: " << e.what() << std::endl;
+	}
+	std::cout << std::endl;
+
+	// [Test 5] 복사 및 대입 시 서명 상태 유지 테스트
+	std::cout << "[Test 5] Copy and Assignment State Test" << std::endl;
+	try {
+		Bureaucrat boss("Boss", 1);
+		Form original("Original", 10, 10);
+		boss.signForm(original); // 서명 완료
+		std::cout << "original Result: " << std::endl << original << std::endl; // Signed 상태여야 함
+		Form copy(original); // 복사 생성
+		std::cout << "Copy Result: " << std::endl << copy << std::endl; // Signed 상태여야 함
+
+		std::cout << std::endl;
+
+		Form assigned("Assigned", 100, 100);
+		std::cout << "Assignment Before Result: " << std::endl << assigned << std::endl; // Unsigned 상태여야 함
+
+		assigned = original; // 대입 연산
+		std::cout << "Assignment After Result: " << std::endl << assigned << std::endl; // Signed 상태여야 함
+	} catch (const std::exception& e) {
+		std::cerr << "Exception: " << e.what() << std::endl;
+}
 
 	return 0;
 }
