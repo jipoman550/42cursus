@@ -121,17 +121,18 @@ void ScalarConverter::convert(const std::string& literal) {
 		errno = 0;
 		long l_val = std::strtol(literal.c_str(), &endptr, 10);
 
-		if (errno == ERANGE || l_val < std::numeric_limits<int>::min() || l_val > std::numeric_limits<int>::max())
+		// long 자체의 범위를 넘어버린 거 거대한 숫자인 경우 처리
+		if (errno == ERANGE)
 		{
 			// std::numeric_limits를 사용해 int 범위 오버플로우 검증
-			isImpossible = true;
+			isImpossible = true; // 이 경우는 모든 타입 불가능(or 실수만 가능하게 정밀 제어)
 		}
 		else
 		{
 			i_val = static_cast<int>(l_val);
-			c = static_cast<char>(i_val);
-			f = static_cast<float>(i_val);
-			d = static_cast<double>(i_val);
+			c	  = static_cast<char>(l_val);
+			f	  = static_cast<float>(l_val);
+			d	  = static_cast<double>(l_val);
 		}
 	}
 	else if (type == FLOAT)
@@ -147,10 +148,10 @@ void ScalarConverter::convert(const std::string& literal) {
 		}
 		else
 		{
-			f = static_cast<float>(temp);
-			c = static_cast<char>(f);
+			f	  = static_cast<float>(temp);
+			c	  = static_cast<char>(f);
 			i_val = static_cast<int>(f);
-			d = static_cast<double>(f);
+			d	  = static_cast<double>(f);
 		}
 	}
 	else if (type == DOUBLE)
@@ -165,9 +166,9 @@ void ScalarConverter::convert(const std::string& literal) {
 		}
 		else
 		{
-			c = static_cast<char>(d);
+			c	  = static_cast<char>(d);
 			i_val = static_cast<int>(d);
-			f = static_cast<float>(d);
+			f	  = static_cast<float>(d);
 		}
 	}
 	else if (type == INVALID)
@@ -185,7 +186,24 @@ void ScalarConverter::convert(const std::string& literal) {
 	else
 	{
 		// char 오버플로우 체크를 위해 변환 전 타입 기반 double 값을 참조값으로 사용
-		double ref = (type == DOUBLE) ? d : (type == FLOAT ? static_cast<double>(f) : (type == INT ? static_cast<double>(i_val) : static_cast<double>(c)));
+		double ref;
+		if (type == DOUBLE)
+		{
+			ref = d;
+		}
+		else if (type == FLOAT)
+		{
+			ref = static_cast<double>(f);
+		}
+		else if (type == INT)
+		{
+			ref = static_cast<double>(i_val);
+		}
+		else
+		{ // type == CHAR 인 경우
+			ref = static_cast<double>(c);
+		}
+
 		if (ref < std::numeric_limits<char>::min() || ref > std::numeric_limits<char>::max())
 		{
 			std::cout << "impossible\n";
@@ -208,7 +226,25 @@ void ScalarConverter::convert(const std::string& literal) {
 	}
 	else
 	{
-		double ref = (type == DOUBLE) ? d : (type == FLOAT ? static_cast<double>(f) : (type == CHAR ? static_cast<double>(c) : static_cast<double>(i_val)));
+		// int 오버플로우 체크를 위해 원본 데이터 타입에 맞는 값을 double ref에 저장
+		double ref;
+		if (type == DOUBLE)
+		{
+			ref = d;
+		}
+		else if (type == FLOAT)
+		{
+			ref = static_cast<double>(f);
+		}
+		else if (type == INT)
+		{
+			ref = d;
+		}
+		else
+		{ // type == CHAR 인 경우
+			ref = static_cast<double>(c);
+		}
+
 		if (ref < std::numeric_limits<int>::min() || ref > std::numeric_limits<int>::max())
 		{
 			std::cout << "impossible\n";
