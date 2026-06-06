@@ -95,7 +95,7 @@ static bool handlePseudoLiteral(const std::string& literal)
 }
 
 // 도우미 2: 정수/문자 오버플로우 검증을 위해 원본 대조군 값을 안전하게 double로 획득
-static double getOriginalValueAsDouble(e_type type, char c, int i_val, float f, double d)
+static double getOriginalValueAsDouble(e_type type, char c, float f, double d)
 {
 	if (type == DOUBLE)
 	{
@@ -268,7 +268,7 @@ void ScalarConverter::convert(const std::string& literal)
 	}
 
 	// [단계 3] 스칼라 타입 결과 출력
-	double ref = getOriginalValueAsDouble(type, c, i_val, f, d);
+	double ref = getOriginalValueAsDouble(type, c, f, d);
 
 	printChar(isImpossible, ref, c);
 	printInt(isImpossible, ref, i_val);
