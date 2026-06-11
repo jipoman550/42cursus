@@ -8,7 +8,7 @@
  */
 class Base {
 public:
-	virtual ~Base() {}
+	virtual ~Base() {} // virtual
 };
 
 #endif
