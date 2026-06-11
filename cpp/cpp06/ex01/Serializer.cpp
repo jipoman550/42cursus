@@ -6,18 +6,18 @@ Serializer::Serializer() {}
 Serializer::Serializer(const Serializer& other) { (void)other; }
 Serializer& Serializer::operator=(const Serializer& other) {
 	(void)other;
-	return *this;
+	return (*this);
 }
 Serializer::~Serializer() {}
 
 // 직렬화: Data 객체의 포인터를 정수형으로 변환
 uintptr_t Serializer::serialize(Data* ptr) {
 	// reinterpret_cast를 사용하여 포인터를 정수형(uintptr_t)으로 강제 변환
-	return reinterpret_cast<uintptr_t>(ptr);
+	return (reinterpret_cast<uintptr_t>(ptr));
 }
 
 // 역직렬화: 정수형을 다시 Data 객체의 포인터로 변환
 Data* Serializer::deserialize(uintptr_t raw) {
 	// reinterpret_cast를 사용하여 정수형(uintptr_t)을 다시 포인터 타입으로 강제 변환
-	return reinterpret_cast<Data*>(raw);
+	return (reinterpret_cast<Data*>(raw));
 }

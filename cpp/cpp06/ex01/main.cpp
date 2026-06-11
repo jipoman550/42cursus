@@ -29,9 +29,12 @@ int main() {
 
 	// 5. 검증: 원본 주소와 되돌린 주소 비교 (시각적 피드백 제공)
 	std::cout << "========== [ VALIDATION ] =============" << std::endl;
-	if (&myData == deserializedPtr) {
+	if (&myData == deserializedPtr)
+	{
 		std::cout << "Result: [SUCCESS] The addresses match perfectly!" << std::endl;
-	} else {
+	}
+	else
+	{
 		std::cout << "Result: [FAIL] The addresses do not match." << std::endl;
 	}
 
@@ -40,9 +43,14 @@ int main() {
 	std::cout << "========== [ DATA INTEGRITY ] =========" << std::endl;
 	std::cout << "Deserialized ID   : " << deserializedPtr->id << std::endl;
 	std::cout << "Deserialized Name : " << deserializedPtr->name << std::endl;
-	if (myData.id == deserializedPtr->id && myData.name == deserializedPtr->name) {
+	if (myData.id == deserializedPtr->id && myData.name == deserializedPtr->name)
+	{
 		std::cout << "Result: [SUCCESS] Data remained intact!" << std::endl;
 	}
+	else
+	{
+		std::cout << "Result: [FAIL] Data has been corrupted!" << std::endl;
+	}
 
-	return 0;
+	return (0);
 }
