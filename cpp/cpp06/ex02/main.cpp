@@ -143,5 +143,10 @@ int main()
 	std::cout << sizeof(B) << std::endl;
 	std::cout << sizeof(C) << std::endl;
 
+	Base* pureBase = new Base();
+	identify(*pureBase);
+	delete pureBase;
+	std::cout << std::endl;
+
 	return (0);
 }
