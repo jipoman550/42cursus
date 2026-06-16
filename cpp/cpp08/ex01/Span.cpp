@@ -53,6 +53,10 @@ unsigned int Span::shortestSpan()
 	for (size_t i = 1; i < sortedVec.size(); ++i)
 	{
 		unsigned int span = static_cast<unsigned int>(sortedVec[i]) - static_cast<unsigned int>(sortedVec[i - 1]);
+		if (span == 0)
+		{
+			return (0);
+		}
 		if (span < minSpan)
 		{
 			minSpan = span;
