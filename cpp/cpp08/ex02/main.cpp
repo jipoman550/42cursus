@@ -89,7 +89,13 @@ int main()
 		// const_iterator 상수 반복자 순회 테스트
 		std::cout << "\n[ const_iterator ]" << std::endl;
 		const MutantStack<int> const_mstack = mstack;
-		for (MutantStack<int>::const_iterator cit = const_mstack.begin(); cit != const_mstack.end(); ++cit)
+
+		// 1. for문 밖에서 미리 선언 및 초기화
+		MutantStack<int>::const_iterator cit = const_mstack.begin();
+		MutantStack<int>::const_iterator cite = const_mstack.end();
+
+		// 2. 초기식 자리를 비워두고 세미콜론만 배치
+		for (; cit != cite; ++cit)
 		{
 			std::cout << *cit << " "; // 10, 20, 30, 40, 50
 		}
