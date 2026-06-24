@@ -240,6 +240,13 @@ void PmergeMe::fordJohnsonSort(std::vector<int>& vec)
 		}
 	}
 
+	// 홀수 번째 원소(straggler)가 존재하면 펜드 체인에 추가하여 Jacobsthal 정렬 과정에서 함께 처리
+	// straggler를 야콥스탈 수열에 넣는 경우
+	// if (straggler != -1)
+	// {
+	// 	pend_chain.push_back(straggler);
+	// }
+
 	// 5. 펜드 체인을 메인 체인에 삽입
 	// 첫 번째 펜드 원소는 항상 메인 체인의 첫 번째 원소보다 작거나 같으므로 맨 앞에 삽입
 	int inserted_count = 0;
@@ -352,6 +359,13 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 			}
 		}
 	}
+
+	// 홀수 번째 원소(straggler)가 존재하면 펜드 체인에 추가하여 Jacobsthal 정렬 과정에서 함께 처리
+	// straggler를 야콥스탈 수열에 넣는 경우
+	// if (straggler != -1)
+	// {
+	// 	pend_chain.push_back(straggler);
+	// }
 
 	int inserted_count = 0;
 	if (!pend_chain.empty())
