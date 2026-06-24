@@ -68,6 +68,9 @@ void PmergeMe::process(int argc, char **argv)
 		deq.push_back(static_cast<int>(val));
 	}
 
+	// 검증용 복사본 저장
+	std::vector<int> original_vec(vec);
+
 	// 2. 정렬 전 데이터 출력
 	std::cout << "Before: ";
 	for (size_t i = 0; i < vec.size(); ++i)
@@ -99,6 +102,23 @@ void PmergeMe::process(int argc, char **argv)
 
 	std::cout << "Time to process a range of " << vec.size() << " elements with std::vector : " << vec_time << " us" << std::endl;
 	std::cout << "Time to process a range of " << deq.size() << " elements with std::deque  : " << deq_time << " us" << std::endl;
+
+	// 검증 수행
+	std::sort(original_vec.begin(), original_vec.end());
+	bool is_vec_sorted = (vec == original_vec);
+	std::vector<int> check_deq(deq.begin(), deq.end());
+	bool is_deq_sorted = (check_deq == original_vec);
+
+	if (!is_vec_sorted || !is_deq_sorted)
+	{
+		std::cerr << "Error: Sorting verification failed!" << std::endl;
+		if (!is_vec_sorted) std::cerr << "  - std::vector is not sorted correctly!" << std::endl;
+		if (!is_deq_sorted) std::cerr << "  - std::deque is not sorted correctly!" << std::endl;
+	}
+	else
+	{
+		std::cout << "[Verification] Sorting verification: OK (Both std::vector and std::deque match std::sort)" << std::endl;
+	}
 }
 
 // --- Jacobsthal Number Generation ---
@@ -120,13 +140,13 @@ void PmergeMe::generateJacobsthal(std::vector<int>& jacob, int n)
 	while (true)
 	{
 		int next = last + 2 * before_last;
+		jacob.push_back(next);
 		if (next >= n)
 		{
 			break;
 		}
 		before_last = last;
 		last = next;
-		jacob.push_back(next);
 	}
 }
 
@@ -147,13 +167,13 @@ void PmergeMe::generateJacobsthal(std::deque<int>& jacob, int n)
 	while (true)
 	{
 		int next = last + 2 * before_last;
+		jacob.push_back(next);
 		if (next >= n)
 		{
 			break ;
 		}
 		before_last = last;
 		last = next;
-		jacob.push_back(next);
 	}
 }
 
@@ -222,9 +242,11 @@ void PmergeMe::fordJohnsonSort(std::vector<int>& vec)
 
 	// 5. 펜드 체인을 메인 체인에 삽입
 	// 첫 번째 펜드 원소는 항상 메인 체인의 첫 번째 원소보다 작거나 같으므로 맨 앞에 삽입
+	int inserted_count = 0;
 	if (!pend_chain.empty())
 	{
 		main_chain.insert(main_chain.begin(), pend_chain[0]);
+		inserted_count = 1;
 	}
 
 	// Jacobsthal 수열을 이용한 최적 삽입
@@ -243,21 +265,25 @@ void PmergeMe::fordJohnsonSort(std::vector<int>& vec)
 				int value_to_insert = pend_chain[j - 1];
 				// 삽입할 위치를 이진 탐색(lower_bound)으로 찾음
 				// 탐색 범위: 현재까지 정렬된 메인 체인 부분 + 현재 삽입할 그룹의 원소들
-				size_t search_range = (j - 1) + (i - 1);
+				size_t search_range = (j - 1) + inserted_count;
 				std::vector<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
 				std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
 				main_chain.insert(pos, value_to_insert);
+				inserted_count++;
 			}
 		}
 		last_jacob_k = k;
 	}
 
-	// 남은 펜드 원소들을 순차적으로 삽입
+	// 남은 펜드 원소들을 순차적으로 삽입 (백업)
 	for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
 	{
 		int value_to_insert = pend_chain[i];
-		std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), value_to_insert);
+		size_t search_range = i + inserted_count;
+		std::vector<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
+		std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
 		main_chain.insert(pos, value_to_insert);
+		inserted_count++;
 	}
 
 	// 6. Straggler 삽입
@@ -327,9 +353,11 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 		}
 	}
 
+	int inserted_count = 0;
 	if (!pend_chain.empty())
 	{
 		main_chain.insert(main_chain.begin(), pend_chain[0]);
+		inserted_count = 1;
 	}
 
 	std::deque<int> jacob_indices;
@@ -344,10 +372,11 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 			if (j - 1 < pend_chain.size())
 			{
 				int value_to_insert = pend_chain[j - 1];
-				size_t search_range = (j - 1) + (i - 1);
+				size_t search_range = (j - 1) + inserted_count;
 				std::deque<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
 				std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
 				main_chain.insert(pos, value_to_insert);
+				inserted_count++;
 			}
 		}
 		last_jacob_k = k;
@@ -356,8 +385,11 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 	for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
 	{
 		int value_to_insert = pend_chain[i];
-		std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), main_chain.end(), value_to_insert);
+		size_t search_range = i + inserted_count;
+		std::deque<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
+		std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
 		main_chain.insert(pos, value_to_insert);
+		inserted_count++;
 	}
 
 	if (straggler != -1)
