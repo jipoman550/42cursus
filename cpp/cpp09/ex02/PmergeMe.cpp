@@ -284,15 +284,15 @@ void PmergeMe::fordJohnsonSort(std::vector<int>& vec)
 	}
 
 	// 남은 펜드 원소들을 순차적으로 삽입 (백업)
-	for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
-	{
-		int value_to_insert = pend_chain[i];
-		size_t search_range = i + inserted_count;
-		std::vector<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
-		std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
-		main_chain.insert(pos, value_to_insert);
-		inserted_count++;
-	}
+	// for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
+	// {
+	// 	int value_to_insert = pend_chain[i];
+	// 	size_t search_range = i + inserted_count;
+	// 	std::vector<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
+	// 	std::vector<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
+	// 	main_chain.insert(pos, value_to_insert);
+	// 	inserted_count++;
+	// }
 
 	// 6. Straggler 삽입
 	//if (straggler != -1)
@@ -379,7 +379,7 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 	generateJacobsthal(jacob_indices, pend_chain.size());
 
 	size_t last_jacob_k = 1;
-	for (size_t i = 2; i < jacob_indices.size(); ++i)
+	for (size_t i = 3; i < jacob_indices.size(); ++i)
 	{
 		size_t k = jacob_indices[i];
 		for (size_t j = k; j > last_jacob_k; --j)
@@ -397,15 +397,15 @@ void PmergeMe::fordJohnsonSort(std::deque<int>& deq) {
 		last_jacob_k = k;
 	}
 
-	for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
-	{
-		int value_to_insert = pend_chain[i];
-		size_t search_range = i + inserted_count;
-		std::deque<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
-		std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
-		main_chain.insert(pos, value_to_insert);
-		inserted_count++;
-	}
+	// for (size_t i = last_jacob_k; i < pend_chain.size(); ++i)
+	// {
+	// 	int value_to_insert = pend_chain[i];
+	// 	size_t search_range = i + inserted_count;
+	// 	std::deque<int>::iterator end_it = main_chain.begin() + std::min(search_range, main_chain.size());
+	// 	std::deque<int>::iterator pos = std::lower_bound(main_chain.begin(), end_it, value_to_insert);
+	// 	main_chain.insert(pos, value_to_insert);
+	// 	inserted_count++;
+	// }
 
 	//if (straggler != -1)
 	//{
