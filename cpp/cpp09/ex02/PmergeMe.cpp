@@ -47,11 +47,8 @@ const char* PmergeMe::ErrorException::what() const throw()
  */
 void PmergeMe::process(int argc, char **argv)
 {
-	// 1. 데이터 파싱 및 컨테이너 채우기
-	std::vector<int> vec;
-	std::deque<int> deq;
-
-	// 인자들을 순회하며 파싱 (실행 파일 이름 제외)
+	// 1. 공통 파싱 및 유효성 검사 (순수 문자열 파싱 작업)
+	std::vector<int> raw_data;
 	for (int i = 1; i < argc; ++i)
 	{
 		char* endptr;
@@ -63,24 +60,21 @@ void PmergeMe::process(int argc, char **argv)
 		{
 			throw ErrorException();
 		}
-		// 유효한 양의 정수만 각 컨테이너에 추가
-		vec.push_back(static_cast<int>(val));
-		deq.push_back(static_cast<int>(val));
+		raw_data.push_back(static_cast<int>(val));
 	}
-
-	// 검증용 복사본 저장
-	std::vector<int> original_vec(vec);
 
 	// 2. 정렬 전 데이터 출력
 	std::cout << "Before: ";
-	for (size_t i = 0; i < vec.size(); ++i)
+	for (size_t i = 0; i < raw_data.size(); ++i)
 	{
-		std::cout << vec[i] << (i == vec.size() - 1 ? "" : " ");
+		std::cout << raw_data[i] << (i == raw_data.size() - 1 ? "" : " ");
 	}
 	std::cout << std::endl;
 
 	// 3. std::vector 정렬 및 시간 측정
 	struct timeval start, end;
+	// Timer 시작 후 벡터 메모리 할당 및 데이터 복사 진행
+	std::vector<int> vec(raw_data.begin(), raw_data.end());
 	gettimeofday(&start, NULL);
 	fordJohnsonSort(vec);
 	gettimeofday(&end, NULL);
@@ -88,6 +82,8 @@ void PmergeMe::process(int argc, char **argv)
 
 	// 4. std::deque 정렬 및 시간 측정
 	gettimeofday(&start, NULL);
+	// Timer 시작 후 덱 메모리 할당(청크 생성) 및 데이터 복사 진행
+	std::deque<int> deq(raw_data.begin(), raw_data.end());
 	fordJohnsonSort(deq);
 	gettimeofday(&end, NULL);
 	long deq_time = (end.tv_sec - start.tv_sec) * 1000000L + (end.tv_usec - start.tv_usec);
@@ -104,8 +100,13 @@ void PmergeMe::process(int argc, char **argv)
 	std::cout << "Time to process a range of " << deq.size() << " elements with std::deque  : " << deq_time << " us" << std::endl;
 
 	// 검증 수행
+
+	// 검증용 복사본 저장
+	std::vector<int> original_vec = raw_data;
+
 	std::sort(original_vec.begin(), original_vec.end());
 	bool is_vec_sorted = (vec == original_vec);
+
 	std::vector<int> check_deq(deq.begin(), deq.end());
 	bool is_deq_sorted = (check_deq == original_vec);
 
@@ -143,7 +144,7 @@ void PmergeMe::generateJacobsthal(std::vector<int>& jacob, int n)
 		jacob.push_back(next);
 		if (next >= n)
 		{
-			break;
+			break ;
 		}
 		before_last = last;
 		last = next;
@@ -261,7 +262,7 @@ void PmergeMe::fordJohnsonSort(std::vector<int>& vec)
 	generateJacobsthal(jacob_indices, pend_chain.size());
 
 	size_t last_jacob_k = 1;
-	for (size_t i = 2; i < jacob_indices.size(); ++i)
+	for (size_t i = 3; i < jacob_indices.size(); ++i) // i = 2 였다가 3으로 바꿈.
 	{
 		size_t k = jacob_indices[i];
 		// Jacobsthal 인덱스부터 이전 Jacobsthal 인덱스까지 역순으로 삽입
