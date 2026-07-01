@@ -1,7 +1,6 @@
 #include "bigint.hpp"
-#include <algorithm>
-#include <stdexcept>
 #include <sstream>
+#include <algorithm>
 #include <cstdlib>
 
 void bigint::trim()
@@ -24,6 +23,8 @@ int bigint::to_int() const
 {
 	return (std::atoi(value_.c_str()));
 }
+
+// =======================
 
 bigint::bigint(unsigned long long value)
 {
@@ -48,6 +49,8 @@ bigint::bigint(const bigint& other) : value_(other.value_) {}
 
 bigint::~bigint() {}
 
+// ==========================
+
 bigint& bigint::operator=(const bigint& other)
 {
 	if (this != &other)
@@ -56,6 +59,8 @@ bigint& bigint::operator=(const bigint& other)
 	}
 	return (*this);
 }
+
+// ============================
 
 bool bigint::operator<(const bigint& other) const
 {
@@ -71,10 +76,12 @@ bool bigint::operator==(const bigint& other) const
 	return (value_ == other.value_);
 }
 
-bool bigint::operator>(const bigint& other) const {return (other < * this);}
-bool bigint::operator<=(const bigint& other) const {return !(*this > other);}
-bool bigint::operator>=(const bigint& other) const {return !(*this < other);}
-bool bigint::operator!=(const bigint& other) const {return !(*this == other);}
+bool bigint::operator>(const bigint& other) const { return (other < *this); }
+bool bigint::operator<=(const bigint& other) const { return !(*this > other); }
+bool bigint::operator>=(const bigint& other) const { return !(*this < other); }
+bool bigint::operator!=(const bigint& other) const { return !(*this == other); }
+
+// ============================
 
 bigint bigint::operator+(const bigint& other) const
 {
@@ -95,7 +102,7 @@ bigint bigint::operator+(const bigint& other) const
 		}
 		if (j >= 0)
 		{
-			sum += s2[j--] - '0';
+			sum += s2[j--] = '0';
 		}
 		result += (sum % 10) + '0';
 		carry = sum / 10;
@@ -123,6 +130,8 @@ bigint bigint::operator++(int)
 	++(*this);
 	return (temp);
 }
+
+// ============================
 
 bigint bigint::operator<<(int n) const
 {
@@ -171,10 +180,12 @@ bigint& bigint::operator>>=(int n)
 	return (*this);
 }
 
-bigint bigint::operator<<(const bigint& n) const {return (*this << n.to_int());}
-bigint& bigint::operator<<=(const bigint& n) {return (*this <<= n.to_int());}
-bigint bigint::operator>>(const bigint& n) const {return (*this >> n.to_int());}
-bigint& bigint::operator>>=(const bigint& n) {return (*this >>= n.to_int());}
+bigint bigint::operator<<(const bigint& n) const { return (*this << n.to_int()); }
+bigint& bigint::operator<<=(const bigint& n) { return (*this <<= n.to_int()); }
+bigint bigint::operator>>(const bigint& n) const { return (*this >> n.to_int()); }
+bigint& bigint::operator>>=(const bigint& n) { return (*this >>= n.to_int()); }
+
+// ============================
 
 std::ostream& operator<<(std::ostream& os, const bigint& bi)
 {
