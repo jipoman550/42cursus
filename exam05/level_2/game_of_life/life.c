@@ -1,9 +1,5 @@
 #include "life.h"
 
-// <stdio.h>를 포함하지 않고 putchar를 사용하기 위해 함수 프로토타입을 선언합니다.
-// 이는 특정 시험 환경(예: 42 cursus)의 제약 조건일 수 있습니다.
-int putchar(int c);
-
 /**
  * @brief 특정 셀 주변의 살아있는 이웃 세포 수를 계산합니다.
  * @param b 게임 보드(1차원 배열 형태).
