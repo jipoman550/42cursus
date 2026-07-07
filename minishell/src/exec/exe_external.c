@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_external.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hama <hama@student.42gyeongsan.kr>         +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 09:59:05 by hama              #+#    #+#             */
-/*   Updated: 2026/02/05 15:55:35 by hama             ###   ########.fr       */
+/*   Updated: 2026/07/07 12:25:53 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,6 @@ int	exe_external(t_pipeline *p, t_cmd *cmd, t_shell *sh)
 	}
 	execve(path, cmd->argv, sh->envp);
 	perror (cmd->argv[0]);
-	return (0);
+	free(path);
+	return (126);
 }

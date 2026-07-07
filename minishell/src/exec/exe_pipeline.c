@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exe_pipeline.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hama <hama@student.42gyeongsan.kr>         +#+  +:+       +#+        */
+/*   By: sisung <sisung@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/31 09:59:02 by hama              #+#    #+#             */
-/*   Updated: 2026/02/05 20:03:18 by hama             ###   ########.fr       */
+/*   Updated: 2026/07/07 12:25:53 by sisung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ static void	pipe_child(t_cmd *cmd, t_pipeline *p, t_shell *sh, t_mix m)
 	if (cmd->is_builtin || is_builtin(cmd->argv[0]))
 	{
 		status = exe_builtin(p, cmd, sh);
-		pipe_clean_up(p, sh, m.pid, 1);
+		pipe_clean_up(p, sh, m.pid, status);
 	}
 	status = exe_external(p, cmd, sh);
-	pipe_clean_up(p, sh, m.pid, 1);
+	pipe_clean_up(p, sh, m.pid, status);
 }
 
 static	int	pipe_excute(t_pipeline *p, t_shell *sh, t_mix m)
