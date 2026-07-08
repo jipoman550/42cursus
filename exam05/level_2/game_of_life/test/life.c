@@ -3,15 +3,13 @@
 int count_nb(char *b, int w, int h, int x, int y)
 {
 	int cnt = 0;
-
-	for (int i = -1; i <= 1; i++)
+	for (int i = -1; i <= 1; ++i)
 	{
-		for (int j = -1; j <= 1; j++)
+		for(int j = -1; j <= 1; ++j)
 		{
 			if (i == 0 && j == 0) continue ;
 
-			int nx = x + j;
-			int ny = y + i;
+			int nx = x + j, ny = y + i;
 
 			if (nx >= 0 && nx < w && ny >= 0 && ny < h && b[ny * w + nx]) cnt++;
 		}
@@ -33,7 +31,8 @@ int main(int argc, char **argv)
 	char *nb = calloc(w * h, 1);
 	if (!b || !nb)
 	{
-		free(b); free(nb);
+		free(b);
+		free(nb);
 		return (1);
 	}
 
@@ -50,17 +49,17 @@ int main(int argc, char **argv)
 
 		if (px < 0) px = 0;
 		if (px >= w) px = w - 1;
-		if (px < 0) py = 0;
+		if (py < 0) py = 0;
 		if (py >= h) py = h - 1;
 
 		if (draw) b[py * w + px] = 1;
 	}
 
-	for (int i = 0; i < it; i++)
+	for (int i = 0; i < it; ++i)
 	{
-		for (int y = 0; y < h; y++)
+		for (int y = 0; y < h; ++y)
 		{
-			for (int x = 0; x < w; x++)
+			for (int x = 0; x < w; ++x)
 			{
 				int n = count_nb(b, w, h, x, y);
 				int alive = b[y * w + x];
@@ -75,9 +74,9 @@ int main(int argc, char **argv)
 		nb = t;
 	}
 
-	for (int y = 0; y < h; y++)
+	for (int y = 0; y < h; ++y)
 	{
-		for (int x = 0; x < w; x++)
+		for (int x = 0; x < w; ++x)
 		{
 			putchar(b[y * w + x] ? '0' : ' ');
 		}
